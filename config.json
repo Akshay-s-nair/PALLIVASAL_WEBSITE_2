@@ -1,0 +1,11 @@
+{
+  "data": {
+    "local_server": "True",
+    "local_uri": "mysql://root:@localhost/pallivasal",
+    "prod_uri": "mysql://root:@localhost/pallivasal",
+    "admin_username": "admin",
+    "admin_password": "1234",
+    "error": "Invalid Username or Password",
+    "upload_location": ".\\static\\uploads"
+  }
+}
