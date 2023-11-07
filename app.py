@@ -9,7 +9,8 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Accept , Details , Places
+from models import Details , Places 
+from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
 
@@ -57,8 +58,8 @@ def view():
     return render_template('view.html')
 
 def authenticate_user(contact, password):
-    list = Accept.query.filter_by(contact=contact).first()
-    if list and list.password == password:
+    list = Details.query.filter_by(contact=contact).first()
+    if list.accept == 1 and list.password == password:
         return True, list.sno
     else:
         return False, None
@@ -77,12 +78,12 @@ def signin():
             flash('Invalid credentials. Please try again.')
             return redirect(url_for('signin'))  
 
-    list = Accept.query.all()
+    list = Details.query.filter_by(accept = 1)
     return render_template('signin.html', list=list)
 
 @app.route('/user_dash/<int:sno>', methods=['GET', 'POST'])
 def user_dash(sno):
-    list = Accept.query.filter_by(sno=sno).all()
+    list = Details.query.filter_by(sno=sno , accept = 1).all()
     return render_template('user_dash.html', list = list)
 
 @app.route('/register', methods = ['GET','POST'])
@@ -182,7 +183,7 @@ def logout():
 
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
-    list = Details.query.filter_by(sno = sno ,slug=slug ).first()                
+    list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()                
     return render_template('admin_view.html' , list=list )
 
 @app.route('/admin_dash')
@@ -192,30 +193,37 @@ def admin_dash():
 @app.route('/admin_accept', methods=['GET' , 'POST'])
 def admin_accept():
     # Get the row id from the request
-    row_id = request.form.get('row_id')
-
     # Query the row to be moved from Table1
-    row = Details.query.get(row_id)
+    # row = Details.query.get(row_id)
+    # stmt = update(Details).where(Details.accept == None).values(accept = 1)
+    row_id = request.form.get('row_id')
+    stmt = Details.query.filter_by(sno = row_id).first()
+    stmt.accept = 1
+    db.session.commit()
+    # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
+    # stmt = Details.update().where(Details.accept == None).values(accept = 1)
+    # if row:
+    #     Details(acce)
 
-    if row:
-        # Create a new row in Table2 with the same data
-        new_row = Accept(name=row.name, address=row.address, contact=row.contact , password=row.password, confirm=row.confirm, email=row.email, services=row.services ,date=datetime.now(), slug=row.slug , file = row.file )  # Modify this based on your table columns
-        # Add the new row to Table2
-        db.session.add(new_row)
-        # Delete the row from Table1
-        db.session.delete(row)
-        # Commit the changes to the database
-        db.session.commit()
-        return render_template('admin_accept.html')
-    else:
-        return 'Row not found'
+    # if row:
+    #     # Create a new row in Table2 with the same data
+    #     new_row = Accept(name=row.name, address=row.address, contact=row.contact , password=row.password, confirm=row.confirm, email=row.email, services=row.services ,date=datetime.now(), slug=row.slug , file = row.file )  # Modify this based on your table columns
+    #     # Add the new row to Table2
+    #     db.session.add(new_row)
+    #     # Delete the row from Table1
+    #     db.session.delete(row)
+    #     # Commit the changes to the database
+    # db.session.commit(stmt)
+    return render_template('admin_accept.html')
+    # else:
+    #     return 'Row not found'
 
 @app.route('/admin_reject', methods=['POST'])    
 def admin_reject():
     row_id2 = request.form.get('row_id2')
-    row2 = Details.query.get(row_id2)
-    if row2:
-        db.session.delete(row2)
+    row = Details.query.filter_by(sno = row_id2).first()
+    if row:
+        db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
 
@@ -223,28 +231,28 @@ def admin_reject():
 @app.route('/approved_remove', methods=['POST'])    
 def approved_remove():
     row_id2 = request.form.get('row_id2')
-    row2 = Accept.query.get(row_id2)
-    if row2:
-        db.session.delete(row2)
+    row = Details.query.filter_by(sno = row_id2).first()
+    if row:
+        db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
 
 @app.route('/requests', methods=["GET" ,"POST"])
 def requests():
     if "user" in session:
-        list = Details.query.filter_by().all()
+        list = Details.query.filter_by(accept = None).all()
         return render_template('requests.html', list=list)
     else:
         return render_template('admin.html')
 
 @app.route('/approved_app', methods=["GET" ,"POST"])
 def approved_app():
-    list = Accept.query.filter_by().all()
+    list = Details.query.filter_by(accept = 1).all()
     return render_template('approved_app.html', list=list)
 
 @app.route('/approved_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
-def approved_view(sno ,slug):
-    list = Accept.query.filter_by(sno = sno ,slug=slug ).first()                
+def approved_view(sno ,slug ):
+    list = Details.query.filter_by(sno = sno ,slug=slug ,accept = 1).first()                
     return render_template('approved_view.html' , list=list )
 
 @app.route('/edit_pages' , methods=["GET" ,"POST"])
@@ -334,12 +342,12 @@ def home_stay():
 
 @app.route('/local_workforce')
 def local_workforce():
-    list = Accept.query.filter_by().all()
+    list = Details.query.filter_by(accept = 1).all()
     return render_template('local_workforce.html' , list = list)
 
 @app.route('/view_localworkforce/<int:sno>', methods=['GET', 'POST'])
 def view_localworkforce(sno):
-    list = Accept.query.filter_by(sno = sno )  
+    list = Details.query.filter_by(sno = sno , accept = 1)  
     return render_template('view_localworkforce.html' , list = list)
 
 
@@ -368,12 +376,12 @@ def tent_camping():
 
 @app.route('/transport')
 def transport():
-    list = Accept.query.filter_by().all()
+    list = Details.query.filter_by(accept = 1).all()
     return render_template('transport.html', list = list)
 
 @app.route('/transport_view/<string:services>', methods=["GET" ,"POST"])
 def transport_view(services):
-    list = Accept.query.filter_by(services = services )
+    list = Details.query.filter_by(services = services , accept = 1)
     return render_template('transport_view.html', list=list)
 
 # @app.route('/taxiservices')
