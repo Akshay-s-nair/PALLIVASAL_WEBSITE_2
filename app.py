@@ -27,6 +27,12 @@ app.config['UPLOAD_FOLDER'] = data['upload_location']
 
 bcrypt=Bcrypt(app)
 
+def truncate_string(input_string, max_length):
+    if len(input_string) > max_length:
+        return input_string[:max_length]
+    else:
+        return input_string
+    
 if(local_server):
         app.config["SQLALCHEMY_DATABASE_URI"] = data['local_uri']
 else:
@@ -94,9 +100,6 @@ def register():
         contact = request.form.get('contact')
         password = request.form.get('password')
         confirm = request.form.get('confirm')
-        if confirm != password:
-            flash("passwords doesn't match")
-            redirect(url_for('register'))
         email = request.form.get('email')
         services = request.form.get('services')
 
@@ -121,9 +124,9 @@ def register():
             return 'No image uploaded!', 400
 
         filename = secure_filename(pic.filename)
-        mimetype = pic.mimetype
+        # mimetype = pic.mimetype
 
-        entry = Details(name=name, address=address, contact=contact , password=password, confirm=confirm, email=email, services=services ,date=datetime.now() , file=filename)
+        entry = Details(name=name, address=address, contact=contact , password=password, confirm=confirm, email=email, services=services ,date=datetime.now().date() , file=filename)
         
         if (request.method == 'POST'):    
             pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -222,7 +225,9 @@ def admin_accept():
 def admin_reject():
     row_id2 = request.form.get('row_id2')
     row = Details.query.filter_by(sno = row_id2).first()
+    filename = row.file
     if row:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
@@ -232,7 +237,9 @@ def admin_reject():
 def approved_remove():
     row_id2 = request.form.get('row_id2')
     row = Details.query.filter_by(sno = row_id2).first()
+    filename = row.file
     if row:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
@@ -403,8 +410,6 @@ def transport_view(services):
 # def CarRental():
 #     list = Accept.query.filter_by(services='Car Rental')
 #     return render_template('transport_view.html', list = list)
-
-
 
 @app.route('/where_to_stay')
 def where_to_stay():

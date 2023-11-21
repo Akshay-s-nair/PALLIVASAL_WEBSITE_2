@@ -87,6 +87,10 @@ select {
   border-radius: 5px;
 }
 
+.error {
+  color: red;
+}
+
 .alert-info {
   background-color: #d9edf7;
   color: #31708f;
@@ -113,7 +117,6 @@ select {
   padding: 8px 0 5px 0;
   font-size: 16px;
   color: #ffffff;
-
 }
 .input-containers input:focus {
   border: none;
@@ -160,12 +163,11 @@ select {
   font-size: 15px;
 }
 
-
 .error {
   color: #fff;
 }
 
-#Upload-file{
+#Upload-file {
   background-color: rgb(227, 253, 244);
   content: "Upload Proof";
 }
