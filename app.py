@@ -23,7 +23,8 @@ app = Flask(__name__)
 
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.permanent_session_lifetime = timedelta(minutes=2)
-app.config['UPLOAD_FOLDER'] = data['upload_location']
+app.config['DB_SERVER'] = data['local_uri']
+
 
 bcrypt=Bcrypt(app)
 
@@ -33,11 +34,7 @@ def truncate_string(input_string, max_length):
     else:
         return input_string
     
-if(local_server):
-        app.config["SQLALCHEMY_DATABASE_URI"] = data['local_uri']
-else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = data['prod_uri']
-
+app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_SERVER']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db_init(app)
 # db = SQLAlchemy()
@@ -79,7 +76,7 @@ def signin():
         result, sno = authenticate_user(user_contact, user_password)
 
         if result:
-            return redirect(url_for('user_dash', sno=sno))  
+            return redirect(url_for('userdash', sno=sno))  
         else:
             flash('Invalid credentials. Please try again.')
             return redirect(url_for('signin'))  
@@ -87,10 +84,10 @@ def signin():
     list = Details.query.filter_by(accept = 1)
     return render_template('signin.html', list=list)
 
-@app.route('/user_dash/<int:sno>', methods=['GET', 'POST'])
-def user_dash(sno):
+@app.route('/userdash/<int:sno>', methods=['GET', 'POST'])
+def userdash(sno):
     list = Details.query.filter_by(sno=sno , accept = 1).all()
-    return render_template('user_dash.html', list = list)
+    return render_template('userdash.html', list = list)
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -129,7 +126,7 @@ def register():
         entry = Details(name=name, address=address, contact=contact , password=password, confirm=confirm, email=email, services=services ,date=datetime.now().date() , file=filename)
         
         if (request.method == 'POST'):    
-            pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            pic.save(os.path.join('static', 'uploads', filename))
     
         db.session.add(entry)
         db.session.commit()
@@ -227,7 +224,7 @@ def admin_reject():
     row = Details.query.filter_by(sno = row_id2).first()
     filename = row.file
     if row:
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        os.remove(os.path.join('static', 'uploads', filename))
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
@@ -239,7 +236,7 @@ def approved_remove():
     row = Details.query.filter_by(sno = row_id2).first()
     filename = row.file
     if row:
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        os.remove(os.path.join('static', 'uploads', filename))
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
@@ -279,7 +276,7 @@ def edit_pages():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file_names.append(filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                file.save(os.path.join('static', 'uploads', filename))
 
         if(num == 1):
             entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
@@ -321,7 +318,7 @@ def allowed_file(filename):
 # 		if file and allowed_file(file.filename):
 # 			filename = secure_filename(file.filename)
 # 			file_names.append(filename)
-# 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+# 			file.save(os.path.join('static', 'uploads', filename))
 
 # 	return render_template('upload.html', filenames=file_names)
 
@@ -360,7 +357,7 @@ def view_localworkforce(sno):
 
 @app.route('/plantation_crops')
 def plantation_crops():
-    return render_template('plantation _crops.html')
+    return render_template('plantation_crops.html')
 
 @app.route('/spices')
 def spices():

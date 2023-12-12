@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="{{ url_for('static',filename='CSS/userdash/userdash.css') }}"
+  />
+    <title>Pallivasal</title>
+    <link
+    rel="icon"
+    href="{{url_for('static',filename='images/logo.png')}}"
+    type="image/icon type"
+  /> 
+</head>
+<body>
+    {% for item in list %}
+    <div class="box">
+    <div class="box1">
+        <h2>{{ item.services }}</h2>
+        <div class="cardss">
+          <div class="topcard">
+            {% if item.services == "Carpentary works" %}
+            <img
+              src="{{url_for('static',filename='images/carpenter.png')}}"
+              alt="Carpenter icon"
+            />
+            {% endif %} {% if item.services == "Plumbing services" %}
+            <img
+              src="{{url_for('static',filename='images/plumber.jpeg')}}"
+              alt="Plumber icon"
+            />
+            {% endif %} {% if item.services == "Electrical works" %}
+            <img
+              src="{{url_for('static',filename='images/electrical.jpeg')}}"
+              alt="Carpenter icon"
+            />
+            {% endif %}
+        <h5>User Name</h5>
+        <h3>{{ item.name }}</h3>
+        <h5>Contact Number</h5>
+        <h3>{{ item.contact }}</h3>
+        <h5>E-mail</h5>
+        <h3>{{ item.email }}</h3>
+        <h5>Address</h5>
+        <h3>{{ item.address }}</h3>
+    </div>
+
+    <div class="box2">
+        <form>
+            <label>Cost of Jeep Safari</label>
+            <input type="text">
+            <label>Trip available</label>
+            <input type="text">
+            <label>Pick up and Drop</label>
+            <input type="text">
+            <label>Duration</label>
+            <input type="text">
+            <label>vehicle</label>
+            <input type="text">
+            <label>No. of Persons Allowed</label>
+            <input type="text">
+            <label>Trip available</label>
+            <input type="text">
+            <label>Things to carry</label>
+            <input type="text">
+            <button>Save Changes</button>         
+    </div>
+    <div class="box2">
+        <form>
+            <label>Area of Specification</label>
+            <input type="text">
+            <label>Whatsapp Number</label>
+            <input type="text">
+            <label>Year of Experience</label>
+            <input type="text">
+            <label>Technical Qualification, if any</label>
+            <input type="text">
+            <label>Remuneration Detais</label>
+            <input type="text">
+            <button>Save Changes</button>  
+    </div>
+    </div>
+
+
+    {% endfor %}
+</body>
+</html>
+
+

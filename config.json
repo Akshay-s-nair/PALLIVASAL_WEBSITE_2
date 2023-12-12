@@ -1,11 +1,9 @@
 {
   "data": {
     "local_server": "True",
-    "local_uri": "mysql://root:1234@localhost/pallivasal",
-    "prod_uri": "mysql://root:1234@localhost/pallivasal",
+    "local_uri": "mysql://root:Qwerty123@localhost/pallivasal",
     "admin_username": "admin",
     "admin_password": "1234",
-    "error": "Invalid Username or Password",
-    "upload_location": ".\\static\\uploads"
+    "error": "Invalid Username or Password"
   }
 }
