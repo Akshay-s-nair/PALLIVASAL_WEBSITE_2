@@ -20,8 +20,6 @@
     <div class="box">
     <div class="box1">
         <h2>{{ item.services }}</h2>
-        <div class="cardss">
-          <div class="topcard">
             {% if item.services == "Carpentary works" %}
             <img
               src="{{url_for('static',filename='images/carpenter.png')}}"
@@ -46,8 +44,8 @@
         <h3>{{ item.email }}</h3>
         <h5>Address</h5>
         <h3>{{ item.address }}</h3>
+  
     </div>
-
     <div class="box2">
         <form>
             <label>Cost of Jeep Safari</label>
@@ -82,7 +80,7 @@
             <input type="text">
             <button>Save Changes</button>  
     </div>
-    </div>
+    </div> 
 
 
     {% endfor %}
