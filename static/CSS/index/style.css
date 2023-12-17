@@ -1,3 +1,8 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+
+
 html,body{
   margin: 0;
   padding: 0;
@@ -355,7 +360,7 @@ body{
     display: block;
     text-align: center;
     width: 50%;
-    background-color: #00000098;
+    background-color: #000000;
     transition: all 0.3s ease-in;
     overflow-y: hidden;
     top: 70px;
@@ -372,7 +377,7 @@ body{
  
   /* when nav toggle button is checked */
   .navbar #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 470px);
+    height: auto;
     overflow-y: auto;
   }
   
@@ -409,9 +414,9 @@ svg {
 
 .headings{
   /* font-family: 'Love Light', cursive; */
-  font-family: 'Pacifico', cursive;
+  font-family: 'Permanent Marker', cursive;
   color: #eeeeeed9;
-  font-size: 85px;
+  font-size: 70px;
 
   padding-top: 120px;
 }
@@ -426,7 +431,8 @@ svg {
 }
 @media (max-width:400px) {
   .headings{
-    font-size: 60px;
+    font-size: 50px;
+    padding: 10px;
   }
   .responsiveimg{
     width: 300px;

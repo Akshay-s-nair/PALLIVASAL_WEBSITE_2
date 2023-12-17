@@ -19,36 +19,42 @@
     <title>Pallivasal</title>
 </head>
 <body>
-    <a href="{{ url_for('logout') }}">
-    <div class="mx-auto">
-        <button type="button" class="btn btn-danger">Logout</button>
-    </div></a>
-  
-    <a href="{{ url_for('approved_app') }}" style="text-decoration: none;">
-    <div class="cards mx-auto">
+    
+  <div class="cards-content">
+
+ 
+    <!-- <a href="{{ url_for('approved_app') }}" style="text-decoration: none;">
+    <div class="cards">
         <P>Total number of Service Providers</P>
         <h3>20</h3>
-    </div></a>
+    </div></a> -->
 
     <a href="{{ url_for('requests') }}" style="text-decoration: none;">
-    <div class="cards mx-auto">
+    <div class="cards">
         <h5 >Application Request</h5>
     </div></a>
 
     <a href="{{ url_for('approved_app') }}" style="text-decoration: none;">
-    <div class="cards mx-auto">
+    <div class="cards">
         <h5 >Approved Applications</h5>
     </div></a>
     
     <a href="{{ url_for('edit_pages') }}" style="text-decoration: none;">
-        <div class="cards mx-auto">
+        <div class="cards">
             <h5>Places To Visit</h5>
         </div></a>
     
-        <a href="{{ url_for('requests') }}" style="text-decoration: none;">
-    <div class="cards mx-auto">
+        <!-- <a href="{{ url_for('requests') }}" style="text-decoration: none;">
+    <div class="cards">
         <h5>Settings</h5>
-    </div></a>
+    </div></a> -->
 
+ 
+
+</div>
+<a href="{{ url_for('logout') }}">
+    <div class="logout-btn mx-auto">
+        <button type="button" class="btn btn-danger">Logout</button>
+    </div></a>
 </body>
 </html>
