@@ -6,8 +6,17 @@ body{
     height: 100vh;
     background-size: cover;
     background-attachment:fixed;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+   
     
+}
+.cards-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    margin-top: 70px;
 }
 .cards{
     height: 120px;
@@ -16,10 +25,11 @@ body{
     border-radius: 25px;
     border: 1px whitesmoke solid;
     opacity: 0.65;
-    margin-top: 30px;
+    margin: 40px;
     overflow: hidden;
     color: white;
     text-align: center;
+    margin-right: 50px;
     
     
 }
@@ -31,6 +41,12 @@ body{
     padding-top: 45px;
     opacity: 1;
     
+}
+.logout-btn{
+    
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 30px;
 }
 
 

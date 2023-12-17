@@ -3,16 +3,21 @@
 	margin: 0;
 	padding: 0px;
 	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	
   }
   body {
-	background-color: #e8eaed;
+	width: 100%;
+	height: 100vh;
+	background-image:linear-gradient(rgba(0, 0, 0, 0.466), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+	background-size: cover;
+	background-attachment:fixed;
+	
   }
   header {
-	background-color: #78E4D4;
-	color: #000000;
+	background-color: rgba(0, 66, 44, 0.837);
+	color: #ffffff;
 	padding: 10px;
-  border-radius: 10px;
-  margin: 20px;
+  	margin: 10px;
   }
   h1 {
 	font-size: 45px;
@@ -32,35 +37,44 @@
 	height: 100%;
 	object-fit: cover;
 	margin-right: 10px;
-    border-radius: 10px;
+    border-radius: 0px;
     
 }
 button>img{
-    height:60px;
-    width:60px;
+    height:40px;
+    width:40px;
     
-  
+	text-align: center;
+	justify-content: center;
 }
 button{
     position: absolute;
-    height:70px;
-    width:150px;
-    border-radius: 10px;
-	background: linear-gradient(to left, #56B4D3,#78E4D4 ); 
-    border-width: 3px;
-    border-color: white; 
+    height:20px;
+    width:120px;
+    /* border-radius: 10px; */
+	/* background: linear-gradient(to left, #56c4d3,#006476 );  */
+    border-width: 1px;
+	background-color: rgb(255, 255, 255);
 	block-size: fit-content;
    
 }
 button>p{
-	color: white;
-	padding-top: 15px;
+	color: rgb(0, 67, 38);
+	text-align: center;
+	justify-content: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	font-weight:500;
-	font-size: large;
+	font-size: medium;
+	position: relative;
+	
 }
 .but{
 	display: flex;
 
+}
+h2,P{
+	color: #ffffff;
 }
 
 
@@ -68,8 +82,68 @@ button>p{
 	margin-left: 100px;
 }
 @media (max-width: 768px) {
+	h1 {
+		font-size: 20px;
+		
+	  }
+	header {
+		background-color: rgba(0, 66, 44, 0.837);
+		color: #ffffff;
+		padding: 10px;
+		  margin: 10px;
+		  width: 85%;
+	  }
 	.mapp{
 		margin-left: 2px;
 		padding-top: 20px;
+	}
+	.slider img{
+		width: 80%;
+		height: 100%;
+	object-fit: contain;
+	margin-right: 0px;
+    border-radius: 0px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-55%,-50%);
+	}
+	.slider {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 200px;
+		width :90%;
+		margin-bottom: 20px;
+	
+	  }
+	  button>img{
+		height:35px;
+		width:35px;
+		
+		text-align: center;
+		justify-content: center;
+	}
+	button{
+		position: absolute;
+		height:20px;
+		width:120px;
+		/* border-radius: 10px; */
+		/* background: linear-gradient(to left, #56c4d3,#006476 );  */
+		border-width: 1px;
+		background-color: rgb(255, 255, 255);
+		block-size: fit-content;
+	   
+	}
+	button>p{
+		color: rgb(0, 67, 38);
+		text-align: center;
+		justify-content: center;
+		margin: 4px;
+		margin-bottom: 0pc;
+		font-weight:500;
+		font-size: medium;
+		position: relative;
+		
 	}
 }
