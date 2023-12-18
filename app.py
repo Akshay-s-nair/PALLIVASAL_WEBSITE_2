@@ -6,8 +6,8 @@ import os
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
-# from flask_session import Session
-# from flask_login import current_user ,LoginManager
+from flask_session import Session
+from flask_login import current_user ,LoginManager
 from db import db_init, db
 from models import Details , Places 
 from sqlalchemy.sql.expression import update
@@ -224,7 +224,10 @@ def admin_reject():
     row = Details.query.filter_by(sno = row_id2).first()
     filename = row.file
     if row:
-        os.remove(os.path.join('static', 'uploads', filename))
+        try:
+            os.remove(os.path.join('static', 'uploads', filename))
+        except:
+            pass
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
@@ -236,7 +239,10 @@ def approved_remove():
     row = Details.query.filter_by(sno = row_id2).first()
     filename = row.file
     if row:
-        os.remove(os.path.join('static', 'uploads', filename))
+        try:
+            os.remove(os.path.join('static', 'uploads', filename))
+        except:
+            pass
         db.session.delete(row)
         db.session.commit()     
     return render_template('admin_reject.html')
