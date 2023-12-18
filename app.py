@@ -388,6 +388,9 @@ def transport_view(services):
     list = Details.query.filter_by(services = services , accept = 1)
     return render_template('transport_view.html', list=list)
 
+@app.route('/transport_view/busview')
+def busview():
+    return render_template('bus.html')
 # @app.route('/taxiservices')
 # def taxiservices():
 #     list = Accept.query.filter_by().all()
