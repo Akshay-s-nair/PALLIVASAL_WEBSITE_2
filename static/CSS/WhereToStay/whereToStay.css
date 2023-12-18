@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 #logo{
     height: 40px;
     width: 70px;
@@ -20,7 +22,8 @@
 }
 body{
     /* background-image: linear-gradient(to right,rgb(83,105,118), rgb(41, 46, 73)); */
-    background-image: linear-gradient(180deg,rgba(1, 20, 33, 0.876),rgba(2, 28, 43, 0.864), rgba(24, 24, 27, 0.872));
+    background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
+    url("../../images/bg.jpg");
     background-size: cover;
   background-attachment:fixed;
 
@@ -47,6 +50,11 @@ body{
 #home
 {
     font-family: verdana;
+}
+.headng{
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+	font-size: 36px;
 }
 
 

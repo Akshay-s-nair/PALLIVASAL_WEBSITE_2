@@ -1,4 +1,5 @@
-.myenv
+.env
 # static\uploads\*
 __pycache__
 myenv
+get-pip.py
