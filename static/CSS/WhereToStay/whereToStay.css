@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 #logo{
     height: 40px;
     width: 70px;
@@ -47,6 +49,11 @@ body{
 #home
 {
     font-family: verdana;
+}
+.headng{
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+	font-size: 36px;
 }
 
 
