@@ -16,16 +16,14 @@
     /* height: auto; */
 }
 body{
-    /* background-image:linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)), url("../../images/bg.jpg"); */
-  background-size: cover;
-  background-attachment:fixed;
-}
-body{
-  
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     font-family: sans-serif;
-    /* background-image: linear-gradient(180deg,rgb(174, 185, 193),rgb(83,105,118), rgb(24, 24, 27)); */
     background-image: linear-gradient(180deg,rgba(1, 20, 33, 0.876),rgba(2, 28, 43, 0.864), rgba(24, 24, 27, 0.872));
-  }
+}
 @media (max-width:400px){
 h5{
     padding-bottom: 30px;
@@ -34,4 +32,66 @@ h5{
 #ts{
     padding-bottom: 0px;
 }
+}
+
+/* --------------------------------BUS SERVICE------------------------------------------ */
+.table{
+    width: 900px;
+    padding: 20px;
+    color: aliceblue;
+    font-size: 20px;
+    /* border: 1px white solid; */
+}
+td{
+    padding: 20px;
+    background-color: rgb(112, 112, 112);
+    z-index: -1;
+}
+th{
+    padding: 20px;
+    background-color: rgb(79, 77, 77);
+    position: sticky;
+    top: 120px;
+    z-index: 111;
+}
+.containerr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+nav.head{
+    width: 865px;
+    text-align: center;
+    height: 80px;
+    color: aliceblue;
+    position: sticky;
+    top: 1px;
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    z-index: 112;
+    background-color:rgba(1, 20, 33, 0.938) ;
+}
+@media (max-width:400px){
+
+    .table,nav.head{
+        padding: 1px;
+        font-size: 15px;
+        width: 350px;
+    }
+    nav.head{
+        position: sticky;
+        padding: 10px;
+        top: 1px;
+        width: 340px;
+    }
+    td{
+        padding: 15px;
+        background-color: rgb(112, 112, 112);
+    }
+    th{
+        padding:15px;
+        top: 100px;
+    }
 }
