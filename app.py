@@ -343,6 +343,10 @@ def dormitories():
 def home_stay():
     return render_template('home_stay.html')
 
+@app.route('/view_homestay')
+def view_homestay():
+    return render_template('view_homestay.html')
+
 
 @app.route('/local_workforce')
 def local_workforce():

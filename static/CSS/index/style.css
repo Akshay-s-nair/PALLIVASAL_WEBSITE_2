@@ -15,12 +15,14 @@ body{
   font-family: sans-serif;
   /* background-image: linear-gradient(180deg,rgb(174, 185, 193),rgb(83,105,118), rgb(24, 24, 27)); */
   /* background-image: linear-gradient(180deg,rgba(1, 20, 33, 0.876),rgba(2, 28, 43, 0.864), rgba(24, 24, 27, 0.872)); */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     0deg,
     rgb(0, 0, 0),
     rgb(0, 0, 0) 90%
-  );
-  
+  ); */
+  background-image:linear-gradient(rgba(0, 0, 0, 0.244), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+  background-size: cover;
+  background-attachment:fixed;
 }
 .body1{
 
