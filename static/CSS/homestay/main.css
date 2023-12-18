@@ -1,13 +1,50 @@
 body{
-    background-image: linear-gradient(to right,rgb(83,105,118), rgb(41, 46, 73));
+    background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
+    url("../../images/bg.jpg");
     font-family: poppins;
     font-size: 22px;
+    background-size: cover;
+    background-attachment:fixed;
 }
 img{
     width: 500px;
     max-width: 100%;
     height: auto;
-    ma
+    
 }
 
-
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 150px;
+    justify-content: center;
+    text-align: center;
+    
+}
+.card{
+    width: 300px;
+    height: fit-content;
+    background-color: rgba(0, 48, 32, 0.342);
+    margin: 30px;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.281);
+    /* background: rgba(0, 0, 0, 0.5); */
+    color: white;
+    box-shadow: black 20px;
+    text-wrap: wrap;
+}
+.card img{
+    width: 300px;
+    height: 150px;
+    object-fit: cover;
+}
+.card h5{
+    text-wrap: wrap;
+   font-size: 1rem;
+   font-weight: 300px;
+   
+    padding: 10px;
+}
