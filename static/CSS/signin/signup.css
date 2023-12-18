@@ -14,6 +14,9 @@ body {
   height: 100%;
   padding: 1rem;
 }
+.conf{
+  color:#fff ;
+}
 .card {
   background-image: linear-gradient(
     180deg,
@@ -136,8 +139,12 @@ select {
   font-weight: bold;
   color: #000000;
   background: rgba(255, 255, 255, 0.856);
-  border-radius: 1px;
+  border-radius: 15px;
   margin-top: 10px;
+  border: none;
+}
+.otpbtn:hover{
+  background-color: rgba(155, 155, 155, 0.856);;
 }
 
 #back {
