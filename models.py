@@ -1,5 +1,8 @@
 from db import db
 from slugify import slugify
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship, Session
+
 
 class Details(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
@@ -35,3 +38,14 @@ class Places(db.Model):
     map =  db.Column(db.String(40) , nullable=True)
 
 
+class LocalWorkforce(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    whatsapp_number = db.Column(db.String(80), nullable=True, default=None)
+    years_of_exp = db.Column(db.String(80), nullable=True, default=None)
+    technical_qualifications = db.Column(db.String(80), nullable=True, default=None)
+    remuneration_details = db.Column(db.String(80), nullable=True, default=None)
+
+    details = relationship("Details", back_populates="local_workforce")
+
+Details.local_workforce = relationship("LocalWorkforce", order_by=LocalWorkforce.local_id, back_populates="details")

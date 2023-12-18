@@ -14,6 +14,7 @@ from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
 
+
 with open('config.json', 'r') as c:
     data = json.load(c)["data"]
 
