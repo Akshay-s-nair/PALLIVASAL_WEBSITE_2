@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 body{
     background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
     url("../../images/bg.jpg");
@@ -5,6 +7,8 @@ body{
     font-size: 22px;
     background-size: cover;
     background-attachment:fixed;
+    overflow-y: hidden;
+    
 }
 img{
     width: 500px;
@@ -17,7 +21,7 @@ img{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 150px;
+    margin-top: 10px;
     justify-content: center;
     text-align: center;
     
@@ -60,4 +64,35 @@ img{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  text-wrap: wrap;
+  
+}
+.box h5{
+    font-size: 1rem;
+    color: white;
+    word-wrap: break-word;
+    width: 600px;
+}
+.box{
+    display: block;
+    padding: 30px;
+    
+}
+
+h2{
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Permanent Marker', cursive;
+    margin-top: 70px;
+}
+
+
+@media (max-width:700px) {
+    .box h5{
+        font-size: 1rem;
+        color: white;
+        word-wrap: break-word;
+        width: 230px;
+    }
 }
