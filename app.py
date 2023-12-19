@@ -74,8 +74,12 @@ def signin():
         user_contact = request.form.get('contact')
         user_password = request.form.get('password')
 
-        result, sno = authenticate_user(user_contact, user_password)
-
+        try:
+            result, sno = authenticate_user(user_contact, user_password)
+        except:
+            flash('Invalid credentials. Please try again.')
+            return redirect(url_for('signin')) 
+        
         if result:
             return redirect(url_for('userdash', sno=sno))  
         else:
