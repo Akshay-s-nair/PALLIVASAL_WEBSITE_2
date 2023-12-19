@@ -48,7 +48,7 @@
 							<img src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
 							{% endif %}
 							{% if list.img5 is not none %}
-							{% set fname5 = 'uploads/' + item.img5 %}  
+							{% set fname5 = 'uploads/' + list.img5 %}  
 							<img src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
 							{% endif %}
 						</div>

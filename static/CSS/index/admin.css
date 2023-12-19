@@ -382,6 +382,10 @@ a{
 
 
 /*   edit page  */
+.bdy{
+    color: #FFFFFF;
+}
+
 .addbut{
     height: 50px;
     padding-bottom: 10px;
@@ -483,4 +487,32 @@ input[type=submit]{
 .crd{
     margin-top: 50px;
     height: 200px;
+}
+
+
+
+/*   edit place page  */
+
+.image{
+    min-height: 200px;
+}
+.bt{
+    margin-top: 20px;
+}
+img.imgs{
+    width: 200px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.addhead{
+    text-align: center;
+    padding: 20px; font-size: 50px;
+}
+.ac{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h5.in{
+    padding: 0%;
 }
