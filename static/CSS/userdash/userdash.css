@@ -6,7 +6,7 @@ body{
 }
 .box1{
     background-color: aliceblue;
-    width: 15em;
+    width: 17em;
     height: 100vh;
     border-radius: 10px;
     /* position: sticky;
@@ -39,22 +39,29 @@ body{
 
 }
 .box2{
-    width: 50em;
+    width: 21em;
     height: fit-content;
     background-color: aliceblue;
     margin-left: 2em;
     border-radius: 10px;
     padding: 20px;
-    
+   
 }
 .box{
     display: flex;
     flex-direction: row;
-    
+    position: absolute;
+     top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 form{
     display: flex;
     flex-direction: column;
+    position: relative;
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); */
 }
 input{
     width: 300px;
@@ -83,7 +90,7 @@ button{
         overflow-x: hidden;
         }
     .box1{
-        width: 95%;
+        width: 100%;
         height: fit-content;
         padding-bottom: 20px;
         position: relative;
@@ -95,7 +102,9 @@ button{
     .box{
         display: flex;
         flex-direction: column;
-       
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-30%);
         
     }
     .box2{
