@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='CSS/localworkforce/localworkforce.css') }}"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='CSS/localworkforce/localworkforce.css') }}"
+    />
     {% for item in list %}
-        <title>{{ item.name }}</title>
+    <title>{{ item.name }}</title>
     {% endfor %}
     <link
-    rel="icon"
-    href="{{url_for('static',filename='images/logo.png')}}"
-    type="image/icon type"
-  />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/f5cbf694f9.js" crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      rel="icon"
+      href="{{url_for('static',filename='images/logo.png')}}"
+      type="image/icon type"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f5cbf694f9.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-
-</head>
-<body style="width: 100%;height: 100%;background-size: cover;">
-   <div class="cnt">
-    <div class="container">
-        <div class="row ">
-            <div class="parentv">
-                <div class="bor">
-                    <div class="childv">
-                        {% for item in list %}
-                            <h5>Name: {{ item.name }}</h5>
-                            <h5>Address: {{item.address}}</h5>
-                            <h5>Email: {{item.email}}</h5>
-                            <h5>Contact no: {{item.contact}}</h5>
-                            
-                        {% endfor %}
-                        <h5><a id="atag" href="{{ url_for('local_workforce') }}">Back to previous</a></h5>
-                    </div>
-                </div>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="width: 100%; height: 100%; background-size: cover">
+    <div class="cnt">
+      <div class="container">
+        <div class="row">
+          <div class="parentv">
+            <div class="bor">
+              <div class="childv">
+                {% for item1 in list %}
+                <h5>Name: {{ item1.name }}</h5>
+                <h5>Address: {{item1.address}}</h5>
+                <h5>Email: {{item1.email}}</h5>
+                <h5>Contact no: {{item1.contact}}</h5>
+                {% endfor %} 
+                {% for item2 in info %}
+                {% if item2.whatsapp_number is not none %}
+                <h5>Whatsapp no: {{item2.whatsapp_number}}</h5>
+                {% endif %} 
+                {% if item2.years_of_exp is not none %}
+                <h5>Years of Experience: {{item2.years_of_exp}}</h5>
+                {% endif %} 
+                {% if item2.technical_qualifications is not none %}
+                <h5>Technical Qualifications: {{item2.technical_qualifications}}</h5>
+                {% endif %} 
+                {% if item2.remuneration_details is not none %}
+                <h5>Remuneration Details: {{item2.remuneration_details}}</h5>
+                {% endif %} 
+                {% endfor %}
+                <h5>
+                  <a id="atag" href="{{ url_for('local_workforce') }}"
+                    >Back to previous</a
+                  >
+                </h5>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>

@@ -9,7 +9,7 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places 
+from models import Details , Places , LocalWorkforce
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -85,10 +85,30 @@ def signin():
     list = Details.query.filter_by(accept = 1)
     return render_template('signin.html', list=list)
 
+
+# @app.route('/userdash_submit', methods=['GET', 'POST'])
+# def userdash_submit():
+
 @app.route('/userdash/<int:sno>', methods=['GET', 'POST'])
 def userdash(sno):
+    if(request.method == 'POST'):
+        whatsapp = request.form.get('whatsapp')
+        remuneration = request.form.get('remuneration')
+        technical = request.form.get('technical')
+        experience = request.form.get('exp')
+        
+        entry = LocalWorkforce.query.join(Details).filter(Details.sno == sno).first()
+
+        if entry:
+            entry.whatsapp_number = whatsapp
+            entry.remuneration_details = remuneration
+            entry.technical_qualifications = technical
+            entry.years_of_exp = experience
+
+            db.session.commit()
+
     list = Details.query.filter_by(sno=sno , accept = 1).all()
-    return render_template('userdash.html', list = list)
+    return render_template('userdash.html', list = list )
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -100,7 +120,7 @@ def register():
         confirm = request.form.get('confirm')
         email = request.form.get('email')
         services = request.form.get('services')
-
+    
     # @app.route('/upload', methods=['POST'])
     # def upload():
     #     pic = request.files['pic']
@@ -198,8 +218,12 @@ def admin_accept():
     # row = Details.query.get(row_id)
     # stmt = update(Details).where(Details.accept == None).values(accept = 1)
     row_id = request.form.get('row_id')
-    stmt = Details.query.filter_by(sno = row_id).first()
-    stmt.accept = 1
+    details_instance = Details.query.filter_by(sno=row_id).first()
+    details_instance.accept = 1
+    db.session.commit()
+
+    new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
+    db.session.add(new_local_workforce)
     db.session.commit()
     # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
     # stmt = Details.update().where(Details.accept == None).values(accept = 1)
@@ -394,8 +418,9 @@ def local_workforce():
 
 @app.route('/view_localworkforce/<int:sno>', methods=['GET', 'POST'])
 def view_localworkforce(sno):
-    list = Details.query.filter_by(sno = sno , accept = 1)  
-    return render_template('view_localworkforce.html' , list = list)
+    list = Details.query.filter_by(sno = sno , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = sno)  
+    return render_template('view_localworkforce.html' , list = list, info = info )
 
 
 @app.route('/plantation_crops')
