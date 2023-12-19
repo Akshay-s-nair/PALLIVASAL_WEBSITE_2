@@ -82,7 +82,7 @@ h5{
     padding: 10px;
 }
 .childv{
-    height: 400px;
+    height: fit-content;
     width: 400px;
     background-color: #fefefe86;
     padding-top: 70px;
@@ -98,10 +98,10 @@ h5{
     align-items: center;
     justify-content: center;
 }
-.bor{
+/* .bor{
     border:2px solid #fefefed0;
     border-radius: 15px;
-}
+} */
 a{
     margin: 10%;
 }
@@ -109,7 +109,15 @@ a{
     padding-top: 25px;
     text-decoration: none;
 }
-
+.childv img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: -70px;
+    padding-bottom: 80px;
+    border-radius: 15px 15px;
+    
+   }    
 @media (max-width: 480px) {
     .cnt{
         width: 100%;
