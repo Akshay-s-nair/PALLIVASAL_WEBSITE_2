@@ -340,6 +340,38 @@ def place(id):
     list = Places.query.filter_by(id = id ).first()                
     return render_template('place.html' , list = list)
 
+@app.route('/added_places', methods=["GET" ,"POST"])
+def added_places():
+    list = Places.query.filter_by().all()
+    return render_template('addedplaces.html', list=list)
+
+@app.route('/addedplace_detail/<int:id>' , methods = ["GET" , "POST"])
+def addedplace_detail(id):
+    list = Places.query.filter_by(id = id ).first()                
+    return render_template('addedplace_detail.html' , list=list )
+
+@app.route('/place_remove', methods=['POST'])    
+def place_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Places.query.filter_by(id = row_id2).first()
+    img1 = row.img1
+    img2 = row.img2
+    img3 = row.img3
+    img4 = row.img4
+    img5 = row.img5
+    if row:
+        try:
+            os.remove(os.path.join('static', 'uploads', img1))
+            os.remove(os.path.join('static', 'uploads', img2))
+            os.remove(os.path.join('static', 'uploads', img3))
+            os.remove(os.path.join('static', 'uploads', img4))
+            os.remove(os.path.join('static', 'uploads', img5))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()     
+    return redirect(url_for('added_places'))
+
 
 @app.route('/dormitories')
 def dormitories():
