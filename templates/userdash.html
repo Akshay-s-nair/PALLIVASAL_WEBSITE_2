@@ -68,6 +68,7 @@
     </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
     <div style="display: block;" class="box2">
+
         <form id="form1" action="/userdash/{{ item.sno }}" method='post'>
           <label>Whatsapp Number</label>
           <input type="text" name="whatsapp">
@@ -79,6 +80,7 @@
           <input type="text" name="remuneration">
           <label>Area of Specification</label>
           <input type="text" name="specification">
+
             <button>Save Changes</button>  
         </form>
     </div>
