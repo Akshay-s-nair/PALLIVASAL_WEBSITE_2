@@ -72,7 +72,8 @@ table{
 }
 th,td{
     padding-left: 5%;
-    
+    margin-right: 5%;
+    max-width: 145px;
 }
 .head{
     height: 40px;
@@ -85,9 +86,17 @@ th,td{
 
     margin-top: 50px;
 }
+#typeOut{
+    padding-top: 15px;
+}
 
-
-
+@media (max-width: 480px) {
+    th,td{
+        padding-left: 3%;
+        font-size: small;
+        
+    }
+}
 
 
 
