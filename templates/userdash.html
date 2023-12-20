@@ -72,8 +72,29 @@
             <input type="text">
             <button>Save Changes</button>         
     </div>
+    <div id="edit"  class="box2">
+      <h5>Cost of Jeep Safari</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Trip available</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Pick up and Drop</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Duration</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>vehicle</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>No. of Persons Allowed</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Trip available</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Things to carry</h5>
+      <h3>{{ item.name }}</h3>
+
+
+        <!-- <button>Edit</button> -->
+    </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
-    <div style="display: block;" class="box2">
+    <div id="save" class="box2">
 
         <form id="form1" action="/userdash/{{ item.sno }}" method='post'>
           <label>Whatsapp Number</label>
@@ -86,13 +107,33 @@
           <input type="text" name="remuneration">
           <label>Area of Specification</label>
           <input type="text" name="specification">
-
-            <button>Save Changes</button>  
+          <button id="btn" >Save Changes</button>
+          
         </form>
     </div>
+    
+    <div id="edit"  class="box2">
+      <h2>Details</h2>
+      <h5>Whatsapp Number</h5>
+        <h3>{{ item.name }}</h3>
+      <h5>Year of Experience</h5>
+        <h3>{{ item.name }}</h3>
+      <h5>Technical Qualification, if any</h5>
+        <h3>{{ item.name }}</h3>
+      <h5>Remuneration Detais</h5>
+        <h3>{{ item.name }}</h3>
+      <h5>Area of Specification</h5>
+        <h3>{{ item.name }}</h3>
+
+        <!-- <button>Edit</button> -->
+    </div>
+     
     {% elif item.services == "Home stay"  %}
-    <div style="display: block;" class="box2">
+
+    <div class="box2">
+      
       <form id="form2" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+
           <label>Name of Homestay</label>
           <input type="text" name="name">
           <label>Location Details</label>
@@ -114,6 +155,30 @@
           <button>Save Changes</button>  
         </form>
   </div>
+
+  <div id="edit"  class="box2">
+    <h2>Details</h2>
+    <h5>Name of Homestay</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Location Details</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Property description</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Additional contact number</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Host information</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Facilities</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>No. of Rooms</h5>
+      <h3>{{ item.name }}</h3>
+    <h5>Services</h5>
+      <h3>{{ item.name }}</h3>
+
+      <!-- <button>Edit</button> -->
+  </div>
+  {% endif %}
+
 
   {% elif item.services == "Spices outlet"  %}
   <div style="display: block;" class="box2">
@@ -164,10 +229,27 @@
 </div>
 
 
+
     </div>
-    {% endif %}
+    
     {% endfor %}
+    
+    <!-- <script>
+      function myFunction() {
+      var x = document.getElementById("save");
+      var y = document.getElementById("btn");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "block";
+    
+      } else {
+        x.style.display = "none";
+        y.style.display = "none";
+      }
+    }
+    </script> -->
 </body>
+
 </html>
 
 
