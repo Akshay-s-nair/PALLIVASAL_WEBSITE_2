@@ -66,7 +66,9 @@
         </label>
       </div>
 
+
       <div class="nav-links px-4">
+
         <a href="{{ url_for('view') }}"
           ><img
             src="{{url_for('static',filename='images/user icon.svg')}}"
@@ -100,6 +102,16 @@
         navbar.classList.remove('scrolled-down');
       }
     });
+
+    const nav = document.getElementById('nav-link');
+// Add a click event listener to the document
+document.addEventListener('click', (event) => {
+  // Check if the target of the event is outside the navbar
+  if (!navbar.contains(event.target)) {
+    // If it is, change the display of the navbar to none
+    navc.style.display = 'none';
+  }
+});
   </script>
     
    

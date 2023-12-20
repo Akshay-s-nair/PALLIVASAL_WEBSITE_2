@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+
 .blk:hover{
     transform: scale(.96);
     transition: 300ms;
@@ -22,7 +25,14 @@ body{
     background-position: center;
     background-size: cover;
     font-family: sans-serif;
-    background-image: linear-gradient(180deg,rgba(1, 20, 33, 0.876),rgba(2, 28, 43, 0.864), rgba(24, 24, 27, 0.872));
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
+    url("../../images/bg.jpg");
+}
+h5{
+    
+    padding-top: 10px;
+
 }
 @media (max-width:400px){
 h5{
@@ -73,6 +83,11 @@ nav.head{
     z-index: 112;
     background-color:rgba(1, 20, 33, 0.938) ;
 }
+
+.headng{
+     font-family: 'Permanent Marker', cursive;
+}
+
 @media (max-width:400px){
 
     .table,nav.head{

@@ -68,18 +68,21 @@
     </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
     <div style="display: block;" class="box2">
-        <form>
+
+        <form id="form1" action="/userdash/{{ item.sno }}" method='post'>
           <label>Whatsapp Number</label>
-          <input type="text">
+          <input type="text" name="whatsapp">
           <label>Year of Experience</label>
-          <input type="text">
+          <input type="text" name="exp">
           <label>Technical Qualification, if any</label>
-          <input type="text">
+          <input type="text" name="technical">
           <label>Remuneration Detais</label>
-          <input type="text">
+          <input type="text" name="remuneration">
           <label>Area of Specification</label>
-          <input type="text">
+          <input type="text" name="specification">
+
             <button>Save Changes</button>  
+        </form>
     </div>
     {% elif item.services == "Home stay"  %}
     <div style="display: block;" class="box2">
