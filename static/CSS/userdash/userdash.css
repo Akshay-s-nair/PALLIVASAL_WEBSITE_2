@@ -51,9 +51,11 @@ body{
     display: flex;
     flex-direction: row;
     position: absolute;
-     top: 50%;
+     top: 40%;
     left: 50%;
     transform: translate(-50%,-50%);
+    
+    bottom: 50px;
 }
 form{
     display: flex;
@@ -99,7 +101,7 @@ button{
     .box{
         display: flex;
         flex-direction: column;
-        top: 50%;
+        top: 10%;
         left: 50%;
         transform: translate(-50%,-30%);
         
