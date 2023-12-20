@@ -152,5 +152,13 @@ a{
         color: #fefefec1;*/
         padding-top:0%;
     }
-   
+    .childv img{
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        margin: -10px;
+        padding-bottom: 80px;
+        border-radius: 15px 15px;
+        
+       } 
   }
