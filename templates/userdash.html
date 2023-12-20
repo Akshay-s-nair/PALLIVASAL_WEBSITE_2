@@ -177,9 +177,8 @@
 
       <!-- <button>Edit</button> -->
   </div>
-  {% endif %}
-
-
+  
+  
   {% elif item.services == "Spices outlet"  %}
   <div style="display: block;" class="box2">
     <form id="form3" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
@@ -232,6 +231,7 @@
 
     </div>
     
+    {% endif %}
     {% endfor %}
     
     <!-- <script>
