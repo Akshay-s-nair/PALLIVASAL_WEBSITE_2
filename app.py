@@ -451,15 +451,17 @@ def dormitories():
     return render_template('dormitories.html')
 
 
-@app.route('/home_stay/<string:services>')
-def home_stay(services):
+@app.route('/home_stay')
+def home_stay():
     # list = Details.query.filter_by(services = services , accept = 1)
     info = WhereToStay.query.filter_by().all()
     return render_template('home_stay.html', info = info )
 
 @app.route('/view_homestay/<int:id>')
-def view_homestay(id):  
-    return render_template('view_homestay.html' )
+def view_homestay(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = WhereToStay.query.filter_by(details_id = id)
+    return render_template('view_homestay.html' , list = list , info = info)
 
 
 @app.route('/local_workforce')

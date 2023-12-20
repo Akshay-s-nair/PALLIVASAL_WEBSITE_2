@@ -25,14 +25,12 @@
         <div class="row">
               <div class="col-lg text-center text-white p-2" >
                 <div class="brightness"> 
-                  {% for item in list %}
-                  {% if item.services =="Home stay" %}
-                  <a href="/home_stay/{{ item.services }}">
+           
+                  <a href="/home_stay">
                     <img src="{{url_for('static',filename='images/homep.png')}}" alt="" id="card"></a>
-                  {% endif %}
-                {% endfor %}
-                </div>
                
+                </div>
+
                 <h6 class="text-white mt-2 p-2">Homestays</h6>
               </div>
               <div class="col-lg text-center text-white p-2" >
