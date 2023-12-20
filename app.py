@@ -9,7 +9,7 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places , LocalWorkforce, Spices
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -98,6 +98,7 @@ def userdash(sno):
     if(request.method == 'POST'):
         entry1 = LocalWorkforce.query.join(Details).filter(Details.sno == sno).first()
         entry2 = Spices.query.join(Details).filter(Details.sno == sno).first()
+        entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
 
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -114,12 +115,30 @@ def userdash(sno):
             entry2.price=request.form.get('price')
             pic = request.files['img']
             
-            if not pic:
-                return 'No image uploaded!', 400
+            # if not pic:
+            #     return 'No image uploaded!', 400
             filename = secure_filename(pic.filename)
             entry2.img=filename   
             pic.save(os.path.join('static', 'uploads', filename))
             db.session.commit()
+
+        elif entry3:
+                entry3.name = request.form.get('name')
+                entry3.location = request.form.get('location')
+                entry3.description = request.form.get('description')
+                entry3.facilities = request.form.get('facilities')
+                entry3.no_of_rooms = request.form.get('rooms')
+                entry3.services = request.form.get('services')
+                img1 = request.files['img1']
+
+                if img1:
+                    filename = secure_filename(img1.filename)
+                    if (request.method == 'POST'):    
+                        img1.save(os.path.join('static', 'uploads', filename))
+                    # mimetype = pic.mimetype
+
+                entry3.img1 = filename
+                db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     return render_template('userdash.html', list = list )
@@ -417,18 +436,25 @@ def place_remove():
     return redirect(url_for('added_places'))
 
 
+@app.route('/where_to_stay')
+def where_to_stay():
+    list = Details.query.filter_by(accept = 1).all()
+    return render_template('where_to_stay.html', list = list)
+
+
 @app.route('/dormitories')
 def dormitories():
     return render_template('dormitories.html')
 
 
-@app.route('/home_stay')
-def home_stay():
-    return render_template('home_stay.html')
+@app.route('/home_stay/<string:services>')
+def home_stay(services):
+    info = Details.query.filter_by(services = services , accept = 1)
+    return render_template('home_stay.html', info = info )
 
 @app.route('/view_homestay')
-def view_homestay():
-    return render_template('view_homestay.html')
+def view_homestay():  
+    return render_template('view_homestay.html' )
 
 
 @app.route('/local_workforce')
@@ -509,9 +535,6 @@ def busview():
 #     list = Accept.query.filter_by(services='Car Rental')
 #     return render_template('transport_view.html', list = list)
 
-@app.route('/where_to_stay')
-def where_to_stay():
-    return render_template('where_to_stay.html')
 
 @app.route('/<text>', methods=['GET', 'POST'])
 def all_routes(text):
