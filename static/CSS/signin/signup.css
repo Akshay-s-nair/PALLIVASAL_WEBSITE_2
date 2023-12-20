@@ -1,7 +1,7 @@
 body {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
     url("../../images/bg.jpg");
   background-size: cover;
   background-attachment: fixed;
@@ -14,10 +14,13 @@ body {
   height: 100%;
   padding: 1rem;
 }
+.conf{
+  color:#fff ;
+}
 .card {
   background-image: linear-gradient(
     180deg,
-    rgba(136, 210, 197, 0.4),
+    rgba(51, 82, 76, 0.4),
     rgba(255, 255, 255, 0.1)
   );
 }
@@ -134,9 +137,14 @@ select {
   font-family: "Inter";
   font-style: normal;
   font-weight: bold;
-  color: #000000bd;
-  background: rgba(217, 217, 217, 0.6);
-  border-radius: 8px;
+  color: #000000;
+  background: rgba(255, 255, 255, 0.856);
+  border-radius: 15px;
+  margin-top: 10px;
+  border: none;
+}
+.otpbtn:hover{
+  background-color: rgba(155, 155, 155, 0.856);;
 }
 
 #back {
@@ -170,4 +178,8 @@ select {
 #Upload-file {
   background-color: rgb(227, 253, 244);
   content: "Upload Proof";
+  margin-left: 0px;
+  width: 80%;
+  background-color: #00000063;
+  color: white;
 }

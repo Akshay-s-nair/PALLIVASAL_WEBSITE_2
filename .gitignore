@@ -1,3 +1,4 @@
-.myenv
+.env
 # static\uploads\*
 __pycache__
+myenv

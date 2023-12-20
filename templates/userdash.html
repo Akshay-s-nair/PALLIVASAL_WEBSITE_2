@@ -45,8 +45,8 @@
         <h5>Address</h5>
         <h3>{{ item.address }}</h3>
     </div>
-
-    <div class="box2">
+    {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
+    <div style="display: block;" class="box2">
         <form>
             <label>Cost of Jeep Safari</label>
             <input type="text">
@@ -66,23 +66,46 @@
             <input type="text">
             <button>Save Changes</button>         
     </div>
-    <div class="box2">
+  {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
+    <div style="display: block;" class="box2">
         <form>
-            <label>Area of Specification</label>
-            <input type="text">
-            <label>Whatsapp Number</label>
-            <input type="text">
-            <label>Year of Experience</label>
-            <input type="text">
-            <label>Technical Qualification, if any</label>
-            <input type="text">
-            <label>Remuneration Detais</label>
-            <input type="text">
+          <label>Whatsapp Number</label>
+          <input type="text">
+          <label>Year of Experience</label>
+          <input type="text">
+          <label>Technical Qualification, if any</label>
+          <input type="text">
+          <label>Remuneration Detais</label>
+          <input type="text">
+          <label>Area of Specification</label>
+          <input type="text">
             <button>Save Changes</button>  
     </div>
+    {% elif item.services == "Home stay"  %}
+    <div style="display: block;" class="box2">
+      <form>
+          <label>Name of Homestay</label>
+          <input type="text">
+          <label>Location Details</label>
+          <input type="text">
+          <label>Property description</label>
+          <input type="text">
+          <label>Additional contact number</label>
+          <input type="text">
+          <label>Host information</label>
+          <input type="text">
+          <label>Facilities</label>
+          <input type="text">
+          <label>No. of Rooms</label>
+          <input type="text">
+          <label>Services</label>
+          <input type="text">
+          <label>Photo of Homestay</label>
+          <input type="file">
+          <button>Save Changes</button>  
+  </div>
     </div>
-
-
+    {% endif %}
     {% endfor %}
 </body>
 </html>

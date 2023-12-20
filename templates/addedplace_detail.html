@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='CSS/index/admin.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='images/logo.png')}}"
+      type="image/icon type"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <title>Added place</title>
+  </head>
+  <body class="mx-auto">
+    <div class="body mx-auto">
+      <h3>Details of {{ list.name }}</h3>
+      <div class="line mx-auto"></div>
+      <div class="details">
+        <p>Name : {{ list.name }}</p>
+        <p>Description : {{ list.description }}</p>
+        <p>map : {{ list.map }}</p>
+      </div>
+      <div class="line mx-auto"></div>
+      <div class="details">
+        <div class="image">
+            {% if list.img1 is not none %}
+                {% set fname1 = 'uploads/' + list.img1 %}  
+                <img class="imgs" src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
+            {% endif %}
+
+            {% if list.img2 is not none %}
+                {% set fname2 = 'uploads/' + list.img2 %}  
+                <img class="imgs" src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
+            {% endif %}
+
+            {% if list.img3 is not none %}
+                {% set fname3 = 'uploads/' + list.img3 %}  
+                <img class="imgs" src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
+            {% endif %}
+
+            {% if list.img4 is not none %}
+                {% set fname4 = 'uploads/' + list.img4 %}  
+                <img class="imgs" src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
+            {% endif %}
+
+            {% if list.img5 is not none %}
+                {% set fname5 = 'uploads/' + list.img5 %}  
+                <img class="imgs" src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
+            {% endif %}
+        </div>
+        <div class="button-center">
+          <form method="post" action="{{ url_for('place_remove') }}">
+            <input type="hidden" name="row_id2" value="{{ list.id }}" />
+            <button type="submit" class="button-20 bt" id="reject" role="button">
+              Remove
+            </button>
+          </form>
+        </div>
+      </div>
+      <br />
+    </div>
+    <br />
+  </body>
+</html>

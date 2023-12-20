@@ -6,7 +6,7 @@ body{
 }
 .box1{
     background-color: aliceblue;
-    width: 15em;
+    width: 17em;
     height: 100vh;
     border-radius: 10px;
     /* position: sticky;
@@ -55,6 +55,7 @@ body{
 form{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 input{
     width: 300px;
