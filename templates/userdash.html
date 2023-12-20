@@ -106,7 +106,58 @@
           <label>Photo of Homestay</label>
           <input type="file">
           <button>Save Changes</button>  
+        </form>
   </div>
+
+  {% elif item.services == "Spices outlet"  %}
+  <div style="display: block;" class="box2">
+    <form id="form1" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+        <label>Name of The Shop</label>
+        <input type="text" name="shop">
+
+        <label>Location Details</label>
+        <input type="text" name="loc">
+
+        <label>Additional contact number</label>
+        <input type="text" name="contact2">
+
+        <label>Spices name</label>
+        <select id="spice" name="product">
+          <option value="Cardmom">Cardmom</option>
+          <option value="Turmeric">Turmeric</option>
+          <option value="Cinamon">Cinamon</option>
+          <option value="Pepper">Pepper</option>
+        </select>
+
+        <label>Price</label>
+        <input type="text" name="price">
+
+        <label>Photo of the shop</label>
+        <input type="file" name="img">
+        
+        <button>Save Changes</button>  
+      </form>
+</div>
+
+
+{% elif item.services == "plantation"  %}
+  <div style="display: block;" class="box2">
+    <form>
+        <label>Name of The Plantation</label>
+        <input type="text">
+        <label>Location Details</label>
+        <input type="text">
+        <label>Additional contact number</label>
+        <input type="text">
+        <label>Type of Plantation</label>
+        <input type="text">
+        <label>Photo of the Plantation</label>
+        <input type="file">
+        <button>Save Changes</button>  
+      </form>
+</div>
+
+
     </div>
     {% endif %}
     {% endfor %}

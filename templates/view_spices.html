@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='CSS/localworkforce/localworkforce.css') }}"
+    />
+    {% for item in list %}
+    <title>{{ item.name }}</title>
+    {% endfor %}
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='images/logo.png')}}"
+      type="image/icon type"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f5cbf694f9.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="width: 100%; height: 100%; background-size: cover">
+    <div class="cnt">
+      <div class="container">
+        <div class="row">
+          <div class="parentv">
+            <div class="bor">
+              <div class="childv"> 
+
+                {% for item2 in lis2 %}
+                    <p><i>Photo of the shop</i></p>
+                    {% if item2.img is not none %}
+                        {% set fname = 'uploads/' + item2.img %}  
+                        <img class="image_holder" src="{{ url_for('static',filename=fname) }}" 
+                        style="margin-top: -10px;">	
+                    {% else %}
+                        <img src="/static/images/bg.jpg" alt="">
+                    {% endif %}
+                    <h5>Shop name: {{item2.name}}</h5>
+
+                    {% if item2.contact2 is not none %}
+                        <h5>Secondary contact no: {{item2.contact2}}</h5>
+                    {% endif %} 
+
+                    {% if item2.location is not none %}
+                        <h5>Location: <a href="{{item2.location}}" style="margin-left: 2px;">{{item2.location}}</a></h5>
+                    {% endif %} 
+
+                    {% if item2.price is not none %}
+                        <h5>Price: {{item2.price}}</h5>
+                    {% endif %}
+                {% endfor %}
+                <h5>
+                  <a id="atag" href="{{ url_for('spices_view') }}"
+                    >Back to previous</a
+                  >
+                </h5>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
