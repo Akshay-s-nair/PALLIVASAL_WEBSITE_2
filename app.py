@@ -259,11 +259,15 @@ def admin_accept():
         new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
         db.session.add(new_local_workforce)
         db.session.commit()
-
     elif service=='Spices outlet':
         spiceobj = Spices(details_id=details_instance.sno)
         db.session.add(spiceobj)
         db.session.commit()
+    elif service in ["Home stay"]:
+        new_wheretostay = WhereToStay(details_id=details_instance.sno)
+        db.session.add(new_wheretostay)
+        db.session.commit()
+
     # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
     # stmt = Details.update().where(Details.accept == None).values(accept = 1)
     # if row:
@@ -449,11 +453,12 @@ def dormitories():
 
 @app.route('/home_stay/<string:services>')
 def home_stay(services):
-    info = Details.query.filter_by(services = services , accept = 1)
+    # list = Details.query.filter_by(services = services , accept = 1)
+    info = WhereToStay.query.filter_by().all()
     return render_template('home_stay.html', info = info )
 
-@app.route('/view_homestay')
-def view_homestay():  
+@app.route('/view_homestay/<int:id>')
+def view_homestay(id):  
     return render_template('view_homestay.html' )
 
 
