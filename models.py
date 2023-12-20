@@ -49,3 +49,17 @@ class LocalWorkforce(db.Model):
     details = relationship("Details", back_populates="local_workforce")
 
 Details.local_workforce = relationship("LocalWorkforce", order_by=LocalWorkforce.local_id, back_populates="details")
+
+class Spices(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    contact2 = db.Column(db.String(80), nullable=True, default=None)
+    spicename = db.Column(db.String(80), nullable=True, default=None)
+    price = db.Column(db.String(80), nullable=True, default=None)
+    img = db.Column(db.Text , nullable=True)
+
+    details = relationship("Details", back_populates="spices")
+
+Details.spices = relationship("Spices", order_by=Spices.local_id, back_populates="details")
