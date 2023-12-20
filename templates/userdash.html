@@ -36,6 +36,12 @@
               alt="Carpenter icon"
             />
             {% endif %}
+            {% if item.services == "Home stay" %}
+            <img
+              src="{{url_for('static',filename='images/electrical.jpeg')}}"
+              alt="Carpenter icon"
+            />
+            {% endif %}
         <h5>User Name</h5>
         <h3>{{ item.name }}</h3>
         <h5>Contact Number</h5>
