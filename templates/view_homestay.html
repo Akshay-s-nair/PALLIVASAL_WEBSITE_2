@@ -32,16 +32,21 @@
   </head>
   <body >
     <div class="view-container">
-        <img src="/static/images/auto.png">
+      {% for item2 in info %}
+      {% set fname = 'uploads/' + item2.img1 %}  
+      <img src="{{ url_for('static',filename=fname) }}">
         <div class="box">
-        <h5>Homestay name</h5>
-        <h5>Addresssfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</h5>
-        <h5>Contact number 1</h5>
-        <h5>Contact number 2</h5>
-        <h5>Property description</h5>
-        <h5>Facilities</h5>
-        <h5>Number of rooms</h5>
-        <h5>Services</h5>
+        <h5>Homestay name : {{ item2.name }}</h5>
+        <h5>Addresss : {{ item2.name }}</h5>
+        {% for item1 in list %}
+        <h5>Contact number 1 : {{ item1.contact }}</h5>
+        {% endfor %}
+        <h5>Contact number 2 : {{ item2.contact }}</h5>
+        <h5>Property description : {{ item2.description }}</h5>
+        <h5>Facilities : {{ item2.facilities }}</h5>
+        <h5>Number of rooms : {{ item2.rooms }}</h5>
+        <h5>Services : {{ item2.services }}</h5>
+        {% endfor %}
       </div>
     </div>
 

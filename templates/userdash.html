@@ -129,28 +129,33 @@
     </div>
      
     {% elif item.services == "Home stay"  %}
+
     <div class="box2">
-      <form>
+      
+      <form id="form2" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+
           <label>Name of Homestay</label>
-          <input type="text">
+          <input type="text" name="name">
           <label>Location Details</label>
-          <input type="text">
+          <input type="text" name="location">
           <label>Property description</label>
-          <input type="text">
+          <input type="text" name="description">
           <label>Additional contact number</label>
-          <input type="text">
+          <input type="text" name="contact">
           <label>Host information</label>
-          <input type="text">
+          <input type="text" name="host">
           <label>Facilities</label>
-          <input type="text">
+          <input type="text" name="facilities">
           <label>No. of Rooms</label>
-          <input type="text">
+          <input type="text" name="rooms">
           <label>Services</label>
-          <input type="text">
+          <input type="text" name="services">
           <label>Photo of Homestay</label>
-          <input type="file">
+          <input type="file" name="img1">
           <button>Save Changes</button>  
+        </form>
   </div>
+
   <div id="edit"  class="box2">
     <h2>Details</h2>
     <h5>Name of Homestay</h5>
@@ -173,6 +178,58 @@
       <!-- <button>Edit</button> -->
   </div>
   {% endif %}
+
+
+  {% elif item.services == "Spices outlet"  %}
+  <div style="display: block;" class="box2">
+    <form id="form3" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+        <label>Name of The Shop</label>
+        <input type="text" name="shop">
+
+        <label>Location Details</label>
+        <input type="text" name="loc">
+
+        <label>Additional contact number</label>
+        <input type="text" name="contact2">
+
+        <label>Spices name</label>
+        <select id="spice" name="product">
+          <option value="Cardmom">Cardmom</option>
+          <option value="Turmeric">Turmeric</option>
+          <option value="Cinamon">Cinamon</option>
+          <option value="Pepper">Pepper</option>
+        </select>
+
+        <label>Price</label>
+        <input type="text" name="price">
+
+        <label>Photo of the shop</label>
+        <input type="file" name="img">
+        
+        <button>Save Changes</button>  
+      </form>
+</div>
+
+
+{% elif item.services == "plantation"  %}
+  <div style="display: block;" class="box2">
+    <form>
+        <label>Name of The Plantation</label>
+        <input type="text">
+        <label>Location Details</label>
+        <input type="text">
+        <label>Additional contact number</label>
+        <input type="text">
+        <label>Type of Plantation</label>
+        <input type="text">
+        <label>Photo of the Plantation</label>
+        <input type="file">
+        <button>Save Changes</button>  
+      </form>
+</div>
+
+
+
     </div>
     
     {% endfor %}

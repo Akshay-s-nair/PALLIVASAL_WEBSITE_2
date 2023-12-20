@@ -31,31 +31,20 @@
     />
   </head>
   <body>
-    <h2>Homestays</h2>
+    <h2>Home stays</h2>
     <div class="container">
-      <a href="{{ url_for('view_homestay') }}" style="text-decoration: none;">
+      {% for item in info %}
+      {% if item.img1 is not none and item.name is not none%}
+      <a href="/view_homestay/{{ item.details_id }}" style="text-decoration: none;">
       <div class="card">
-        <img src="/static/images/auto.png">
-        <h5>Homestayds</h5>
-      
+        {% set fname = 'uploads/' + item.img1 %}  
+        <img src="{{ url_for('static',filename=fname) }}">
+        <h5>{{ item.name }}</h5>
       </div>
-      </a>
-      
+    </a>
+    {% endif %}
+    {% endfor %}
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script

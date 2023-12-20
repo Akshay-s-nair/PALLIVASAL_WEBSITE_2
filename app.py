@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash , Response
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.utils import secure_filename
 import os
@@ -9,7 +9,7 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places , LocalWorkforce
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -96,20 +96,49 @@ def signin():
 @app.route('/userdash/<int:sno>', methods=['GET', 'POST'])
 def userdash(sno):
     if(request.method == 'POST'):
-        whatsapp = request.form.get('whatsapp')
-        remuneration = request.form.get('remuneration')
-        technical = request.form.get('technical')
-        experience = request.form.get('exp')
-        
-        entry = LocalWorkforce.query.join(Details).filter(Details.sno == sno).first()
+        entry1 = LocalWorkforce.query.join(Details).filter(Details.sno == sno).first()
+        entry2 = Spices.query.join(Details).filter(Details.sno == sno).first()
+        entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
 
-        if entry:
-            entry.whatsapp_number = whatsapp
-            entry.remuneration_details = remuneration
-            entry.technical_qualifications = technical
-            entry.years_of_exp = experience
-
+        if entry1:
+            entry1.whatsapp_number = request.form.get('whatsapp')
+            entry1.remuneration_details = request.form.get('remuneration')
+            entry1.technical_qualifications = request.form.get('technical')
+            entry1.years_of_exp = request.form.get('exp')
             db.session.commit()
+
+        elif entry2:
+            entry2.name=request.form.get('shop')
+            entry2.location=request.form.get('loc')
+            entry2.contact2=request.form.get('contact2')
+            entry2.spicename=request.form.get('product')
+            entry2.price=request.form.get('price')
+            pic = request.files['img']
+            
+            # if not pic:
+            #     return 'No image uploaded!', 400
+            filename = secure_filename(pic.filename)
+            entry2.img=filename   
+            pic.save(os.path.join('static', 'uploads', filename))
+            db.session.commit()
+
+        elif entry3:
+                entry3.name = request.form.get('name')
+                entry3.location = request.form.get('location')
+                entry3.description = request.form.get('description')
+                entry3.facilities = request.form.get('facilities')
+                entry3.no_of_rooms = request.form.get('rooms')
+                entry3.services = request.form.get('services')
+                img1 = request.files['img1']
+
+                if img1:
+                    filename = secure_filename(img1.filename)
+                    if (request.method == 'POST'):    
+                        img1.save(os.path.join('static', 'uploads', filename))
+                    # mimetype = pic.mimetype
+
+                entry3.img1 = filename
+                db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     return render_template('userdash.html', list = list )
@@ -224,11 +253,21 @@ def admin_accept():
     row_id = request.form.get('row_id')
     details_instance = Details.query.filter_by(sno=row_id).first()
     details_instance.accept = 1
+    service=details_instance.services
     db.session.commit()
+    if service in ["Carpentary works" , 'Plumbing services' , 'Electrical works']:
+        new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
+        db.session.add(new_local_workforce)
+        db.session.commit()
+    elif service=='Spices outlet':
+        spiceobj = Spices(details_id=details_instance.sno)
+        db.session.add(spiceobj)
+        db.session.commit()
+    elif service in ["Home stay"]:
+        new_wheretostay = WhereToStay(details_id=details_instance.sno)
+        db.session.add(new_wheretostay)
+        db.session.commit()
 
-    new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
-    db.session.add(new_local_workforce)
-    db.session.commit()
     # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
     # stmt = Details.update().where(Details.accept == None).values(accept = 1)
     # if row:
@@ -401,6 +440,12 @@ def place_remove():
     return redirect(url_for('added_places'))
 
 
+@app.route('/where_to_stay')
+def where_to_stay():
+    list = Details.query.filter_by(accept = 1).all()
+    return render_template('where_to_stay.html', list = list)
+
+
 @app.route('/dormitories')
 def dormitories():
     return render_template('dormitories.html')
@@ -408,11 +453,15 @@ def dormitories():
 
 @app.route('/home_stay')
 def home_stay():
-    return render_template('home_stay.html')
+    # list = Details.query.filter_by(services = services , accept = 1)
+    info = WhereToStay.query.filter_by().all()
+    return render_template('home_stay.html', info = info )
 
-@app.route('/view_homestay')
-def view_homestay():
-    return render_template('view_homestay.html')
+@app.route('/view_homestay/<int:id>')
+def view_homestay(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = WhereToStay.query.filter_by(details_id = id)
+    return render_template('view_homestay.html' , list = list , info = info)
 
 
 @app.route('/local_workforce')
@@ -433,11 +482,21 @@ def plantation_crops():
 
 @app.route('/spices')
 def spices():
-    return render_template('spices.html')
+    list = Details.query.filter_by().all()
+    return render_template('spices.html',list=list)
 
 @app.route('/spices_view')
 def spices_view():
-    return render_template('spices_view.html')
+    lis1=Details.query.filter_by(services='Spices outlet').all()
+    lis2 = Spices.query.filter_by().all()
+    return render_template('spices_view.html',lis1=lis1,lis2=lis2)
+
+@app.route('/view_spices/<int:sno>', methods=['GET', 'POST'])
+def view_spices(sno):
+    lis1 = Details.query.filter_by(sno = sno , accept = 1)
+    lis2 = Spices.query.filter_by(details_id = sno)  
+    return render_template('view_spices.html' ,lis2=lis2,lis1=lis1 )
+
 
 
 @app.route('/resorts')
@@ -483,9 +542,6 @@ def busview():
 #     list = Accept.query.filter_by(services='Car Rental')
 #     return render_template('transport_view.html', list = list)
 
-@app.route('/where_to_stay')
-def where_to_stay():
-    return render_template('where_to_stay.html')
 
 @app.route('/<text>', methods=['GET', 'POST'])
 def all_routes(text):
