@@ -33,17 +33,22 @@
   <body>
     <h2>Home stays</h2>
     <div class="container">
+      {% for item1 in list %}
+      {% if item1.services == "Home stay" %}
       {% for item in info %}
-      {% if item.img1 is not none and item.name is not none%}
+      {% if item.details_id == item1.sno and item.img1 is not none and item.name is not none%}
       <a href="/view_homestay/{{ item.details_id }}" style="text-decoration: none;">
-      <div class="card">
-        {% set fname = 'uploads/' + item.img1 %}  
-        <img src="{{ url_for('static',filename=fname) }}">
-        <h5>{{ item.name }}</h5>
-      </div>
-    </a>
-    {% endif %}
-    {% endfor %}
+        <div class="card">
+          {% set fname = 'uploads/' + item.img1 %}  
+          <img src="{{ url_for('static',filename=fname) }}">
+          <h5>{{ item.name }}</h5>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+    
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

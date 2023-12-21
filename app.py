@@ -136,7 +136,8 @@ def userdash(sno):
                     if (request.method == 'POST'):    
                         img1.save(os.path.join('static', 'uploads', filename))
                     # mimetype = pic.mimetype
-
+                else:
+                    filename = None
                 entry3.img1 = filename
                 db.session.commit()
 
@@ -279,7 +280,7 @@ def admin_accept():
         spiceobj = Spices(details_id=details_instance.sno)
         db.session.add(spiceobj)
         db.session.commit()
-    elif service in ["Home stay"]:
+    elif service in ["Home stay" , "Resorts" , "Tent Camping" , "Dormitories"]:
         new_wheretostay = WhereToStay(details_id=details_instance.sno)
         db.session.add(new_wheretostay)
         db.session.commit()
@@ -468,14 +469,22 @@ def where_to_stay():
 
 @app.route('/dormitories')
 def dormitories():
-    return render_template('dormitories.html')
+    list = Details.query.filter_by( accept = 1).all()
+    info = WhereToStay.query.filter_by().all()
+    return render_template('dormitories.html', info = info , list = list )
+
+@app.route('/view_dormitories/<int:id>')
+def view_dormitories(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = WhereToStay.query.filter_by(details_id = id)
+    return render_template('view_dormitories.html' , list = list , info = info)
 
 
 @app.route('/home_stay')
 def home_stay():
-    # list = Details.query.filter_by(services = services , accept = 1)
+    list = Details.query.filter_by( accept = 1).all()
     info = WhereToStay.query.filter_by().all()
-    return render_template('home_stay.html', info = info )
+    return render_template('home_stay.html', info = info , list = list )
 
 @app.route('/view_homestay/<int:id>')
 def view_homestay(id):
@@ -483,6 +492,30 @@ def view_homestay(id):
     info = WhereToStay.query.filter_by(details_id = id)
     return render_template('view_homestay.html' , list = list , info = info)
 
+
+@app.route('/resorts')
+def resorts():
+    list = Details.query.filter_by( accept = 1).all()
+    info = WhereToStay.query.filter_by().all()
+    return render_template('resorts.html', info = info , list = list )
+
+@app.route('/view_resorts/<int:id>')
+def view_resorts(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = WhereToStay.query.filter_by(details_id = id)
+    return render_template('view_resorts.html' , list = list , info = info)
+
+@app.route('/tent_camping')
+def tent_camping():
+    list = Details.query.filter_by( accept = 1).all()
+    info = WhereToStay.query.filter_by().all()
+    return render_template('tent_camping.html', info = info , list = list )
+
+@app.route('/view_tent/<int:id>')
+def view_tent_camping(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = WhereToStay.query.filter_by(details_id = id)
+    return render_template('view_tent.html' , list = list , info = info)
 
 @app.route('/local_workforce')
 def local_workforce():
@@ -539,14 +572,6 @@ def addspiceproduct(sno):
     return render_template('userdash.html', list = list )
 
 
-@app.route('/resorts')
-def resorts():
-    return render_template('resorts.html')
-
-
-@app.route('/tent_camping')
-def tent_camping():
-    return render_template('tent_camping.html')
 
 
 @app.route('/transport')
