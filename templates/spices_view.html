@@ -27,39 +27,40 @@
     <div class="container">
       <div class="row">
 
-            <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
-              <div class="demos">
-                <div class="card-head">
-                  <div class="card-title mt-2"><h4>CARDMOM</h4></div>
-                </div>
-                <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
-                  <div class="card-body_text">   
-                  {% for item2 in lis2 %}
-                    {% for item in lis1 %}
-                      {% if item2.spicename =="Cardmom" and item2.details_id==item.sno %}
-                      <a href="/view_spices/{{ item.sno }}">
-                        <div class="p-2">
-                            <div class="cards p-1">
-                              <div class="bdy text-black">
-                                <b>
-                                  {% if item2.name is not none and item2.price is not none %}
-                                    <p>Shop Name : {{item2.name}}</p>
-                                    <p>Contact Number : {{item2.price}}</p>
-                                  {% else %}
-                                    <p>No products available</p>
-                                  {% endif %}
-                                </b>
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                     {% endif %}
-                    {% endfor %}
-                  {% endfor %}
-                  </div>
-                </div>   
-              </div>
+        
+        <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
+          <div class="demos">
+            <div class="card-head">
+              <div class="card-title mt-2"><h4>CARDMOM</h4></div>
             </div>
+            <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
+              <div class="card-body_text">   
+              {% for i in lis3 %}
+                {% for j in lis2 %}
+                  {% if i.product =="Cardmom" and i.details_id==j.local_id %}
+                  <a href="/view_spices/{{ j.details_id }}">
+                    <div class="p-2">
+                        <div class="cards p-1">
+                          <div class="bdy text-black">
+                            <b>
+                              {% if j.name is not none and i.price is not none %}
+                                <p>Shop Name : {{j.name}}</p>
+                                <p>Price : ₹{{i.price}}</p>
+                              {% else %}
+                                <p>No products available</p>
+                              {% endif %}
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                 {% endif %}
+                {% endfor %}
+              {% endfor %}
+              </div>
+            </div>   
+          </div>
+        </div>
           
             <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
               <div class="demos">
@@ -68,17 +69,17 @@
                 </div>
                 <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">   
-                  {% for item2 in lis2 %}
-                    {% for item in lis1 %}
-                      {% if item2.spicename =="Turmeric" and item2.details_id==item.sno %}
-                      <a href="/view_spices/{{ item.sno }}">
+                    {% for i in lis3 %}
+                    {% for j in lis2 %}
+                      {% if i.product =="Turmeric" and i.details_id==j.local_id %}
+                      <a href="/view_spices/{{ j.details_id }}">
                         <div class="p-2">
                             <div class="cards p-1">
                               <div class="bdy text-black">
                                 <b>
-                                  {% if item2.name is not none and item2.price is not none %}
-                                    <p>Shop Name : {{item2.name}}</p>
-                                    <p>Contact Number : {{item2.price}}</p>
+                                  {% if j.name is not none and i.price is not none %}
+                                    <p>Shop Name : {{j.name}}</p>
+                                    <p>Price : ₹{{i.price}}</p>
                                   {% else %}
                                     <p>No products available</p>
                                   {% endif %}
@@ -102,17 +103,17 @@
                 </div>
                 <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">   
-                  {% for item2 in lis2 %}
-                    {% for item in lis1 %}
-                      {% if item2.spicename =="Pepper" and item2.details_id==item.sno %}
-                      <a href="/view_spices/{{ item.sno }}">
+                    {% for i in lis3 %}
+                    {% for j in lis2 %}
+                      {% if i.product =="Pepper" and i.details_id==j.local_id %}
+                      <a href="/view_spices/{{ j.details_id }}">
                         <div class="p-2">
                             <div class="cards p-1">
                               <div class="bdy text-black">
                                 <b>
-                                  {% if item2.name is not none and item2.price is not none %}
-                                    <p>Shop Name : {{item2.name}}</p>
-                                    <p>Contact Number : {{item2.price}}</p>
+                                  {% if j.name is not none and i.price is not none %}
+                                    <p>Shop Name : {{j.name}}</p>
+                                    <p>Price : ₹{{i.price}}</p>
                                   {% else %}
                                     <p>No products available</p>
                                   {% endif %}
@@ -136,17 +137,17 @@
                 </div>
                 <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">   
-                  {% for item2 in lis2 %}
-                    {% for item in lis1 %}
-                      {% if item2.spicename =="Cinamon" and item2.details_id==item.sno %}
-                      <a href="/view_spices/{{ item.sno }}">
+                    {% for i in lis3 %}
+                    {% for j in lis2 %}
+                      {% if i.product =="Cinamon" and i.details_id==j.local_id %}
+                      <a href="/view_spices/{{ j.details_id }}">
                         <div class="p-2">
                             <div class="cards p-1">
                               <div class="bdy text-black">
                                 <b>
-                                  {% if item2.name is not none and item2.price is not none %}
-                                    <p>Shop Name : {{item2.name}}</p>
-                                    <p>Contact Number : {{item2.price}}</p>
+                                  {% if j.name is not none and i.price is not none %}
+                                    <p>Shop Name : {{j.name}}</p>
+                                    <p>Price : ₹{{i.price}}</p>
                                   {% else %}
                                     <p>No products available</p>
                                   {% endif %}

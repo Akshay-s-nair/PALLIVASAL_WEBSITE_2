@@ -55,16 +55,12 @@
                     <h5>Shop name: {{item2.name}}</h5>
 
                     {% if item2.contact2 is not none %}
-                        <h5>Secondary contact no: {{item2.contact2}}</h5>
+                        <h5>Contact Number: {{item2.contact2}}</h5>
                     {% endif %} 
 
                     {% if item2.location is not none %}
                         <h5>Location: <a href="{{item2.location}}" style="margin-left: 2px;">{{item2.location}}</a></h5>
                     {% endif %} 
-
-                    {% if item2.price is not none %}
-                        <h5>Price: {{item2.price}}</h5>
-                    {% endif %}
                 {% endfor %}
                 <h5>
                   <a id="atag" href="{{ url_for('spices_view') }}"
