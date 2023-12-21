@@ -56,13 +56,23 @@ class Spices(db.Model):
     name = db.Column(db.String(80), nullable=True, default=None)
     location = db.Column(db.String(80), nullable=True, default=None)
     contact2 = db.Column(db.String(80), nullable=True, default=None)
-    spicename = db.Column(db.String(80), nullable=True, default=None)
-    price = db.Column(db.String(80), nullable=True, default=None)
     img = db.Column(db.Text , nullable=True)
 
     details = relationship("Details", back_populates="spices")
 
 Details.spices = relationship("Spices", order_by=Spices.local_id, back_populates="details")
+
+class Spiceproducts(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('spices.local_id'))
+    product = db.Column(db.String(80), nullable=True, default=None)
+    price = db.Column(db.String(80), nullable=True, default=None)
+
+    spices = relationship("Spices", back_populates="spiceproducts")
+
+Spices.spiceproducts = relationship("Spiceproducts", order_by=Spiceproducts.local_id, back_populates="spices")
+
+
 
 class WhereToStay(db.Model):
     local_id = db.Column(db.Integer, primary_key=True)
@@ -79,3 +89,18 @@ class WhereToStay(db.Model):
     details = relationship("Details", back_populates="where_to_stay")
 
 Details.where_to_stay = relationship("WhereToStay", order_by=WhereToStay.local_id, back_populates="details")
+
+
+class Plantation(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    address = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    contact = db.Column(db.String(80), nullable=True, default=None)
+    Crops = db.Column(db.String(80), nullable=True, default=None)
+    img = db.Column(db.Text , nullable=True)
+
+    details = relationship("Details", back_populates="plantation")
+
+Details.plantation = relationship("Plantation", order_by=Plantation.local_id, back_populates="details")

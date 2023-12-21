@@ -9,7 +9,7 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places , LocalWorkforce, Spices , WhereToStay
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -99,7 +99,9 @@ def userdash(sno):
         entry1 = LocalWorkforce.query.join(Details).filter(Details.sno == sno).first()
         entry2 = Spices.query.join(Details).filter(Details.sno == sno).first()
         entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
-
+        entry4 = Plantation.query.join(Details).filter(Details.sno == sno).first()
+        # entry4 = Spiceproducts.query.join(Spices).filter().first()
+ 
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
             entry1.remuneration_details = request.form.get('remuneration')
@@ -111,8 +113,6 @@ def userdash(sno):
             entry2.name=request.form.get('shop')
             entry2.location=request.form.get('loc')
             entry2.contact2=request.form.get('contact2')
-            entry2.spicename=request.form.get('product')
-            entry2.price=request.form.get('price')
             pic = request.files['img']
             
             # if not pic:
@@ -139,6 +139,21 @@ def userdash(sno):
 
                 entry3.img1 = filename
                 db.session.commit()
+
+        elif entry4:
+            entry4.name=request.form.get('name')
+            entry4.address=request.form.get('address')
+            entry4.location=request.form.get('location')
+            entry4.contact=request.form.get('contact')
+            entry4.Crops=request.form.get('Crops')
+            pic = request.files['img']
+            
+            # if not pic:
+            #     return 'No image uploaded!', 400
+            filename = secure_filename(pic.filename)
+            entry4.img=filename   
+            pic.save(os.path.join('static', 'uploads', filename))
+            db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     return render_template('userdash.html', list = list )
@@ -228,6 +243,7 @@ def admin():
 # def load_user(user_id):
 #     return User.get(user_id)
 
+
 @app.route('/logout')
 def logout():
     if session.get('user') == data.get('admin_username'):
@@ -266,6 +282,10 @@ def admin_accept():
     elif service in ["Home stay"]:
         new_wheretostay = WhereToStay(details_id=details_instance.sno)
         db.session.add(new_wheretostay)
+        db.session.commit()
+    elif service=='plantation':
+        plantation = Plantation(details_id=details_instance.sno)
+        db.session.add(plantation)
         db.session.commit()
 
     # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
@@ -478,7 +498,8 @@ def view_localworkforce(sno):
 
 @app.route('/plantation_crops')
 def plantation_crops():
-    return render_template('plantation_crops.html')
+    list1 = Plantation.query.filter_by().all()
+    return render_template('plantation_crops.html',list=list1)
 
 @app.route('/spices')
 def spices():
@@ -489,14 +510,33 @@ def spices():
 def spices_view():
     lis1=Details.query.filter_by(services='Spices outlet').all()
     lis2 = Spices.query.filter_by().all()
-    return render_template('spices_view.html',lis1=lis1,lis2=lis2)
+    lis3=Spiceproducts.query.filter_by().all()
+    return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3)
 
 @app.route('/view_spices/<int:sno>', methods=['GET', 'POST'])
 def view_spices(sno):
     lis1 = Details.query.filter_by(sno = sno , accept = 1)
     lis2 = Spices.query.filter_by(details_id = sno)  
-    return render_template('view_spices.html' ,lis2=lis2,lis1=lis1 )
+    lis3=Spiceproducts.query.filter_by().all()
+    return render_template('view_spices.html' ,lis2=lis2,lis1=lis1,lis3=lis3 )
 
+@app.route('/addspiceproduct/<int:sno>', methods=['GET', 'POST'])
+def addspiceproduct(sno):
+    if(request.method == 'POST'):
+        product=request.form.get('product')
+        price=request.form.get('price')
+        details_instance = Details.query.filter_by(sno=sno).first()
+        details_instance_spices = Spices.query.filter_by(details_id=details_instance.sno).first()
+        spiceobj = Spiceproducts(product=product,price=price,details_id=details_instance_spices.local_id)
+        db.session.add(spiceobj)
+        db.session.commit()
+        # entry3=Spiceproducts()
+        # db.session.add(entry3)
+        # db.session.commit()
+
+    list = Details.query.filter_by(sno=sno , accept = 1).all()
+    print(list)
+    return render_template('userdash.html', list = list )
 
 
 @app.route('/resorts')
