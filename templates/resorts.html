@@ -31,26 +31,19 @@
     />
   </head>
   <body>
-    <div class="container p-5 text-center text-white">
-      <div class="img mb-4 w-400px h-auto">
-        <img src="{{url_for('static',filename='images/resortp.png')}}" alt="" />
+    <h2>Resorts</h2>
+    <div class="container">
+      {% for item in info %}
+      {% if item.img1 is not none and item.name is not none%}
+      <a href="/view_homestay/{{ item.details_id }}" style="text-decoration: none;">
+      <div class="card">
+        {% set fname = 'uploads/' + item.img1 %}  
+        <img src="{{ url_for('static',filename=fname) }}">
+        <h5>{{ item.name }}</h5>
       </div>
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-          facere harum est consequuntur ex accusantium hic recusandae magni
-          accusamus reiciendis. Expedita quae dolorum, optio quisquam aperiam
-          laboriosam debitis fuga perferendis veniam vitae doloremque
-          exercitationem? Eaque libero qui magnam excepturi, enim nisi vero non
-          alias similique vel delectus odit et possimus fugit sequi odio, fuga
-          saepe corrupti, veritatis blanditiis labore. Nobis ea accusamus nam
-          atque adipisci aspernatur! Facere suscipit fugiat est incidunt totam
-          aspernatur, rerum praesentium accusantium delectus possimus quia ipsam
-          vel, consequuntur odit hic dignissimos corporis qui omnis. Deleniti
-          fugiat tempore vel quas corporis, necessitatibus eaque obcaecati ab
-          itaque dolores.
-        </p>
-      </div>
+    </a>
+    {% endif %}
+    {% endfor %}
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
