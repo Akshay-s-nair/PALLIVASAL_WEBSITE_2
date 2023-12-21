@@ -68,27 +68,6 @@ def authenticate_user(contact, password):
     else:
         return False, None
 
-@app.route('/signin', methods=['GET', 'POST'])
-def signin():
-    if request.method == 'POST':
-        user_contact = request.form.get('contact')
-        user_password = request.form.get('password')
-
-        try:
-            result, sno = authenticate_user(user_contact, user_password)
-        except:
-            flash('Invalid credentials. Please try again.')
-            return redirect(url_for('signin')) 
-        
-        if result:
-            return redirect(url_for('userdash', sno=sno))  
-        else:
-            flash('Invalid credentials. Please try again.')
-            return redirect(url_for('signin'))  
-
-    list = Details.query.filter_by(accept = 1)
-    return render_template('signin.html', list=list)
-
 
 # @app.route('/userdash_submit', methods=['GET', 'POST'])
 # def userdash_submit():
@@ -164,8 +143,21 @@ def register():
         name = request.form.get('name')
         address = request.form.get('address')
         contact = request.form.get('contact')
+        if len(contact)!=10:
+            flash('Invalied Mobile number. Please try with a different one.')
+            return redirect(url_for('register'))
+        x=Details.query.filter_by(contact=contact).first()
+        if x is not None:
+            flash('Account exists with this number. Please try with a different one.')
+            return redirect(url_for('register'))
         password = request.form.get('password')
         confirm = request.form.get('confirm')
+        if password==confirm:
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        else:
+            flash('Password combination does not match. Please try again.')
+            return redirect(url_for('register'))
+        
         email = request.form.get('email')
         services = request.form.get('services')
     
@@ -187,22 +179,42 @@ def register():
     #     return 'Img Uploaded!', 200
         pic = request.files['file1']
         if not pic:
-            return 'No image uploaded!', 400
-
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('register'))
         filename = secure_filename(pic.filename)
-        # mimetype = pic.mimetype
-
-        entry = Details(name=name, address=address, contact=contact , password=password, confirm=confirm, email=email, services=services ,date=datetime.now().date() , file=filename)
-        
+        entry = Details(name=name, address=address, contact=contact , password=hashed_password, email=email, services=services ,date=datetime.now().date() , file=filename)
         if (request.method == 'POST'):    
             pic.save(os.path.join('static', 'uploads', filename))
-    
         db.session.add(entry)
         db.session.commit()
         
         return render_template('confirm.html')
-                
     return render_template('register.html')
+
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    if request.method == 'POST':
+        user_contact = request.form.get('contact')
+        user_password = request.form.get('password')
+        details=Details.query.filter_by(contact=user_contact).first()
+        if details and bcrypt.check_password_hash(details.password, user_password):
+            return redirect(url_for('userdash', sno=details.sno)) 
+        else:
+            flash('Invalid credentials. Please try again.')
+            return redirect(url_for('signin'))  
+            
+        # try:
+        #     result, sno = authenticate_user(user_contact, user_password)
+        # except:
+        #     flash('Invalid credentials. Please try again.')
+        #     return redirect(url_for('signin')) 
+        
+        # if result:
+        #     return redirect(url_for('userdash', sno=sno))  
+        # else:
+
+    list = Details.query.filter_by(accept = 1)
+    return render_template('signin.html', list=list)
 
 @app.route("/admin",  methods = ['GET', 'POST'])
 def admin():
@@ -535,8 +547,9 @@ def addspiceproduct(sno):
         # db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
-    print(list)
-    return render_template('userdash.html', list = list )
+    list1=Spices.query.filter_by().all()
+    list2=Spiceproducts.query.filter_by().all()
+    return render_template('userdash.html', list = list ,list1=list1,list2=list2)
 
 
 @app.route('/resorts')
