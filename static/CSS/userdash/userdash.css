@@ -8,11 +8,12 @@ body{
     background-color: aliceblue;
     width: 17em;
     height: fit-content;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     display: block;
     padding-bottom: 20px;
-    /* position: sticky;
-    top: 0; */
+    position: sticky;
+    top: 80px;
+    border: solid black 1px;
 }
 .box1 h2{
     text-align: center;
@@ -20,7 +21,10 @@ body{
     padding-top: 10px;
 }
 .box2 h2{
+    position: relative;
     text-align: center;
+    justify-content: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .box1 img{
     width: 150px;
@@ -44,12 +48,15 @@ body{
 
 }
 .box2{
-    width: 21em;
+    width: 35em;
     height: fit-content;
     background-color: aliceblue;
-    margin-left: 2em;
-    border-radius: 10px;
-    padding: 20px;
+    /* margin-left: 0.5em; */
+    /* border-radius: 10px; */
+    padding-left: 8%;
+    padding-top: 20px;
+    padding-right: 8%;
+    border: solid black 1px;
    
 }
 #save{
@@ -57,16 +64,15 @@ body{
 }
 #edit{
     display: block;
+    padding-bottom: 20px;
+    
 }
 .box{
     display: flex;
     flex-direction: row;
-    position: absolute;
-     top: 40%;
-    left: 50%;
-    transform: translate(-50%,-50%);
     
-    bottom: 50px;
+    margin-top: 80px;
+   
 }
 form{
     display: flex;
@@ -94,14 +100,16 @@ button{
    margin-top: 50px;
 
 }
-
+h5,h3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 @media screen and (max-width: 480px){
     html, body {
         max-width: 100%;
         overflow-x: hidden;
         }
     .box1{
-        width: 92%;
+        width: 100%;
         height: fit-content;
         padding-bottom: 20px;
         position: relative;
@@ -113,13 +121,14 @@ button{
     .box{
         display: flex;
         flex-direction: column;
-        top: -175%;
+        position: absolute;
+        top: 100%;
         left: 50%;
         transform: translate(-50%,-30%);
         
     }
     .box2{
-        width: 20em;
+        width: 21em;
         height: fit-content;
         background-color: aliceblue;
         position: relative;
@@ -138,10 +147,15 @@ button{
     .box1 img{
         width: 150px;
         position: relative;
-        top: 15%;
+        top: 100%;
         left: 50%;
-        transform: translate(-50%,-50%); 
+        transform: translate(-50%,0%); 
         
         margin-bottom: 0px;
+    }
+    #edit{
+        width: 18em;
+        padding-left: 50px;
+        padding-right: 20px;
     }
 }
