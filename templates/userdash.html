@@ -54,7 +54,7 @@
     {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
     <div style="display: block;" class="box2">
         <form>
-            <label>Cost of Jeep Safari</label>
+            <label>Cost </label>
             <input type="text">
             <label>Trip available</label>
             <input type="text">
@@ -70,6 +70,8 @@
             <input type="text">
             <label>Things to carry</label>
             <input type="text">
+            <label>Photo of vehicle</label>
+           <input type="file" name="img">
             <button>Save Changes</button>         
     </div>
     <div id="edit"  class="box2">
@@ -107,6 +109,8 @@
           <input type="text" name="remuneration">
           <label>Area of Specification</label>
           <input type="text" name="specification">
+          <label>Photo of your work</label>
+          <input type="file" name="img">
           <button id="btn" >Save Changes</button>
           
         </form>
@@ -177,7 +181,7 @@
 
       <!-- <button>Edit</button> -->
   </div>
-  
+
 
 
   {% elif item.services == "Spices outlet"  %}
@@ -229,9 +233,10 @@
 </div>
 
 
-{% endif %}
+
     </div>
     
+    {% endif %}
     {% endfor %}
     
     <!-- <script>
