@@ -9,7 +9,7 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay, Plantation, Spiceproducts
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -86,6 +86,15 @@ def userdash(sno):
             entry1.remuneration_details = request.form.get('remuneration')
             entry1.technical_qualifications = request.form.get('technical')
             entry1.years_of_exp = request.form.get('exp')
+            pic = request.files['img']
+            
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
+            entry1.img=filename   
+
             db.session.commit()
 
         elif entry2:
@@ -94,11 +103,12 @@ def userdash(sno):
             entry2.contact2=request.form.get('contact2')
             pic = request.files['img']
             
-            # if not pic:
-            #     return 'No image uploaded!', 400
-            filename = secure_filename(pic.filename)
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
             entry2.img=filename   
-            pic.save(os.path.join('static', 'uploads', filename))
             db.session.commit()
 
         elif entry3:
@@ -114,7 +124,7 @@ def userdash(sno):
                     filename = secure_filename(img1.filename)
                     if (request.method == 'POST'):    
                         img1.save(os.path.join('static', 'uploads', filename))
-                    # mimetype = pic.mimetype
+                        # mimetype = pic.mimetype
                 else:
                     filename = None
                 entry3.img1 = filename
@@ -127,16 +137,21 @@ def userdash(sno):
             entry4.contact=request.form.get('contact')
             entry4.Crops=request.form.get('Crops')
             pic = request.files['img']
-            
-            # if not pic:
-            #     return 'No image uploaded!', 400
-            filename = secure_filename(pic.filename)
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
             entry4.img=filename   
-            pic.save(os.path.join('static', 'uploads', filename))
             db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
-    return render_template('userdash.html', list = list )
+    localworkforce = LocalWorkforce.query.filter_by(details_id = sno).all()
+    wheretostay = WhereToStay.query.filter_by(details_id = sno).all()
+    spices = Spices.query.filter_by(details_id = sno).all()
+    spiceproducts = Spiceproducts.query.filter_by().all()
+    plantation = Plantation.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -585,10 +600,25 @@ def addspiceproduct(sno):
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     list1=Spices.query.filter_by().all()
     list2=Spiceproducts.query.filter_by().all()
-    return render_template('userdash.html', list = list ,list1=list1,list2=list2)
+    return render_template('add_spices.html', list = list ,list1=list1,list2=list2)
 
 
+# @app.route('/deletespiceproduct/<int:sno>', methods=['GET', 'POST'])
+# def deletespiceproduct(sno):
+#     if(request.method == 'POST'):
+        
+    #     details_instance = Details.query.filter_by(sno=sno).first()
+    #     details_instance_spices = Spices.query.filter_by(details_id=details_instance.sno).first()
+        # spiceobj = Spiceproducts(details_id=sno).all()
+        # db.session.delete(spiceobj)
+        # db.session.commit()
+    
+    # list = Details.query.filter_by(sno=sno , accept = 1).all()
+    # list1=Spices.query.filter_by().all()
+    # list2=Spiceproducts.query.filter_by().all()
+    # return render_template('addspices.html')
 
+    
 
 @app.route('/transport')
 def transport():
@@ -623,6 +653,9 @@ def busview():
 #     list = Accept.query.filter_by(services='Car Rental')
 #     return render_template('transport_view.html', list = list)
 
+@app.route('/image/<string:img>', methods=['GET', 'POST'])
+def image(img):
+    return render_template('image.html' , img = img )
 
 @app.route('/<text>', methods=['GET', 'POST'])
 def all_routes(text):

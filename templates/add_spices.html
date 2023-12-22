@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link
+    rel="stylesheet"
+    type="text/css"
+    href="{{ url_for('static',filename='CSS/userdash/userdash.css') }}"
+  /> -->
+    <title>Add Spices</title>
+    <link
+    rel="icon"
+    href="{{url_for('static',filename='images/logo.png')}}"
+    type="image/icon type"
+  /> 
+</head>
+<body>
+  {% for item in list %}
+  <div>
+    <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
+        <label for="spice">Select the Spice : </label>
+              <select id="spice" name="product">
+                <option value="" selected disabled>Select a Spice</option>
+                <option value="Cardamom">Cardamom</option>
+                <option value="Cinnamon">Cinnamon</option>
+                <option value="Clove">Clove</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Pepper">Pepper</option>
+                <option value="Tea">Tea</option>
+                <option value="Turmeric">Turmeric</option>
+              </select>
+              <br><br>
+              <label>Price</label>
+              <input type="text" name="price" placeholder="Enter the amount in Rs.">
+              <input type="submit" value="Submit">
+            </form>
+            {% for item2 in list2 %}
+            {% if item1.details_id == item.sno%}
+     
+            {% if item2.details_id == item1.local_id%}
+            <a href="/userdash/{{ item2.details_id }}">Go Back</>
+          
+          {% endfor %}
+
+        </div>
+          {% endfor %}
+</body>
+</html>
