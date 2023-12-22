@@ -144,7 +144,7 @@ def register():
         address = request.form.get('address')
         contact = request.form.get('contact')
         if len(contact)!=10:
-            flash('Invalied Mobile number. Please try with a different one.')
+            flash('Invalid Mobile number. Please try with a different one.')
             return redirect(url_for('register'))
         x=Details.query.filter_by(contact=contact).first()
         if x is not None:
@@ -159,6 +159,9 @@ def register():
             return redirect(url_for('register'))
         
         email = request.form.get('email')
+        if '@' not in email and '.' not in email:
+            flash('Invalid email format. Please try again.')
+            return redirect(url_for('register'))
         services = request.form.get('services')
     
     # @app.route('/upload', methods=['POST'])
