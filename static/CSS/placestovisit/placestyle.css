@@ -24,9 +24,7 @@
 	text-align: center;
   }
   .slider {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+
 	height: 250px;
 	width :350px;
 	margin-bottom: 20px;
@@ -34,8 +32,9 @@
   }
  
   .slider img {
+	width: 500px;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
 	margin-right: 10px;
     border-radius: 0px;
     
@@ -75,23 +74,41 @@ button>p{
 }
 h2,P{
 	color: #ffffff;
+	width: 600px;
+	word-wrap: break-word;
 }
 
-
+.row{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
 .mapp{
 	margin-left: 100px;
+}
+.container{
+	padding-top: 50px;
 }
 @media (max-width: 768px) {
 	h1 {
 		font-size: 20px;
 		
 	  }
+	.container{
+		padding-top: 20px;
+		padding-bottom: 100px;
+		
+	}
 	header {
 		background-color: rgba(0, 66, 44, 0.837);
 		color: #ffffff;
 		padding: 10px;
-		  margin: 10px;
-		  width: 85%;
+		margin: 10px;
+		width: 94%;
+		position: absolute;
+		text-align: center;
+		justify-content: center;
+		margin-top: 70px;
 	  }
 	.mapp{
 		margin-left: 2px;
@@ -99,23 +116,24 @@ h2,P{
 	}
 	.slider img{
 		width: 80%;
-		height: 100%;
-	object-fit: contain;
-	margin-right: 0px;
-    border-radius: 0px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-55%,-50%);
+		height: 250px;
+		object-fit: contain;
+		margin-right: 0px;
+    	border-radius: 0px;
+		/* position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%); */
+		margin-left: 40px;
 	}
 	.slider {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 200px;
-		width :90%;
-		margin-bottom: 20px;
-	
+		/* display: flex;
+		flex-direction: column; */
+		/* height: 200px;
+		width :90%; */
+		/* margin-bottom: 20px;
+		object-fit: contain; */
+		margin-top: 0px;
 	  }
 	  button>img{
 		height:35px;
@@ -133,7 +151,8 @@ h2,P{
 		border-width: 1px;
 		background-color: rgb(255, 255, 255);
 		block-size: fit-content;
-	   
+	   margin-left: 30px;
+	   margin-bottom: 20px;
 	}
 	button>p{
 		color: rgb(0, 67, 38);
@@ -145,5 +164,19 @@ h2,P{
 		font-size: medium;
 		position: relative;
 		
+	}
+	.description{
+		margin-left: 30px;
+		margin-top: 130px;
+	}
+	h2,P{
+		
+		width: 300px;
+		word-wrap: break-word;
+	}
+	.containerr{
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
 	}
 }

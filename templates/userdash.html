@@ -16,14 +16,14 @@
     type="image/icon type"
   /> 
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function addChild() {
       document.getElementById("form11").style.display = "block";
     }
     // function addprod() {
     //   document.getElementById("box3").style.display = "block";
     // }
-  </script>
+  </script> -->
 </head>
 
 <body>
@@ -35,23 +35,89 @@
             {% if item.services == "Carpentary works" %}
             <img
               src="{{url_for('static',filename='images/carpenter.png')}}"
-              alt="Carpenter icon"
+              alt="Carpenter"
             />
             {% endif %} {% if item.services == "Plumbing services" %}
             <img
               src="{{url_for('static',filename='images/plumber.jpeg')}}"
-              alt="Plumber icon"
+              alt="Plumber"
             />
             {% endif %} {% if item.services == "Electrical works" %}
             <img
               src="{{url_for('static',filename='images/electrical.jpeg')}}"
-              alt="Carpenter icon"
+              alt="Electrical"
+            />
+            {% endif %}
+            {% if item.services == "Trekking Guide" %}
+            <img
+              src="{{url_for('static',filename='images/Treeking guide.jpg')}}"
+              alt="Trekking"
+            />
+            {% endif %}
+            {% if item.services == "Spices outlet" %}
+            <img
+              src="{{url_for('static',filename='images/spices outlet.jpg')}}"
+              alt="spices outlet"
+            />
+            {% endif %}
+            {% if item.services == "plantation" %}
+            <img
+              src="{{url_for('static',filename='images/Plantation crops.jpg')}}"
+              alt="Plantation crops"
+            />
+            {% endif %}
+            {% if item.services == "Jeep safari" %}
+            <img
+              src="{{url_for('static',filename='images/taxi services.jpg')}}"
+              alt="jeep safari"
+            />
+            {% endif %}
+            {% if item.services == "Taxi service" %}
+            <img
+              src="{{url_for('static',filename='images/taxi services.jpg')}}"
+              alt="taxi"
+            />
+            {% endif %}
+            {% if item.services == "Auto Rickshaw" %}
+            <img
+              src="{{url_for('static',filename='images/auto service.jpg')}}"
+              alt="auto service"
+            />
+            {% endif %}
+            {% if item.services == "Bike Rental" %}
+            <img
+              src="{{url_for('static',filename='images/bike rental.jpg')}}"
+              alt="bike rental"
+            />
+            {% endif %}
+            {% if item.services == "Car Rental" %}
+            <img
+              src="{{url_for('static',filename='images/car rental.jpg')}}"
+              alt="car rental"
             />
             {% endif %}
             {% if item.services == "Home stay" %}
             <img
-              src="{{url_for('static',filename='images/electrical.jpeg')}}"
-              alt="Carpenter icon"
+              src="{{url_for('static',filename='images/homestay.jpg')}}"
+              alt="Homestay"
+            />
+            {% endif %}
+            {% if item.services == "Resorts" %}
+            <img
+              src="{{url_for('static',filename='images/resorts.jpg')}}"
+              alt="resorts"
+            />
+            {% endif %}
+            {% if item.services == "Dormitories" %}
+            <img
+              src="{{url_for('static',filename='images/dormitories.jpg')}}"
+              alt="dormitories"
+            />
+            {% endif %}
+            {% if item.services == "Tent Camping" %}
+            <img
+              src="{{url_for('static',filename='images/tent camping.jpg')}}"
+              alt="tent camping"
             />
             {% endif %}
         <h5>User Name</h5>
@@ -64,204 +130,222 @@
         <h3>{{ item.address }}</h3>
     </div>
     {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
-    <div style="display: block;" class="box2">
-        <form action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data" >
-            <label>Cost per kilometer</label>
-            <input type="text" name="cost" >
+    <div class="box2">
+    <div id="change">
+        <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+            <label>Cost </label>
+            <input type="text">
             <label>Trip available</label>
-            <input type="text" name="Trip_available">
+            <input type="text">
             <label>Pick up and Drop</label>
-            <input type="text" name="Pick_up_and_Drop">
+            <input type="text">
             <label>Duration</label>
-            <input type="text" name="Duration">
+            <input type="text">
             <label>vehicle</label>
-            <input type="text" name="vehicle">
+            <input type="text">
             <label>No. of Persons Allowed</label>
-            <input type="text" name="no_of_persons">
+            <input type="text">
+            <label>Trip available</label>
+            <input type="text">
             <label>Things to carry</label>
-            <input type="text" name="Things_to_carry">
+            <input type="text">
             <label>Photo of vehicle</label>
            <input type="file" name="img">
-            <button>Save Changes</button>         
+            <button type="submit">Save Changes</button>   
+        </form>      
     </div>
-    <div id="edit"  class="box2">
+    <div id="edit">
       <h5>Cost of Jeep Safari</h5>
       <h3>{{ item.name }}</h3>
-    <h5>Trip available</h5>
+      <h5>Trip available</h5>
       <h3>{{ item.name }}</h3>
-    <h5>Pick up and Drop</h5>
+      <h5>Pick up and Drop</h5>
       <h3>{{ item.name }}</h3>
-    <h5>Duration</h5>
+      <h5>Duration</h5>
       <h3>{{ item.name }}</h3>
-    <h5>vehicle</h5>
+      <h5>vehicle</h5>
       <h3>{{ item.name }}</h3>
-    <h5>No. of Persons Allowed</h5>
+      <h5>No. of Persons Allowed</h5>
       <h3>{{ item.name }}</h3>
-    <h5>Trip available</h5>
+      <h5>Trip available</h5>
       <h3>{{ item.name }}</h3>
-    <h5>Things to carry</h5>
+      <h5>Things to carry</h5>
       <h3>{{ item.name }}</h3>
-
-
-        <!-- <button>Edit</button> -->
+      <button onclick="changeDivContent()" >Edit</button>
+    </div>
     </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
-    <div id="save" class="box2">
-
-        <form id="form1" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+  <div class="box2">
+    {% for item1 in local %}
+  <div id="change">  
+        <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data"'>
           <label>Whatsapp Number</label>
-          <input type="text" name="whatsapp">
+          <input value="{{ item1.whatsapp_number | default('') }}" type="text" name="whatsapp">
           <label>Year of Experience</label>
-          <input type="text" name="exp">
+          <input value="{{ item1.years_of_exp | default('') }}" type="text" name="exp">
           <label>Technical Qualification, if any</label>
-          <input type="text" name="technical">
+          <input value="{{ item1.technical_qualifications | default('') }}" type="text" name="technical">
           <label>Remuneration Detais</label>
-          <input type="text" name="remuneration">
-          <label>Area of Specification</label>
-          <input type="text" name="specification">
+          <input value="{{ item1.remuneration_details | default('') }}" type="text" name="remuneration">
           <label>Photo of your work</label>
           <input type="file" name="img">
-          <button id="btn" >Save Changes</button>
-          
+          <button id="btn" type="submit">Save Changes</button>
         </form>
-    </div>
-    
-    <div id="edit"  class="box2">
-      <h2>Details</h2>
-      <h5>Whatsapp Number</h5>
-        <h3>{{ item.name }}</h3>
-      <h5>Year of Experience</h5>
-        <h3>{{ item.name }}</h3>
-      <h5>Technical Qualification, if any</h5>
-        <h3>{{ item.name }}</h3>
-      <h5>Remuneration Detais</h5>
-        <h3>{{ item.name }}</h3>
-      <h5>Area of Specification</h5>
-        <h3>{{ item.name }}</h3>
-
-        <!-- <button>Edit</button> -->
+      </div>
+      <div id="edit">
+        <h2>Details</h2>
+        <h5>Whatsapp Number</h5>
+        <h3>{{ item1.whatsapp_number | default('') }}</h3>
+        <h5>Year of Experience</h5>
+        <h3>{{ item1.years_of_exp | default('') }}</h3>
+        <h5>Technical Qualification, if any</h5>
+        <h3>{{ item1.technical_qualifications | default('') }}</h3>
+        <h5>Remuneration Detais</h5>
+        <h3>{{ item1.remuneration_details | default('') }}</h3>
+        {% if item1.img is not none %}
+        <h5>Photos of your work</h5>
+        <a href="/image/{{ item1.img }}" target="_blank">click here to view the picture
+        </a>        
+        {% endif %}
+        <!-- <img src="{{ url_for('static',filename=fname) }}" alt="image">click -->
+        <button onclick="changeDivContent()" >Edit</button>
+      </div>
+      {% endfor %}
     </div>
      
     {% elif item.services in ["Home stay" , "Resorts" , "Tent Camping" , "Dormitories" ]  %}
-
+    
     <div class="box2">
+      {% for item2 in stay %}
       <div id="change">
-      <form id="form2" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
-        
+      <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <h2>Enter the Details</h2>
           <label>Name of Homestay</label>
-          <input type="text" name="name">
+          <input value="{{ item2.name | default('') }}" type="text" name="name">
           <label>Location Details</label>
-          <input type="text" name="location">
+          <input value="{{ item2.location | default('') }}" type="text" name="location">
           <label>Property description</label>
-          <input type="text" name="description">
+          <input value="{{ item2.description | default('') }}" type="text" name="description">
           <label>Additional contact number</label>
-          <input type="text" name="contact">
-          <label>Host information</label>
-          <input type="text" name="host">
+          <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
           <label>Facilities</label>
-          <input type="text" name="facilities">
+          <input value="{{ item2.facilities | default('') }}" type="text" name="facilities">
           <label>No. of Rooms</label>
-          <input type="text" name="rooms">
+          <input value="{{ item2.no_of_rooms | default('') }}" type="text" name="rooms">
           <label>Services</label>
-          <input type="text" name="services">
+          <input value="{{ item2.services | default('') }}" type="text" name="services">
           <label>Photo of Homestay</label>
           <input type="file" name="img1">
-      
-       
-        </form>  </div>
+          <button id="click-btn" type="submit">Save Changes</button>
+        </form>  
+      </div>
         <div id="edit">
           <h2>Details</h2>
           <h5>Name of Homestay</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>"{{ item2.name | default('') }}"</h3>
           <h5>Location Details</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>"{{ item2.location | default('') }}"</h3>
           <h5>Property description</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>{{ item2.description | default('') }}</h3>
           <h5>Additional contact number</h5>
-            <h3>{{ item.name }}</h3>
-          <h5>Host information</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>{{ item2.contact2 | default('') }}</h3>
           <h5>Facilities</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>{{ item2.facilities | default('') }}</h3>
           <h5>No. of Rooms</h5>
-            <h3>{{ item.name }}</h3>
+            <h3>{{ item2.no_of_rooms | default('') }}</h3>
           <h5>Services</h5>
-            <h3>{{ item.name }}</h3>
-      
-            <!-- <button>Edit</button> -->
+            <h3>{{ item2.services | default('') }}</h3>
+            {% if item2.img1 is not none %}
+            <h5>Uploaded Photo</h5>
+            <a href="/image/{{ item2.img1 }}" target="_blank">click here to view the picture
+            </a>        
+            {% endif %}
+            <button onclick="changeDivContent()" >Edit</button>
         </div>
-        <button id="click-btn" onclick="myFunction()">Save Changes</button>
-        
+      {% endfor %}
   </div>
 
-  
-
-
   {% elif item.services == "Spices outlet"  %}
-  <div style="display: block;" class="box2">
-    <form id="form3" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+  <div class="box2">
+    {% for item3 in spices %}
+    <div id="change">
+    <form id="form3" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <label>Name of The Shop</label>
-        <input type="text" name="shop">
+        <input value="{{ item3.name | default('') }}" type="text" name="shop" id="namespice">
 
         <label>Location Details</label>
-        <input type="text" name="loc">
+        <input value="{{ item3.location | default('') }}" type="text" name="loc" id="locationspice">
 
         <label>Additional contact number</label>
-        <input type="text" name="contact2">
+        <input value="{{ item3.contact2 | default('') }}" type="text" name="contact2" id="contact2spice">
 
         <label>Photo of the shop</label>
         <input type="file" name="img">
         
-        <button >Save Changes</button>  
-        <!-- onclick="addprod();" -->
-      
-    </form>
-    <div class="box3" id="box3">
+        <label>Edit Spices</label>
+        <a href="/addspiceproduct/{{ item3.local_id }}" onclick="saveForm()">click here</a>
+
+        <button type="submit" onclick="deleteSessionData()">Save Changes</button>  
+      </form>
+    </div>
+
+    <div id="edit">
+      <h2>Details</h2>
+      <h5>Name of Shop</h5>
+      <h3>{{ item3.name | default('') }}</h3>
+      <h5>Location Details</h5>
+      <h3>{{ item3.location | default('') }}</h3>
+      <h5>Additional contact number</h5>
+      <h3>{{ item3.contact2 | default('') }}</h3>
+      {% if item3.img is not none %}
+      <h5>Uploaded Photo</h5>
+      <a href="/image/{{ item3.img }}" target="_blank">click here to view the picture
+      </a>        
+      {% endif %}
+      <h5>Added Spices</h5>
+      {% for item4 in prod %}
+      {% if item4.details_id == item3.local_id and item4.product is not none and item4.price is not none%}
+      <h3>{{ item4.product | default('') }} : {{ item4.price | default('') }}</h3>
+    {% endif %}
+    {% endfor %}
+      <button onclick="changeDivContent()" >Edit</button>
+    </div>
+    {% endfor %}
+  </div>
+    <!-- <div
+       class="box3" id="box3">
       <div class="cards mx-auto">
         <p id="addplace">Add Spices</p>
-        <!-- <a href="" onclick="showForm()"><img class="addbut" src="images/plus.png" alt=""></a> -->
-        <img
-          src="{{url_for('static',filename='images/plus.png')}}"
+        <button
           class="addbut"
           value="Add Child"
           onclick="addChild();"
-        />
+        >add spices</button>
       </div>
 
       <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
         <label for="">Select the Spice : </label>
               <select id="spice" name="product">
-                <option value="Cardmom">Cardmom</option>
-                <option value="Turmeric">Turmeric</option>
-                <option value="Cinamon">Cinamon</option>
+                <option value="Cardamom">Cardamom</option>
+                <option value="Cinnamon">Cinnamon</option>
+                <option value="Clove">Clove</option>
+                <option value="Coffee">Coffee</option>
                 <option value="Pepper">Pepper</option>
+                <option value="Tea">Tea</option>
+                <option value="Turmeric">Turmeric</option>
               </select>
               <br><br>
               <label>Price</label>
               <input type="text" name="price" placeholder="₹">
-              <!-- <br /> -->
-              <!-- <button>Submit</button>   -->
               <input type="submit" value="Submit">
             </form>
             
-          </div>
+          </div> -->
           
-        </div>
-            <div id="edit"  class="box2">
-              <h2>Details</h2>
-              <h5>Name of Shop</h5>
-                <h3>{{ item.name }}</h3>
-              <h5>Location Details</h5>
-                <h3>{{ item.location }}</h3>
-              <h5>Additional contact number</h5>
-                <h3>{{ item.contact2 }}</h3>
-          
-                <!-- <button>Edit</button> -->
-            </div>
 {% elif item.services == "plantation"  %}
-  <div style="display: block;" class="box2">
-    <form action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+  <div class="box2">
+    <div id="change">
+    <form id="form4" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <label>Name of The Plantation</label>
         <input type="text" name="name">
         <label>Address</label>
@@ -274,37 +358,48 @@
         <input type="text" placeholder="Use comma if more than one" name="Crops">
         <label>Photo of the Plantation</label>
         <input type="file" name="img">
-        <button>Save Changes</button>  
+        <button type="submit">Save Changes</button>  
       </form>
-</div>
-
-
-
     </div>
+  </div>
+</div>
     
     {% endif %}
     {% endfor %}
-    
-    <script>
-      function myFunction() {
-      
-      var btn = document.getElementById("click-btn");
-      var x = document.getElementById("change");
-      var y = document.getElementById("edit");
-      if (x.style.display === "block") {
-        y.style.display = "block";
-        x.style.display = "none";
-        btn.innerHTML='Edit';
-        // document.getElementById("form2").submit();
-        
-      } else {
-        y.style.display = "none";
-        x.style.display = "block";
-        btn.innerHTML='Save Changes';
-        
+
+    <script type="text/javascript">
+      function changeDivContent() {
+          document.getElementById('change').style.display = 'block';
+          document.getElementById('edit').style.display = 'none';
       }
-    }
-    </script>
+      window.onload = function() {
+        const savedname = sessionStorage.getItem('savedname');
+        const savedlocation = sessionStorage.getItem('savedlocation');
+  
+        if (savedname && savedlocation) {
+          document.getElementById('name').value = savedname;
+          document.getElementById('location').value = savedlocation;
+        }
+      }
+  
+      function saveForm() {
+        const name = document.getElementById('namespice').value;
+        const location = document.getElementById('locationspice').value;
+        const contact = document.getElementById('contact2spice').value;
+  
+        sessionStorage.setItem('savedname', name);
+        sessionStorage.setItem('savedlocation', location);
+        sessionStorage.setItem('savedcontact', contact);
+  
+      };
+      function deleteSessionData() {
+        sessionStorage.removeItem('savedname');
+        sessionStorage.removeItem('savedlocation');
+        sessionStorage.removeItem('savedcontact');
+
+      }
+  </script>
+    
 </body>
 
 </html>

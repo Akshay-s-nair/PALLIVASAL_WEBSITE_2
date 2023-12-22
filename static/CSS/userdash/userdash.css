@@ -63,12 +63,12 @@ body{
     display: block;
 }
 #edit{
-    display: none;
+    display: block;
     padding-bottom: 20px;
     
 }
 #change{
-    display: block;
+    display: none;
 }
 .box{
     display: flex;
@@ -121,6 +121,7 @@ h5,h3{
 }
 
 .box3{
+    display: none;
     width: 20em;
     background-color: aliceblue;
     min-height: 20px;

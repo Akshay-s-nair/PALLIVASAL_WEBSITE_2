@@ -43,7 +43,12 @@
             <div class="bor">
               <div class="childv">
                 {% for item1 in list %}
-                <img src="/static/images/bg.jpg" alt="">
+                {% for item2 in info %}
+                {% if item2.img is not none %}
+                {% set fname = 'uploads/' + item2.img %}
+                <img src="{{ url_for('static',filename=fname) }}" alt="">
+                {% endif %} 
+                {% endfor %} 
                 <h5>Name: {{ item1.name }}</h5>
                 <h5>Address: {{item1.address}}</h5>
                 <h5>Email: {{item1.email}}</h5>

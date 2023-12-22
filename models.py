@@ -28,7 +28,7 @@ db.event.listen(Details.name, 'set', Details.slugify, retval=False)
 class Places(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
-    description = db.Column(db.String(1000), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     img1 = db.Column(db.Text , nullable=True)
     img2 = db.Column(db.Text , nullable=True)
     img3 = db.Column(db.Text , nullable=True)
@@ -44,6 +44,8 @@ class LocalWorkforce(db.Model):
     years_of_exp = db.Column(db.String(80), nullable=True, default=None)
     technical_qualifications = db.Column(db.String(80), nullable=True, default=None)
     remuneration_details = db.Column(db.String(80), nullable=True, default=None)
+    img = db.Column(db.Text , nullable=True)
+
 
     details = relationship("Details", back_populates="local_workforce")
 
@@ -79,6 +81,7 @@ class WhereToStay(db.Model):
     name = db.Column(db.String(80), nullable=True, default=None)
     location = db.Column(db.String(80), nullable=True, default=None)
     description = db.Column(db.String(80), nullable=True, default=None)
+    contact2 = db.Column(db.String(80), nullable=True, default=None)
     facilities = db.Column(db.String(80), nullable=True, default=None)
     no_of_rooms = db.Column(db.String(80), nullable=True, default=None)
     services = db.Column(db.String(80), nullable=True, default=None)
