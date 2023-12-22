@@ -147,9 +147,10 @@
     {% elif item.services in ["Home stay" , "Resorts" , "Tent Camping" , "Dormitories" ]  %}
 
     <div class="box2">
-      <h2>Enter the Details</h2>
+      <div id="change">
       <form id="form2" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
-
+        
+        <h2>Enter the Details</h2>
           <label>Name of Homestay</label>
           <input type="text" name="name">
           <label>Location Details</label>
@@ -168,32 +169,35 @@
           <input type="text" name="services">
           <label>Photo of Homestay</label>
           <input type="file" name="img1">
-          <button>Save Changes</button>  
-        </form>
+      
+       
+        </form>  </div>
+        <div id="edit">
+          <h2>Details</h2>
+          <h5>Name of Homestay</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Location Details</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Property description</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Additional contact number</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Host information</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Facilities</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>No. of Rooms</h5>
+            <h3>{{ item.name }}</h3>
+          <h5>Services</h5>
+            <h3>{{ item.name }}</h3>
+      
+            <!-- <button>Edit</button> -->
+        </div>
+        <button id="click-btn" onclick="myFunction()">Save Changes</button>
+        
   </div>
 
-  <div id="edit"  class="box2">
-    <h2>Details</h2>
-    <h5>Name of Homestay</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Location Details</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Property description</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Additional contact number</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Host information</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Facilities</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>No. of Rooms</h5>
-      <h3>{{ item.name }}</h3>
-    <h5>Services</h5>
-      <h3>{{ item.name }}</h3>
-
-      <!-- <button>Edit</button> -->
-  </div>
-
+  
 
 
   {% elif item.services == "Spices outlet"  %}
@@ -283,20 +287,27 @@
     {% endif %}
     {% endfor %}
     
-    <!-- <script>
+    <script>
       function myFunction() {
-      var x = document.getElementById("save");
-      var y = document.getElementById("btn");
-      if (x.style.display === "none") {
-        x.style.display = "block";
+      var form = document.getElementById("form2");
+      var btn = document.getElementById("click-btn");
+      var x = document.getElementById("change");
+      var y = document.getElementById("edit");
+      //  
+      if (x.style.display === "block") {
         y.style.display = "block";
-    
-      } else {
         x.style.display = "none";
+        btn.style.display = "none";
+        form.submit();
+        
+      } else {
         y.style.display = "none";
+        x.style.display = "block";
+       
+        
       }
     }
-    </script> -->
+    </script>
 </body>
 
 </html>
