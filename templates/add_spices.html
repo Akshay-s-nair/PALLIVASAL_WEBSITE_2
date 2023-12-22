@@ -35,13 +35,9 @@
               <input type="text" name="price" placeholder="Enter the amount in Rs.">
               <input type="submit" value="Submit">
             </form>
-            {% for item2 in list2 %}
-            {% if item1.details_id == item.sno%}
-     
-            {% if item2.details_id == item1.local_id%}
-            <a href="/userdash/{{ item2.details_id }}">Go Back</>
-          
-          {% endfor %}
+
+            <a href="/userdash/{{ item2.details_no }}">Go Back</>
+
 
         </div>
           {% endfor %}
