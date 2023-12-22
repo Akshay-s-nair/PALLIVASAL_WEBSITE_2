@@ -28,7 +28,7 @@ db.event.listen(Details.name, 'set', Details.slugify, retval=False)
 class Places(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
-    description = db.Column(db.String(1000), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     img1 = db.Column(db.Text , nullable=True)
     img2 = db.Column(db.Text , nullable=True)
     img3 = db.Column(db.Text , nullable=True)

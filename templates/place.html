@@ -22,14 +22,14 @@
             <h1>{{ list.name }}</h1>
         </header>
         
-        <div class="container">
+        <div class="container ">
             <div class="row">
-                <div class="description col-12 col-md-6 p-3">
+                <div class="description">
                     <h2>Description</h2>
                     <p>{{ list.description }}</p>
                 </div>
                 <div class="mapp">
-                    <div class="containerr p-4">
+                    <div class="containerr">
                         <div class="slider">
 							{% if list.img1 is not none %}
 							{% set fname1 = 'uploads/' + list.img1 %}  
