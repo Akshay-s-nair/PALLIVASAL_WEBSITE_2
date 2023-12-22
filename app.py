@@ -9,7 +9,9 @@ from datetime import timedelta
 from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
-from models import Details , Places , LocalWorkforce, Spices , WhereToStay, Plantation, Spiceproducts
+
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation
+
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
 # from sqlalchemy import text
@@ -79,6 +81,7 @@ def userdash(sno):
         entry2 = Spices.query.join(Details).filter(Details.sno == sno).first()
         entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
         entry4 = Plantation.query.join(Details).filter(Details.sno == sno).first()
+        entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
         # entry4 = Spiceproducts.query.join(Spices).filter().first()
  
         if entry1:
@@ -143,6 +146,23 @@ def userdash(sno):
             else:
                 filename = None
             entry4.img=filename   
+            db.session.commit()
+
+        elif entry5:
+            entry5.cost=request.form.get('cost')
+            entry5.Trip_available=request.form.get('Trip_available')
+            entry5.Pick_up_and_Drop=request.form.get('Pick_up_and_Drop')
+            entry5.Duration=request.form.get('Duration')
+            entry5.vehicle=request.form.get('vehicle')
+            entry5.no_of_persons=request.form.get('no_of_persons')
+            entry5.Things_to_carry=request.form.get('Things_to_carry')
+            pic = request.files['img']
+            
+            # if not pic:
+            #     return 'No image uploaded!', 400
+            filename = secure_filename(pic.filename)
+            entry5.img=filename   
+            pic.save(os.path.join('static', 'uploads', filename))
             db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
@@ -317,6 +337,11 @@ def admin_accept():
     elif service=='plantation':
         plantation = Plantation(details_id=details_instance.sno)
         db.session.add(plantation)
+        db.session.commit()
+
+    elif service in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']:
+        transport = Transportation(details_id=details_instance.sno)
+        db.session.add(transport)
         db.session.commit()
 
     # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
@@ -574,7 +599,11 @@ def spices_view():
     lis1=Details.query.filter_by(services='Spices outlet').all()
     lis2 = Spices.query.filter_by().all()
     lis3=Spiceproducts.query.filter_by().all()
-    return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3)
+    lis4 = Spiceproducts.query.with_entities(Spiceproducts.product).all()
+    product_list = [item.product for item in lis4]
+    product_list=list(set(product_list))
+    print(product_list)
+    return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3,product_list=product_list)
 
 @app.route('/view_spices/<int:sno>', methods=['GET', 'POST'])
 def view_spices(sno):
@@ -629,6 +658,12 @@ def transport():
 def transport_view(services):
     list = Details.query.filter_by(services = services , accept = 1)
     return render_template('transport_view.html', list=list)
+
+@app.route('/transport_detail_view/<int:sno>', methods=["GET" ,"POST"])
+def transport_detail_view(sno):
+    list = Details.query.filter_by(sno = sno , accept = 1)
+    list1=Transportation.query.filter_by(details_id = sno).first()
+    return render_template('view_transportation.html', list=list,list1=list1)
 
 @app.route('/transport_view/busview')
 def busview():
