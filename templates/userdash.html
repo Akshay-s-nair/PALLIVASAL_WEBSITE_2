@@ -289,21 +289,20 @@
     
     <script>
       function myFunction() {
-      var form = document.getElementById("form2");
+      
       var btn = document.getElementById("click-btn");
       var x = document.getElementById("change");
       var y = document.getElementById("edit");
-      //  
       if (x.style.display === "block") {
         y.style.display = "block";
         x.style.display = "none";
-        btn.style.display = "none";
-        form.submit();
+        btn.innerHTML='Edit';
+        // document.getElementById("form2").submit();
         
       } else {
         y.style.display = "none";
         x.style.display = "block";
-       
+        btn.innerHTML='Save Changes';
         
       }
     }
