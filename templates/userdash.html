@@ -65,23 +65,21 @@
     </div>
     {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
     <div style="display: block;" class="box2">
-        <form>
-            <label>Cost </label>
-            <input type="text">
+        <form action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data" >
+            <label>Cost per kilometer</label>
+            <input type="text" name="cost" >
             <label>Trip available</label>
-            <input type="text">
+            <input type="text" name="Trip_available">
             <label>Pick up and Drop</label>
-            <input type="text">
+            <input type="text" name="Pick_up_and_Drop">
             <label>Duration</label>
-            <input type="text">
+            <input type="text" name="Duration">
             <label>vehicle</label>
-            <input type="text">
+            <input type="text" name="vehicle">
             <label>No. of Persons Allowed</label>
-            <input type="text">
-            <label>Trip available</label>
-            <input type="text">
+            <input type="text" name="no_of_persons">
             <label>Things to carry</label>
-            <input type="text">
+            <input type="text" name="Things_to_carry">
             <label>Photo of vehicle</label>
            <input type="file" name="img">
             <button>Save Changes</button>         
@@ -110,7 +108,7 @@
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
     <div id="save" class="box2">
 
-        <form id="form1" action="/userdash/{{ item.sno }}" method='post'>
+        <form id="form1" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
           <label>Whatsapp Number</label>
           <input type="text" name="whatsapp">
           <label>Year of Experience</label>

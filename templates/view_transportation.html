@@ -44,19 +44,25 @@
               
 <!--  jeep sari , car rental etc-->
               <div class="childv">
-               
-                <img src="/static/images/bg.jpg" alt="">
-                <h5>Cost : </h5>
-                <h5>Trip available : </h5>
-                <h5>Pick up and Drop : </h5>
-                <h5>Duration : </h5>
-                <h5>Vehicle : </h5>
-                <h5>No. of persons allowed : </h5>
-                <h5>Things to carry : </h5>
+                {% if list1.img is not none %}
+                  {% set fname = 'uploads/' + list1.img %}  
+                  <img src="{{ url_for('static',filename=fname) }}" class="asd">
+                {% else %}
+                  <img src="/static/images/bg.jpg" alt="">
+                {% endif %}
+                <h5>Name of the Driver: {{ list[0].name }}</h5>
+                <h5>Cost : {{ list1.cost }}</h5>
+                <h5>Trip available : {{ list1.Trip_available }}</h5>
+                <h5>Pick up and Drop : {{ list1.Pick_up_and_Drop }}</h5>
+                <h5>Duration : {{ list1.Duration }}</h5>
+                <h5>Vehicle : {{ list1.vehicle }}</h5>
+                <h5>No. of persons allowed : {{ list1.no_of_persons }}</h5>
+                <h5>Things to carry : {{ list1.Things_to_carry }}</h5>
                 
-                
-                  <a id="atag" href="{{ url_for('local_workforce') }}"
+                {% if list[0].services is not none %}
+                  <a id="atag" href="/transport_view/{{ list[0].services }}"
                     >Back to previous</a>
+                {% endif %}
                 </h5>
               </div>
             </div>
