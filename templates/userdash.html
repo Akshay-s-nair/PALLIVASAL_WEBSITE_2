@@ -215,8 +215,7 @@
         <!-- onclick="addprod();" -->
       
     </form>
-  </div>
-  <div class="box3" id="box3">
+    <div class="box3" id="box3">
       <div class="cards mx-auto">
         <p id="addplace">Add Spices</p>
         <!-- <a href="" onclick="showForm()"><img class="addbut" src="images/plus.png" alt=""></a> -->
@@ -229,7 +228,7 @@
       </div>
 
       <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
-             <label for="">Select the Spice : </label>
+        <label for="">Select the Spice : </label>
               <select id="spice" name="product">
                 <option value="Cardmom">Cardmom</option>
                 <option value="Turmeric">Turmeric</option>
@@ -243,9 +242,21 @@
               <!-- <button>Submit</button>   -->
               <input type="submit" value="Submit">
             </form>
-
+            
           </div>
-
+          
+        </div>
+            <div id="edit"  class="box2">
+              <h2>Details</h2>
+              <h5>Name of Shop</h5>
+                <h3>{{ item.name }}</h3>
+              <h5>Location Details</h5>
+                <h3>{{ item.location }}</h3>
+              <h5>Additional contact number</h5>
+                <h3>{{ item.contact2 }}</h3>
+          
+                <!-- <button>Edit</button> -->
+            </div>
 {% elif item.services == "plantation"  %}
   <div style="display: block;" class="box2">
     <form action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">

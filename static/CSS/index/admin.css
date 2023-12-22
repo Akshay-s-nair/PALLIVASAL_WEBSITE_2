@@ -488,7 +488,7 @@ a{
     margin-top: 2%;
 }
 input[type=submit]{
-    background-color: #0df0a8;
+    background-color: #068f0f;
     color: #FFFFFF;
     font-weight: 660
 }
@@ -499,7 +499,10 @@ input[type=submit]{
 }
 
 
-
+textarea.ta{
+    padding-left: 35px;
+    
+}
 /*   edit place page  */
 
 .image{
@@ -524,4 +527,10 @@ img.imgs{
 }
 h5.in{
     padding: 0%;
+}
+@media (max-width: 480px) {
+    textarea.ta{
+        padding-left: 45px;
+        
+    }
 }

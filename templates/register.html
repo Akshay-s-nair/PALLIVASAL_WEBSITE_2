@@ -52,15 +52,6 @@
                                             <input type="password" required="" maxlength="10" name='confirm'/>
                                             <label> Reenter Password</label>
                                         </div>
-                                        {% with messages = get_flashed_messages() %}
-                                                    {% if messages %}
-                                                        <div class = flashes>
-                                                    {% for message in messages %}
-                                                        <div class = alert alert-{{ category }}>{{ message }}</div>
-                                                    {% endfor %}
-                                                        </div>
-                                                    {% endif %}
-                                                    {% endwith %}
                                         <div class="input-containers pb-3">
                                             <input type="email" required="" name='email'/>
                                             <label>Email</label>		
@@ -95,7 +86,15 @@
                                         <div class="pt-3 pb-2">
                                        <input type="submit" class="otpbtn" value="Register" id="upload" />
                                     </div>
-                                    
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        <div class="flashes">
+                                            {% for message in messages %}
+                                                <div class="alert alert-info">{{ message }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}   
                                     </div>
                                 </div>
                             </div>
