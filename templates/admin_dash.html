@@ -19,7 +19,29 @@
     <title>Pallivasal</title>
 </head>
 <body>
+    <div class="navv">
+        <nav class="navbar">
+          <!-- Navbar logo -->
+          <div class="nav-header">
+            <div class="nav-logo">
+              <a href="#">
+                <img
+                  id="logo"
+                  src="{{url_for('static',filename='images/logo.png')}}"
+                  width="90px"
+                  alt="logo"
+                />
+              </a>
+              <a href="{{ url_for('logout') }}">
+                <div class="logout-btn">
+                    <button type="button" class="btn btn-danger">Logout</button>
+                </div></a>
+            </div>
+          </div>
     
+          <!-- responsive navbar toggle button -->
+        </nav>
+      </div>
   <div class="cards-content">
 
  
@@ -57,9 +79,6 @@
  
 
 </div>
-<a href="{{ url_for('logout') }}">
-    <div class="logout-btn mx-auto">
-        <button type="button" class="btn btn-danger">Logout</button>
-    </div></a>
+
 </body>
 </html>

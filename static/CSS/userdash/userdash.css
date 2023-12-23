@@ -1,8 +1,11 @@
 body{
-    background-color: rgb(0, 67, 44);
-    overflow-x: hidden;
-  
     
+    overflow-x: hidden;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.466), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+	background-size: cover;
+	background-attachment:fixed;
+    margin: 0;
+    padding: 0;
 }
 .box1{
     background-color: aliceblue;
@@ -12,7 +15,7 @@ body{
     display: block;
     padding-bottom: 20px;
     position: sticky;
-    top: 80px;
+    top: 70px;
     border: solid black 1px;
 }
 .box1 h2{
@@ -73,8 +76,8 @@ body{
 .box{
     display: flex;
     flex-direction: row;
-    
-    margin-top: 80px;
+    margin-left: 10px;
+    margin-top: 70px;
    
 }
 form{
@@ -147,6 +150,57 @@ h5,h3{
 display: none;
 } */
 
+  
+  .navv{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    top: 0;
+   
+  }
+  .navbar{
+    height: 70px;
+    width: 100%;
+    background-color: #000000;
+    margin: -10;
+    padding: -10;
+    
+  }
+  #logo{
+   padding-top: 25px;
+   padding-left: 20px;
+  }
+  
+  .navbar .nav-header{
+    display: inline;
+  }
+  .navbar .nav-header .nav-logo{
+    display: inline-block;
+    margin-top: -7px;
+  }
+  .navbar .nav-links{
+    display: inline;
+    float: right;
+    font-size: 18px;
+    padding: 0px 0px 0px 0px;
+  }
+   
+  
+  .navbar .nav-links a{
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 550;
+    color: white;
+  }
+  /* Hover effects */
+  .navbar .nav-links a:hover{
+    background-color: #00000025;
+  }
+   
+  /* responsive navbar toggle button */
+  .navbar #nav-check, .navbar .nav-btn{
+    display: none;
+  }
 @media screen and (max-width: 480px){
     html, body {
         max-width: 100%;
@@ -210,12 +264,15 @@ display: none;
     }
 
     #edit{
-        width: 18em;
-        padding-left: 50px;
+        
+        padding-left: 10px;
         padding-right: 20px;
     }
     #edit h2{
-       margin-left: -50px;
+       margin-left: 0px;
+    }
+    button{
+        left: 50%;
     }
 }
 

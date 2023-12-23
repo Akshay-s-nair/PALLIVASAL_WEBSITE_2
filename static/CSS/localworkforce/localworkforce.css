@@ -64,6 +64,56 @@ h1{
     justify-content: center;
     padding: 8px;
 }
+.navv{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    top: 0;
+   
+  }
+  .navbar{
+    height: 70px;
+    width: 100%;
+    background-color: #000000;
+    margin: -10;
+    padding: -10;
+    
+  }
+  #logo{
+   padding-top: 10px;
+   padding-left: 10px;
+  }
+  
+  .navbar .nav-header{
+    display: inline;
+  }
+  .navbar .nav-header .nav-logo{
+    display: inline-block;
+    margin-top: -7px;
+  }
+  .navbar .nav-links{
+    display: inline;
+    float: right;
+    font-size: 18px;
+    padding: 0px 0px 0px 0px;
+  }
+   
+  
+  .navbar .nav-links a{
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 550;
+    color: white;
+  }
+  /* Hover effects */
+  .navbar .nav-links a:hover{
+    background-color: #00000025;
+  }
+   
+  /* responsive navbar toggle button */
+  .navbar #nav-check, .navbar .nav-btn{
+    display: none;
+  }
 @media (max-width: 480px) {
     .mainb{
         border: 3px  solid #fefefe;
@@ -131,17 +181,9 @@ a{
  padding-bottom: 80px;
  border-radius: 15px 15px;
  
+ 
 }
-
-.childv img{
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin: -70px;
-    padding-bottom: 80px;
-    border-radius: 15px 15px;
-    
-   }   
+ 
      img.asd{
     width: 400px;
     height: 300px;
@@ -156,12 +198,13 @@ a{
         
         width: 80%;
         padding-top: 10px;
-       
+        margin-top: 200px;
         padding-bottom: 10px;
         position: absolute;
         top: 40%;
         left: 30%;
         transform: translate(-50%,-50%);
+        margin-bottom: 50px;
     }
     .parentv{
         height: 100%;
@@ -191,7 +234,7 @@ a{
         width: 100%;
         height: auto;
         object-fit: contain;
-
+        
         margin: -10px;
         padding-bottom: 80px;
         border-radius: 15px 15px;

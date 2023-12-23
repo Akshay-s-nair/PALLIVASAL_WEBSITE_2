@@ -30,7 +30,25 @@
       type="image/icon type"
     />
   </head>
-  <body >
+  <body > <div class="navv">
+    <nav class="navbar">
+      <!-- Navbar logo -->
+      <div class="nav-header">
+        <div class="nav-logo">
+          <a href="#">
+            <img
+              id="logo"
+              src="{{url_for('static',filename='images/logo.png')}}"
+              width="90px"
+              alt="logo"
+            />
+          </a>
+        </div>
+      </div>
+
+      <!-- responsive navbar toggle button -->
+    </nav>
+  </div>
     <div class="view-container">
       {% for item2 in info %}
       {% set fname = 'uploads/' + item2.img1 %}  
