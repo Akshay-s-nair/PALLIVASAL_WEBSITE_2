@@ -481,7 +481,10 @@ hr{
   transform: translate(-50%,-50%);
   margin: 5px;
 }
-
+#project{
+  margin-left: 50px;
+  margin-right: 50px;
+}
 @media (max-width:400px) {
   .headings{
     font-size: 50px;

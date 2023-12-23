@@ -93,6 +93,23 @@ class WhereToStay(db.Model):
 Details.where_to_stay = relationship("WhereToStay", order_by=WhereToStay.local_id, back_populates="details")
 
 
+class Transportation(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    cost = db.Column(db.String(10), nullable=True, default=None)
+    Trip_available = db.Column(db.String(10), nullable=True, default=None)
+    Pick_up_and_Drop = db.Column(db.String(10), nullable=True, default=None)
+    Duration = db.Column(db.String(80), nullable=True, default=None)
+    vehicle = db.Column(db.String(80), nullable=True, default=None)
+    no_of_persons = db.Column(db.String(80), nullable=True, default=None)
+    Things_to_carry = db.Column(db.String(80), nullable=True, default=None)
+    img = db.Column(db.Text, nullable=True, default=None)
+
+
+    details = relationship("Details", back_populates="transportation")
+
+Details.transportation = relationship("Transportation", order_by=Transportation.local_id, back_populates="details")
+
 class Plantation(db.Model):
     local_id = db.Column(db.Integer, primary_key=True)
     details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
