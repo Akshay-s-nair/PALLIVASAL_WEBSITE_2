@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link
+    <link
     rel="stylesheet"
     type="text/css"
     href="{{ url_for('static',filename='CSS/userdash/userdash.css') }}"
-  /> -->
+  />
     <title>Add Spices</title>
     <link
     rel="icon"
@@ -16,21 +16,22 @@
   /> 
 </head>
 <body>
+  <div class="container">
             <!-- this part for go back -->
-
             {% for item in list %}
             {% for item1 in list1 %}
             {% if item1.details_id == item.sno and item.services == "Spices outlet" %}
             <div>
-            <a href="/userdash/{{ item.sno }}">Go Back</a>
+            <a class="goback" href="/userdash/{{ item.sno }}">Go Back</a>
           </div>
             {% endif %}
             {% endfor %}
             {% endfor %}
-  
+  <h1>Add Your Spices</h1>
+            <div class="par">
   {% for item in list %}
-  <div>
-    <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
+  <div class="box4">
+    <form id="form1" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
         <label for="spice">Select the Spice : </label>
               <select id="spice" name="product">
                 <option value="" selected disabled>Select a Spice</option>
@@ -42,28 +43,34 @@
                 <option value="Tea">Tea</option>
                 <option value="Turmeric">Turmeric</option>
               </select>
-              <br><br>
+              <br>
               <label>Price</label>
               <input type="text" name="price" placeholder="Enter the amount in Rs.">
               <input type="submit" value="Submit">
-            </form>
-          </div>
-          {% endfor %}
+    </form>
+  </div>
+  {% endfor %}
+    <div class="row">
           <!-- this part for delete -->
-          {% for item in list %}
-          {% for item1 in list1 %}
-          {% for item2 in list2 %}
-          {% if item2.details_id == item1.local_id and item.sno == item2.details_id and item2.product is not none and item2.price is not none %}
-          <div>
-          <p>{{ item2.product }} : {{ item2.price }}</p>
-          <form action="/deletespiceproduct/{{ item2.details_id }}/{{ item2.local_id }}" method="post">
-            <button type="submit">delete</button>
-          </form>
+  {% for item in list %}
+    {% for item1 in list1 %}
+    <div class="viewpar">
+      {% for item2 in list2 %}
+          {% if item2.details_id == item1.local_id and item.sno == item1.details_id and item2.product is not none and item2.price is not none %}
+            <div class="viewtemp">
+              <h4>{{ item2.product }} : {{ item2.price }}</h4>
+              <form class="formbut" action="/deletespiceproduct/{{ item.sno }}/{{ item2.local_id }}" method="post">
+                <button class="delete" type="submit"><img class="del" src="{{ url_for('static',filename='images/delete.png') }}" alt=""></button>
+              </form>
+            </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% endfor %}
+      
+</div>
+</div>
         </div>
-          {% endif %}
-          {% endfor %}
-          {% endfor %}
-          {% endfor %}
-
           </body>
 </html>
