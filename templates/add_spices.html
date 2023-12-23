@@ -16,6 +16,18 @@
   /> 
 </head>
 <body>
+            <!-- this part for go back -->
+
+            {% for item in list %}
+            {% for item1 in list1 %}
+            {% if item1.details_id == item.sno and item.services == "Spices outlet" %}
+            <div>
+            <a href="/userdash/{{ item.sno }}">Go Back</a>
+          </div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+  
   {% for item in list %}
   <div>
     <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
@@ -35,11 +47,23 @@
               <input type="text" name="price" placeholder="Enter the amount in Rs.">
               <input type="submit" value="Submit">
             </form>
-
-            <a href="/userdash/{{ item2.details_no }}">Go Back</>
-
-
-        </div>
+          </div>
           {% endfor %}
-</body>
+          <!-- this part for delete -->
+          {% for item in list %}
+          {% for item1 in list1 %}
+          {% for item2 in list2 %}
+          {% if item2.details_id == item1.local_id and item.sno == item2.details_id and item2.product is not none and item2.price is not none %}
+          <div>
+          <p>{{ item2.product }} : {{ item2.price }}</p>
+          <form action="/deletespiceproduct/{{ item2.details_id }}/{{ item2.local_id }}" method="post">
+            <button type="submit">delete</button>
+          </form>
+        </div>
+          {% endif %}
+          {% endfor %}
+          {% endfor %}
+          {% endfor %}
+
+          </body>
 </html>

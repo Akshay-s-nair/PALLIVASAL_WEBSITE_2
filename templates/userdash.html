@@ -312,55 +312,47 @@
     </div>
     {% endfor %}
   </div>
-    <!-- <div
-       class="box3" id="box3">
-      <div class="cards mx-auto">
-        <p id="addplace">Add Spices</p>
-        <button
-          class="addbut"
-          value="Add Child"
-          onclick="addChild();"
-        >add spices</button>
-      </div>
-
-      <form id="form11" action="/addspiceproduct/{{ item.sno }}" method="post" enctype="multipart/form-data">
-        <label for="">Select the Spice : </label>
-              <select id="spice" name="product">
-                <option value="Cardamom">Cardamom</option>
-                <option value="Cinnamon">Cinnamon</option>
-                <option value="Clove">Clove</option>
-                <option value="Coffee">Coffee</option>
-                <option value="Pepper">Pepper</option>
-                <option value="Tea">Tea</option>
-                <option value="Turmeric">Turmeric</option>
-              </select>
-              <br><br>
-              <label>Price</label>
-              <input type="text" name="price" placeholder="₹">
-              <input type="submit" value="Submit">
-            </form>
-            
-          </div> -->
-          
+         
 {% elif item.services == "plantation"  %}
   <div class="box2">
+    {% for item4 in plant %}
     <div id="change">
     <form id="form4" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <label>Name of The Plantation</label>
-        <input type="text" name="name">
+        <input value="{{ item4.name | default('') }}" type="text" name="name">
         <label>Address</label>
-        <input type="text" name="address">
+        <input value="{{ item4.address | default('') }}" type="text" name="address">
         <label>Location Details</label>
-        <input type="text" name="location">
+        <input value="{{ item4.location | default('') }}" type="text" name="location">
         <label>Additional contact number</label>
-        <input type="text" name="contact">
+        <input value="{{ item4.contact | default('') }}" type="text" name="contact">
         <label>Type of Plantations</label>
-        <input type="text" placeholder="Use comma if more than one" name="Crops">
+        <input value="{{ item4.Crops | default('') }}" type="text" placeholder="Use comma if more than one" name="Crops">
         <label>Photo of the Plantation</label>
         <input type="file" name="img">
         <button type="submit">Save Changes</button>  
       </form>
     </div>
+    <div id="edit">
+      <h2>Details</h2>
+      <h5>Name of Plantation</h5>
+        <h3>{{ item4.name | default('') }}</h3>
+        <h5>Address</h5>
+        <h3>{{ item4.location | default('') }}</h3>
+      <h5>Location Details</h5>
+        <h3>{{ item4.location | default('') }}</h3>
+      <h5>Additional contact number</h5>
+        <h3>{{ item4.contact | default('') }}</h3>
+      <h5>Type of Plantations</h5>
+        <h3>{{ item4.Crops | default('') }}</h3>
+        {% if item4.img1 is not none %}
+        <h5>Uploaded Photo</h5>
+        <a href="/image/{{ item4.img }}" target="_blank">click here to view the picture
+        </a>        
+        {% endif %}
+        <button onclick="changeDivContent()" >Edit</button>
+    </div>
+    {% endfor %}
   </div>
 </div>
     

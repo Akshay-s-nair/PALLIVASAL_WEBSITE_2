@@ -632,20 +632,17 @@ def addspiceproduct(sno):
     return render_template('add_spices.html', list = list ,list1=list1,list2=list2)
 
 
-# @app.route('/deletespiceproduct/<int:sno>', methods=['GET', 'POST'])
-# def deletespiceproduct(sno):
-#     if(request.method == 'POST'):
-        
-    #     details_instance = Details.query.filter_by(sno=sno).first()
-    #     details_instance_spices = Spices.query.filter_by(details_id=details_instance.sno).first()
-        # spiceobj = Spiceproducts(details_id=sno).all()
-        # db.session.delete(spiceobj)
-        # db.session.commit()
+@app.route('/deletespiceproduct/<int:sno>/<int:id>', methods=['GET', 'POST'])
+def deletespiceproduct(sno , id):
+    if(request.method == 'POST'):
+        deletespice = Spiceproducts().query.filter_by(details_id=sno , local_id = id).first()
+        db.session.delete(deletespice)
+        db.session.commit()
     
-    # list = Details.query.filter_by(sno=sno , accept = 1).all()
-    # list1=Spices.query.filter_by().all()
-    # list2=Spiceproducts.query.filter_by().all()
-    # return render_template('addspices.html')
+    list = Details.query.filter_by(sno=sno , accept = 1).all()
+    list1=Spices.query.filter_by().all()
+    list2=Spiceproducts.query.filter_by().all()
+    return render_template('add_spices.html' , list = list , list1 = list1 , list2 = list2)
 
     
 
