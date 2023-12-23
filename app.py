@@ -629,21 +629,16 @@ def addspiceproduct(sno):
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     list1=Spices.query.filter_by().all()
     list2=Spiceproducts.query.filter_by().all()
-    return render_template('add_spices.html', list = list ,list1=list1,list2=list2)
+    return render_template('add_spices.html', list = list ,list1=list1, list2=list2)
 
 
 @app.route('/deletespiceproduct/<int:sno>/<int:id>', methods=['GET', 'POST'])
 def deletespiceproduct(sno , id):
     if(request.method == 'POST'):
-        deletespice = Spiceproducts().query.filter_by(details_id=sno , local_id = id).first()
+        deletespice = Spiceproducts().query.filter_by( local_id = id).first()
         db.session.delete(deletespice)
         db.session.commit()
-    
-    list = Details.query.filter_by(sno=sno , accept = 1).all()
-    list1=Spices.query.filter_by().all()
-    list2=Spiceproducts.query.filter_by().all()
-    return render_template('add_spices.html' , list = list , list1 = list1 , list2 = list2)
-
+    return redirect(url_for('addspiceproduct', sno=sno)) 
     
 
 @app.route('/transport')

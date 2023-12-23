@@ -59,6 +59,22 @@ body{
     border: solid black 1px;
    
 }
+a.editspices{
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    background-color: rgb(59, 59, 59);
+    /* border: 1px black solid; */
+    text-decoration: none;
+    width: 70px;
+    margin: 20px;
+    border-radius: 20px;
+}
+.par{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #save{
     display: block;
 }
@@ -146,7 +162,86 @@ h5,h3{
 /* #box3{
 display: none;
 } */
+.box4{
+    display: none;
+    width: 20em;
+    background-color: aliceblue;
+    min-height: 20px;
+    /* position: relative;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%,0%); */
+    display:flex ;
+    flex-direction:column ;
+    justify-content: center;
+    align-items: center;
 
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 20px;
+}
+.container{
+    margin: 20px;
+}
+.row{
+    border: 1px white solid;
+    padding: 20px;
+    margin: 20px;
+}
+.viewpar{
+    display: flex;
+    
+}
+a.goback{
+    color: rgb(0, 67, 44);
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    /* border: 1px black solid; */
+    text-decoration: none;
+    width: 70px;
+    border-radius: 30px;
+}
+h1{
+    text-align: center;
+    color: aliceblue;
+}
+h4{
+    padding-left: 15px;
+}
+.viewtemp{
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    border-radius: 20px;
+    width: 200px;
+    height: 70px;
+    justify-content:space-between;
+    margin: 10px;
+    text-align: center;
+}
+button.delete{
+    background-color: rgba(250, 235, 215, 0);
+    color: rgb(255, 0, 0);
+    width: 0px;
+    padding: 0px;
+    position:initial;
+    margin-top: 20px;
+    border: 0px ;
+
+
+}
+img.del{
+    width: 20px;
+}
+form.formbut{
+    display:flex ;
+    flex-direction: column;
+    justify-content:space-between;
+    width: 20px;
+    align-items: center;
+}
 @media screen and (max-width: 480px){
     html, body {
         max-width: 100%;
@@ -216,6 +311,9 @@ display: none;
     }
     #edit h2{
        margin-left: -50px;
+    }
+    .viewpar{
+        flex-direction: column;
     }
 }
 
