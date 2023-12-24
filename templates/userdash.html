@@ -16,14 +16,6 @@
     type="image/icon type"
   /> 
 
-  <!-- <script type="text/javascript">
-    function addChild() {
-      document.getElementById("form11").style.display = "block";
-    }
-    // function addprod() {
-    //   document.getElementById("box3").style.display = "block";
-    // }
-  </script> -->
 </head>
 
 <body>
@@ -87,7 +79,7 @@
             {% endif %}
             {% if item.services == "Jeep safari" %}
             <img
-              src="{{url_for('static',filename='images/taxi services.jpg')}}"
+              src="{{url_for('static',filename='images/jeepsafari.jpeg')}}"
               alt="jeep safari"
             />
             {% endif %}
@@ -173,7 +165,7 @@
         </form>      
     </div>
     <div id="edit">
-      <h5>Cost of Jeep Safari</h5>
+      <h5>Cost </h5>
       <h3>{{ item5.cost | default('') }}</h3>
       <h5>Trip available</h5>
       <h3>{{ item5.Trip_available | default('') }}</h3>
