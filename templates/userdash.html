@@ -27,6 +27,25 @@
 </head>
 
 <body>
+  <div class="navv">
+    <nav class="navbar">
+      <!-- Navbar logo -->
+      <div class="nav-header">
+        <div class="nav-logo">
+          <a href="#">
+            <img
+              id="logo"
+              src="{{url_for('static',filename='images/logo.png')}}"
+              width="90px"
+              alt="logo"
+            />
+          </a>
+        </div>
+      </div>
+
+      <!-- responsive navbar toggle button -->
+    </nav>
+  </div>
   
     {% for item in list %}
     <div class="box">
@@ -68,7 +87,7 @@
             {% endif %}
             {% if item.services == "Jeep safari" %}
             <img
-              src="{{url_for('static',filename='images/taxi services.jpg')}}"
+              src="{{url_for('static',filename='images/jeep safari.jpg')}}"
               alt="jeep safari"
             />
             {% endif %}
@@ -220,7 +239,7 @@
       <div id="change">
       <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <h2>Enter the Details</h2>
-          <label>Name of Homestay</label>
+          <label>Name of (Home stay/Resort/Tent/Dormitories)</label>
           <input value="{{ item2.name | default('') }}" type="text" name="name">
           <label>Location Details</label>
           <input value="{{ item2.location | default('') }}" type="text" name="location">
@@ -234,17 +253,17 @@
           <input value="{{ item2.no_of_rooms | default('') }}" type="text" name="rooms">
           <label>Services</label>
           <input value="{{ item2.services | default('') }}" type="text" name="services">
-          <label>Photo of Homestay</label>
-          <input type="file" name="img1">
+          <label>Photo</label>
+          <input type="file" name="img1" required>
           <button id="click-btn" type="submit">Save Changes</button>
         </form>  
       </div>
         <div id="edit">
           <h2>Details</h2>
-          <h5>Name of Homestay</h5>
-            <h3>"{{ item2.name | default('') }}"</h3>
+          <h5>Name</h5>
+            <h3>{{ item2.name | default('') }}</h3>
           <h5>Location Details</h5>
-            <h3>"{{ item2.location | default('') }}"</h3>
+            <h3>{{ item2.location | default('') }}</h3>
           <h5>Property description</h5>
             <h3>{{ item2.description | default('') }}</h3>
           <h5>Additional contact number</h5>
@@ -257,8 +276,8 @@
             <h3>{{ item2.services | default('') }}</h3>
             {% if item2.img1 is not none %}
             <h5>Uploaded Photo</h5>
-            <a href="/image/{{ item2.img1 }}" target="_blank">click here to view the picture
-            </a>        
+            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view the picture
+            </a> </h3>       
             {% endif %}
             <button onclick="changeDivContent()" >Edit</button>
         </div>
@@ -282,7 +301,9 @@
         <label>Photo of the shop</label>
         <input type="file" name="img">
         
+
         <a class="editspices" href="/addspiceproduct/{{ item3.details_id }}" onclick="saveForm()">Edit spices</a>
+
 
         <button type="submit" onclick="deleteSessionData()">Save Changes</button>  
       </form>
@@ -298,8 +319,8 @@
       <h3>{{ item3.contact2 | default('') }}</h3>
       {% if item3.img is not none %}
       <h5>Uploaded Photo</h5>
-      <a href="/image/{{ item3.img }}" target="_blank">click here to view the picture
-      </a>        
+      <h3><a href="/image/{{ item3.img }}" target="_blank">click here to view the picture
+      </a> </h3>       
       {% endif %}
       <h5>Added Spices</h5>
       {% for item4 in prod %}
@@ -346,8 +367,8 @@
         <h3>{{ item4.Crops | default('') }}</h3>
         {% if item4.img1 is not none %}
         <h5>Uploaded Photo</h5>
-        <a href="/image/{{ item4.img }}" target="_blank">click here to view the picture
-        </a>        
+        <h3><a href="/image/{{ item4.img }}" target="_blank">click here to view the picture
+        </a></h3>        
         {% endif %}
         <button onclick="changeDivContent()" >Edit</button>
     </div>

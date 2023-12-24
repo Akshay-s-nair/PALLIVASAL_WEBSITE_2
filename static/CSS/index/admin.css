@@ -16,7 +16,7 @@ body{
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-    margin-top: 70px;
+    margin-top: 150px;
 }
 .cards{
     height: 120px;
@@ -44,11 +44,16 @@ body{
 }
 .logout-btn{
     
-    text-align: center;
-    justify-content: center;
-    padding-bottom: 30px;
+    position: fixed;
+    right: 0;
+    margin-right: 30px;
+    margin-top: 5px;
 }
-
+@media (max-width: 780px) {
+    .cards-content{
+        margin-top: 70px;
+    }
+}
 
 
 /*      request page         */
@@ -90,18 +95,36 @@ th,td{
     padding-top: 15px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 780px) {
     th,td{
         padding-left: 3%;
         font-size: small;
         
     }
+    .approve-text{
+        text-align: center; 
+        padding: 20px; 
+        font-size: 0px;
+        margin-top: 100px;
+        color: black;
+    }
 }
 
 
+.approve-text{
+    text-align: center; 
+    padding: 20px; 
+    font-size: 40px;
+    margin-top: 90px;
+}
 
-
-
+.approve-cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-bottom: 60px;
+}
 
 
 
@@ -111,7 +134,7 @@ th,td{
     background-color: rgba(1, 78, 33, 0.943);
     width: 80%;
     height: 90%;
-    margin-top: 40px;
+    margin-top: 80px;
     overflow-wrap: break-word;
     margin-bottom: 40px;
     block-size: fit-content;
@@ -391,6 +414,9 @@ a{
 
 
 /*   edit page  */
+.container{
+    margin-top: 70px;
+}
 .bdy{
     color: #FFFFFF;
 }
@@ -518,7 +544,10 @@ img.imgs{
 }
 .addhead{
     text-align: center;
-    padding: 20px; font-size: 50px;
+    padding: 20px; 
+    font-size: 40px;
+    color: black;
+    margin-top: 70px;
 }
 .ac{
     display: flex;
@@ -534,3 +563,59 @@ h5.in{
         
     }
 }
+
+
+/*            Navbar           */
+.navv{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    top: 0;
+  
+  }
+  .navbar{
+    height: 70px;
+    width: 100%;
+    background-color: #0000004d;
+    margin: -10;
+    padding: -10;
+    
+  }
+  #logo{
+   padding-top: 10px;
+   padding-left: 10px;
+  }
+  
+  .navbar .nav-header{
+    display: inline;
+  }
+  .navbar .nav-header .nav-logo{
+    display: flex;
+    flex-direction: row;
+    
+    margin-top: -7px;
+  }
+  .navbar .nav-links{
+    display: inline;
+    float: right;
+    font-size: 18px;
+    padding: 0px 0px 0px 0px;
+  }
+   
+  
+  .navbar .nav-links a{
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 550;
+    color: white;
+  }
+  /* Hover effects */
+  .navbar .nav-links a:hover{
+    background-color: #00000025;
+  }
+   
+  /* responsive navbar toggle button */
+  .navbar #nav-check, .navbar .nav-btn{
+    display: none;
+  }
+  
