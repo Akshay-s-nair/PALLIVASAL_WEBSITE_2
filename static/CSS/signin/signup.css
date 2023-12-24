@@ -111,6 +111,15 @@ select {
 
     transition: all 0.5s ease-in-out;
   }
+  .input-container label {
+    position: absolute;
+    top: 0px;
+    left: 25px;
+    font-size: 14px;
+    color: #fff;
+  
+    transition: all 0.5s ease-in-out;
+  }
 }
 .input-containers input,
 select {

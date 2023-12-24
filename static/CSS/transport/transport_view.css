@@ -55,7 +55,56 @@ th,td{
 section{
     width: 94%;
 }
-
+.navv{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    top: 0;
+   
+  }
+  .navbar{
+    height: 70px;
+    width: 100%;
+    background-color: #000000;
+    margin: -10;
+    padding: -10;
+    
+  }
+  #logo{
+   padding-top: 10px;
+   padding-left: 10px;
+  }
+  
+  .navbar .nav-header{
+    display: inline;
+  }
+  .navbar .nav-header .nav-logo{
+    display: inline-block;
+    margin-top: -7px;
+  }
+  .navbar .nav-links{
+    display: inline;
+    float: right;
+    font-size: 18px;
+    padding: 0px 0px 0px 0px;
+  }
+   
+  
+  .navbar .nav-links a{
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 550;
+    color: white;
+  }
+  /* Hover effects */
+  .navbar .nav-links a:hover{
+    background-color: #00000025;
+  }
+   
+  /* responsive navbar toggle button */
+  .navbar #nav-check, .navbar .nav-btn{
+    display: none;
+  }
 @media (max-width: 480px) {
     th,td{
         padding-left: 2%;

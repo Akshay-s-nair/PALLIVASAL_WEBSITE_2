@@ -19,6 +19,30 @@
     <title>Added places</title>
 </head>
 <body class="mx-auto">
+  <div class="navv">
+    <nav class="navbar">
+      <!-- Navbar logo -->
+      <div class="nav-header">
+        <div class="nav-logo">
+          <a href="#">
+            <img
+              id="logo"
+              src="{{url_for('static',filename='images/logo.png')}}"
+              width="90px"
+              alt="logo"
+            />
+          </a>
+          <a href="{{ url_for('admin') }}">
+            <div class="logout-btn">
+                <button type="button" class="btn btn-success">Home</button>
+            </div></a>
+        </div>
+      </div>
+
+      <!-- responsive navbar toggle button -->
+    </nav>
+  </div>
+
   <div >
     <h1 class="addhead">Added places</h1>
   </div>
