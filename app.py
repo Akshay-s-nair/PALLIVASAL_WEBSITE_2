@@ -314,7 +314,7 @@ def admin_accept():
         db.session.add(plantation)
         db.session.commit()
 
-    elif service in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']:
+    elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']:
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
