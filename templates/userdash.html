@@ -32,6 +32,10 @@
               alt="logo"
             />
           </a>
+          <a href="{{ url_for('signin_logout') }}">
+            <div class="logout-btn">
+                <button type="button" class="btn btn-danger">Logout</button>
+            </div></a>
         </div>
       </div>
 
@@ -77,7 +81,7 @@
               alt="Plantation crops"
             />
             {% endif %}
-            {% if item.services == "Jeep safari" %}
+            {% if item.services == "Jeep Safari" %}
             <img
               src="{{url_for('static',filename='images/jeepsafari.jpeg')}}"
               alt="jeep safari"
@@ -145,11 +149,12 @@
     {% for item5 in transport %}
     <div id="change">
         <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+          <h2>Enter the Details</h2>
           <label>Cost per kilometer</label>
           <input value="{{ item5.cost | default('') }}" type="text" name="cost" >
-          <label>Trip available</label>
+          <label>Trip available(Yes/No)</label>
           <input value="{{ item5.Trip_available | default('') }}" type="text" name="Trip_available">
-          <label>Pick up and Drop</label>
+          <label>Pick up and Drop(Yes/No)</label>
           <input value="{{ item5.Pick_up_and_Drop | default('') }}" type="text" name="Pick_up_and_Drop">
           <label>Duration</label>
           <input value="{{ item5.Duration | default('') }}" type="text" name="Duration">
@@ -165,6 +170,7 @@
         </form>      
     </div>
     <div id="edit">
+      <h2>Details</h2>
       <h5>Cost </h5>
       <h3>{{ item5.cost | default('') }}</h3>
       <h5>Trip available</h5>
@@ -181,18 +187,23 @@
       <h3>{{ item5.Things_to_carry | default('') }}</h3>
       {% if item5.img is not none %}
       <h5>Uploaded Photo</h5>
-      <a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
-      </a>     
+
+      <h3><a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
+      </a> </h3>       
+
       {% endif %}
       <button onclick="changeDivContent()">Edit</button>
     </div>
     {% endfor %}
-  </div>
+
+    </div>
+    
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
   <div class="box2">
     {% for item1 in local %}
   <div id="change">  
-        <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data"'>
+        <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+          <h2>Enter the Details</h2>
           <label>Whatsapp Number</label>
           <input value="{{ item1.whatsapp_number | default('') }}" type="text" name="whatsapp">
           <label>Year of Experience</label>
@@ -236,7 +247,7 @@
         <h2>Enter the Details</h2>
           <label>Name of (Home stay/Resort/Tent/Dormitories)</label>
           <input value="{{ item2.name | default('') }}" type="text" name="name">
-          <label>Location Details</label>
+          <label>Location Details(Link of Google Map)</label>
           <input value="{{ item2.location | default('') }}" type="text" name="location">
           <label>Property description</label>
           <input value="{{ item2.description | default('') }}" type="text" name="description">
@@ -284,6 +295,7 @@
     {% for item3 in spices %}
     <div id="change">
     <form id="form3" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+      <h2>Enter the Details</h2>
         <label>Name of The Shop</label>
         <input value="{{ item3.name | default('') }}" type="text" name="shop" id="namespice">
 
@@ -333,6 +345,7 @@
     {% for item4 in plant %}
     <div id="change">
     <form id="form4" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+      <h2>Enter the Details</h2>
         <label>Name of The Plantation</label>
         <input value="{{ item4.name | default('') }}" type="text" name="name">
         <label>Address</label>

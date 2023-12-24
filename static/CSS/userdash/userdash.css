@@ -233,7 +233,7 @@ button.delete{
     margin-top: 20px;
     border: 0px ;
 
-
+}
   
   .navv{
     position: fixed;
@@ -251,16 +251,18 @@ button.delete{
     
   }
   #logo{
-   padding-top: 25px;
-   padding-left: 20px;
+   padding-top: 20px;
+   padding-left: 10px;
   }
   
   .navbar .nav-header{
     display: inline;
   }
   .navbar .nav-header .nav-logo{
-    display: inline-block;
-    margin-top: -7px;
+    display: flex;
+    flex-direction: row;
+    
+    margin-top: 0px;
   }
   .navbar .nav-links{
     display: inline;
@@ -285,9 +287,23 @@ button.delete{
   .navbar #nav-check, .navbar .nav-btn{
     display: none;
   }
-
+  .logout-btn{
+    
+    position: fixed;
+    right: 0;
+    margin-right: 30px;
+    margin-top: -15px;
+}
+.logout-btn button{
+    background-color: red;
+    font-weight: bold;
+    padding: 5px;
+    
+    
 
 }
+
+
 img.del{
     width: 20px;
 }
