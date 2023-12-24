@@ -187,12 +187,15 @@
       <h3>{{ item5.Things_to_carry | default('') }}</h3>
       {% if item5.img is not none %}
       <h5>Uploaded Photo</h5>
+
       <h3><a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
       </a> </h3>       
+
       {% endif %}
       <button onclick="changeDivContent()">Edit</button>
     </div>
     {% endfor %}
+
     </div>
     
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}

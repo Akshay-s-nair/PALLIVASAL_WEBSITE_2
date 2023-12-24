@@ -261,37 +261,34 @@ def admin():
 
     return render_template('admin.html', data=data, error=error)
 
-# @app.route('/logout')
-# def logout():
-#     if session.get('user') == data.get('admin_username'):
-#         session.pop('user')
-#     return redirect('/admin')
-
 @app.route('/logout')
 def logout():
     session.pop('user', None)
     return redirect(url_for('admin'))
 
-@app.route("/signin/logout")
+@app.route("/signin_logout")
 def signin_logout():
     session.pop('user', None)
     return redirect(url_for('signin'))
 
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
-    list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()                
-    return render_template('admin_view.html' , list=list )
+    if "user" in session:
+        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()                
+        return render_template('admin_view.html' , list=list )
+    else:
+        return render_template('admin.html')
 
 @app.route('/admin_dash')
 def admin_dash():
-    return render_template('admin_dash.html')
+    if "user" in session:
+        return render_template('admin_dash.html')
+    else:
+        return render_template('admin.html')
 
 @app.route('/admin_accept', methods=['GET' , 'POST'])
 def admin_accept():
-    # Get the row id from the request
-    # Query the row to be moved from Table1
-    # row = Details.query.get(row_id)
-    # stmt = update(Details).where(Details.accept == None).values(accept = 1)
+
     row_id = request.form.get('row_id')
     details_instance = Details.query.filter_by(sno=row_id).first()
     details_instance.accept = 1
@@ -318,24 +315,9 @@ def admin_accept():
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
-
-    # session.query(Details).filter(Details.accept == None , sno = row_id).update({Details.accept: 1})
-    # stmt = Details.update().where(Details.accept == None).values(accept = 1)
-    # if row:
-    #     Details(acce)
-
-    # if row:
-    #     # Create a new row in Table2 with the same data
-    #     new_row = Accept(name=row.name, address=row.address, contact=row.contact , password=row.password, confirm=row.confirm, email=row.email, services=row.services ,date=datetime.now(), slug=row.slug , file = row.file )  # Modify this based on your table columns
-    #     # Add the new row to Table2
-    #     db.session.add(new_row)
-    #     # Delete the row from Table1
-    #     db.session.delete(row)
-    #     # Commit the changes to the database
-    # db.session.commit(stmt)
+        
     return render_template('admin_accept.html')
-    # else:
-    #     return 'Row not found'
+
 
 @app.route('/admin_reject', methods=['POST'])    
 def admin_reject():
@@ -376,53 +358,62 @@ def requests():
 
 @app.route('/approved_app', methods=["GET" ,"POST"])
 def approved_app():
-    list = Details.query.filter_by(accept = 1).all()
-    return render_template('approved_app.html', list=list)
+    if "user" in session:
+        list = Details.query.filter_by(accept = 1).all()
+        return render_template('approved_app.html', list=list)
+    else:
+        return render_template('admin.html')
 
 @app.route('/approved_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def approved_view(sno ,slug ):
-    list = Details.query.filter_by(sno = sno ,slug=slug ,accept = 1).first()                
-    return render_template('approved_view.html' , list=list )
+    if "user" in session:
+        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = 1).first()                
+        return render_template('approved_view.html' , list=list )
+    else:
+        return render_template('admin.html')
 
 @app.route('/edit_pages' , methods=["GET" ,"POST"])
 def edit_pages():
-    if(request.method == 'POST'):
-        name = request.form.get('name')
-        description = request.form.get('desc')
-        map = request.form.get('map')
+    if "user" in session:
+        if(request.method == 'POST'):
+            name = request.form.get('name')
+            description = request.form.get('desc')
+            map = request.form.get('map')
 
-        if 'files[]' not in request.files:
-            flash('No file selected')
-            return redirect(request.url)
-        files = request.files.getlist('files[]')
-        num = len(files)
-        file_names = []
-        for file in files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file_names.append(filename)
-                file.save(os.path.join('static', 'uploads', filename))
+            if 'files[]' not in request.files:
+                flash('No file selected')
+                return redirect(request.url)
+            files = request.files.getlist('files[]')
+            num = len(files)
+            file_names = []
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_names.append(filename)
+                    file.save(os.path.join('static', 'uploads', filename))
 
-        if(num == 1):
-            entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
-        elif(num == 2):
-            entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] ,img2 = file_names[1] )
-        elif(num == 3):
-            entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2] )
-        elif(num == 4):
-            entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
-        elif(num == 5):
-            entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
-        # elif(num > 5):
-       
+            if(num == 1):
+                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
+            elif(num == 2):
+                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] ,img2 = file_names[1] )
+            elif(num == 3):
+                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2] )
+            elif(num == 4):
+                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
+            elif(num == 5):
+                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
+            # elif(num > 5):
+        
 
-        if(num<=5):
-            db.session.add(entry)
-        else:
-            flash('only a maximum of 5 should be uploaded!')
-        db.session.commit()
-            
-    return render_template('edit_pages.html' )
+            if(num<=5):
+                db.session.add(entry)
+            else:
+                flash('only a maximum of 5 should be uploaded!')
+            db.session.commit()
+                
+        return render_template('edit_pages.html' )
+    else:
+        return render_template('admin.html')
 
 @app.route('/confirm')
 def confirm():
