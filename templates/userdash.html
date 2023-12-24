@@ -140,7 +140,7 @@
         <h5>Address</h5>
         <h3>{{ item.address }}</h3>
     </div>
-    {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
+    {% if item.services in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
     <div class="box2">
     {% for item5 in transport %}
     <div id="change">
@@ -182,12 +182,12 @@
       {% if item5.img is not none %}
       <h5>Uploaded Photo</h5>
       <a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
-      </a>        
+      </a>     
       {% endif %}
       <button onclick="changeDivContent()">Edit</button>
     </div>
     {% endfor %}
-    </div>
+  </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
   <div class="box2">
     {% for item1 in local %}
