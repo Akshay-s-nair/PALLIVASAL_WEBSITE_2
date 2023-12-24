@@ -169,7 +169,8 @@ def userdash(sno):
     spices = Spices.query.filter_by(details_id = sno).all()
     spiceproducts = Spiceproducts.query.filter_by().all()
     plantation = Plantation.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
+    transport=Transportation.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
 
 @app.route('/register', methods = ['GET','POST'])
 def register():

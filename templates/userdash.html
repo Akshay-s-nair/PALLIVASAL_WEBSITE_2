@@ -68,7 +68,7 @@
             {% endif %}
             {% if item.services == "Jeep safari" %}
             <img
-              src="{{url_for('static',filename='images/taxi services.jpg')}}"
+              src="{{url_for('static',filename='images/jeepsafari.jpeg')}}"
               alt="jeep safari"
             />
             {% endif %}
@@ -131,48 +131,51 @@
     </div>
     {% if item.services in ["Jeep safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
     <div class="box2">
+    {% for item5 in transport %}
     <div id="change">
         <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
-            <label>Cost </label>
-            <input type="text">
-            <label>Trip available</label>
-            <input type="text">
-            <label>Pick up and Drop</label>
-            <input type="text">
-            <label>Duration</label>
-            <input type="text">
-            <label>vehicle</label>
-            <input type="text">
-            <label>No. of Persons Allowed</label>
-            <input type="text">
-            <label>Trip available</label>
-            <input type="text">
-            <label>Things to carry</label>
-            <input type="text">
-            <label>Photo of vehicle</label>
-           <input type="file" name="img">
-            <button type="submit">Save Changes</button>   
+          <label>Cost per kilometer</label>
+          <input value="{{ item5.cost | default('') }}" type="text" name="cost" >
+          <label>Trip available</label>
+          <input value="{{ item5.Trip_available | default('') }}" type="text" name="Trip_available">
+          <label>Pick up and Drop</label>
+          <input value="{{ item5.Pick_up_and_Drop | default('') }}" type="text" name="Pick_up_and_Drop">
+          <label>Duration</label>
+          <input value="{{ item5.Duration | default('') }}" type="text" name="Duration">
+          <label>vehicle</label>
+          <input value="{{ item5.vehicle | default('') }}" type="text" name="vehicle">
+          <label>No. of Persons Allowed</label>
+          <input value="{{ item5.no_of_persons | default('') }}" type="text" name="no_of_persons">
+          <label>Things to carry</label>
+          <input value="{{ item5.Things_to_carry | default('') }}" type="text" name="Things_to_carry">
+          <label>Photo of vehicle</label>
+         <input type="file" name="img">
+          <button>Save Changes</button>      
         </form>      
     </div>
     <div id="edit">
       <h5>Cost of Jeep Safari</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.cost | default('') }}</h3>
       <h5>Trip available</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.Trip_available | default('') }}</h3>
       <h5>Pick up and Drop</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.Pick_up_and_Drop | default('') }}</h3>
       <h5>Duration</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.Duration | default('') }}</h3>
       <h5>vehicle</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.vehicle | default('') }}</h3>
       <h5>No. of Persons Allowed</h5>
-      <h3>{{ item.name }}</h3>
-      <h5>Trip available</h5>
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item5.no_of_persons | default('') }}</h3>
       <h5>Things to carry</h5>
-      <h3>{{ item.name }}</h3>
-      <button onclick="changeDivContent()" >Edit</button>
+      <h3>{{ item5.Things_to_carry | default('') }}</h3>
+      {% if item5.img is not none %}
+      <h5>Uploaded Photo</h5>
+      <a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
+      </a>        
+      {% endif %}
+      <button onclick="changeDivContent()">Edit</button>
     </div>
+    {% endfor %}
     </div>
   {% elif item.services in ["Carpentary works" , 'Plumbing services' , 'Electrical works']  %}
   <div class="box2">
