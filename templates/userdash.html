@@ -301,8 +301,9 @@
         <label>Photo of the shop</label>
         <input type="file" name="img">
         
-        <label>Edit Spices</label>
-        <a style="padding-left: 10px;" href="/addspiceproduct/{{ item3.local_id }}" onclick="saveForm()">click here</a>
+
+        <a class="editspices" href="/addspiceproduct/{{ item3.details_id }}" onclick="saveForm()">Edit spices</a>
+
 
         <button type="submit" onclick="deleteSessionData()">Save Changes</button>  
       </form>

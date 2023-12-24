@@ -10,7 +10,7 @@ from flask_session import Session
 from flask_login import current_user ,LoginManager
 from db import db_init, db
 
-from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation
+from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
 from sqlalchemy.sql.expression import update
 # login_manager = LoginManager()
@@ -25,7 +25,9 @@ local_server=True
 app = Flask(__name__)
 
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
-app.permanent_session_lifetime = timedelta(minutes=2)
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSION_TYPE'] = 'filesystem'
+app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['DB_SERVER'] = data['local_uri']
 
 
@@ -69,10 +71,6 @@ def authenticate_user(contact, password):
         return True, list.sno
     else:
         return False, None
-
-
-# @app.route('/userdash_submit', methods=['GET', 'POST'])
-# def userdash_submit():
 
 @app.route('/userdash/<int:sno>', methods=['GET', 'POST'])
 def userdash(sno):
@@ -200,22 +198,6 @@ def register():
             return redirect(url_for('register'))
         services = request.form.get('services')
     
-    # @app.route('/upload', methods=['POST'])
-    # def upload():
-    #     pic = request.files['pic']
-    #     if not pic:
-    #         return 'No pic uploaded!', 400
-
-    #     filename = secure_filename(pic.filename)
-    #     mimetype = pic.mimetype
-    #     if not filename or not mimetype:
-    #         return 'Bad upload!', 400
-
-    #     img = Img(img=pic.read(), name=filename, mimetype=mimetype)
-    #     db.session.add(img)
-    #     db.session.commit()
-
-    #     return 'Img Uploaded!', 200
         pic = request.files['file1']
         if not pic:
             flash('No Image uploaded. Please try again.')
@@ -230,77 +212,69 @@ def register():
         return render_template('confirm.html')
     return render_template('register.html')
 
-@app.route('/signin', methods=['GET', 'POST'])
+@app.route("/signin", methods=['GET', 'POST'])
 def signin():
+    user_contact = None
+    
     if request.method == 'POST':
         user_contact = request.form.get('contact')
         user_password = request.form.get('password')
-        details=Details.query.filter_by(contact=user_contact).first()
+
+        details = Details.query.filter_by(contact=user_contact).first()
         if details and bcrypt.check_password_hash(details.password, user_password):
-            return redirect(url_for('userdash', sno=details.sno)) 
+            session.permanent = True
+            session['user'] = user_contact
+            return redirect(url_for('userdash', sno=details.sno))
         else:
             flash('Invalid credentials. Please try again.')
-            return redirect(url_for('signin'))  
-            
-        # try:
-        #     result, sno = authenticate_user(user_contact, user_password)
-        # except:
-        #     flash('Invalid credentials. Please try again.')
-        #     return redirect(url_for('signin')) 
-        
-        # if result:
-        #     return redirect(url_for('userdash', sno=sno))  
-        # else:
+            return redirect(url_for('signin'))
 
-    list = Details.query.filter_by(accept = 1)
-    return render_template('signin.html', list=list)
+    if 'user' in session and session['user'] == user_contact:
+        return render_template('admin_dash.html', data=data)
 
-@app.route("/admin",  methods = ['GET', 'POST'])
+    details_list = Details.query.filter_by(accept=1).all()
+    return render_template('signin.html', list=details_list)
+
+@app.route("/admin", methods=['GET', 'POST'])
 def admin():
     error = None
+    username = None
 
     if request.method == "POST":
-        session.permanent = True
         username = request.form.get("username", "")
         userpass = request.form.get("password", "")
-        if username == data.get('admin_username') and userpass == data.get('admin_password'):
+
+        admin = Admin.query.filter_by(username=username).first()
+        if admin and bcrypt.check_password_hash(admin.password, userpass):
+            session.permanent = True
             session['user'] = username
             return render_template('admin_dash.html', data=data)
 
-        error = data.get('error')
+        else:
+            flash('Invalid credentials. Please try again.')
+            error = data.get('error')
+            return render_template('admin.html', data=data, error=error)
 
-    if session.get('user') == data.get('admin_username'):
+    if 'user' in session and session['user'] == username:
         return render_template('admin_dash.html', data=data)
 
     return render_template('admin.html', data=data, error=error)
-# @app.route("/")
-# def index():
-#     if not session.get("user_name"):
-#         return redirect("/login")
-#     return render_template('welcome.html')
 
-# @app.route("/login", methods=["POST", "GET"])
-# def login():
-#     if request.method == "POST":
-#         session["user_name"] = request.form.get("name")
-#         return redirect("/")
-#     return render_template("login.html")
-
-# @app.route("/logout")
+# @app.route('/logout')
 # def logout():
-#     session["user_name"] = None
-#     return redirect("/")
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.get(user_id)
-
+#     if session.get('user') == data.get('admin_username'):
+#         session.pop('user')
+#     return redirect('/admin')
 
 @app.route('/logout')
 def logout():
-    if session.get('user') == data.get('admin_username'):
-        session.pop('user')
-    return redirect('/admin')
+    session.pop('user', None)
+    return redirect(url_for('admin'))
 
+@app.route("/signin/logout")
+def signin_logout():
+    session.pop('user', None)
+    return redirect(url_for('signin'))
 
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
@@ -457,20 +431,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# def upload_image():
-# 	if 'files[]' not in request.files:
-# 		flash('No file part')
-# 		return redirect(request.url)
-# 	files = request.files.getlist('files[]')
-# 	file_names = []
-# 	for file in files:
-# 		if file and allowed_file(file.filename):
-# 			filename = secure_filename(file.filename)
-# 			file_names.append(filename)
-# 			file.save(os.path.join('static', 'uploads', filename))
-
-# 	return render_template('upload.html', filenames=file_names)
 
 
 @app.route('/tour')
@@ -629,21 +589,16 @@ def addspiceproduct(sno):
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     list1=Spices.query.filter_by().all()
     list2=Spiceproducts.query.filter_by().all()
-    return render_template('add_spices.html', list = list ,list1=list1,list2=list2)
+    return render_template('add_spices.html', list = list ,list1=list1, list2=list2)
 
 
 @app.route('/deletespiceproduct/<int:sno>/<int:id>', methods=['GET', 'POST'])
 def deletespiceproduct(sno , id):
     if(request.method == 'POST'):
-        deletespice = Spiceproducts().query.filter_by(details_id=sno , local_id = id).first()
+        deletespice = Spiceproducts().query.filter_by( local_id = id).first()
         db.session.delete(deletespice)
         db.session.commit()
-    
-    list = Details.query.filter_by(sno=sno , accept = 1).all()
-    list1=Spices.query.filter_by().all()
-    list2=Spiceproducts.query.filter_by().all()
-    return render_template('add_spices.html' , list = list , list1 = list1 , list2 = list2)
-
+    return redirect(url_for('addspiceproduct', sno=sno)) 
     
 
 @app.route('/transport')
@@ -692,6 +647,20 @@ def image(img):
 @app.route('/<text>', methods=['GET', 'POST'])
 def all_routes(text):
     return redirect(url_for('index'))
+
+
+@app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
+def addadmin():
+    if(request.method == 'POST'):
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        entry = Admin(username = username , password = hashed_password)
+            
+        db.session.add(entry)
+        db.session.commit()
+        
+    return render_template('admin_add.html')
 
 
 if __name__ == ("__main__"):

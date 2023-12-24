@@ -2,10 +2,8 @@
   "data": {
     "local_server": "True",
 
-    "local_uri": "mysql://root:12345678@localhost/pallivasal",
+    "local_uri": "mysql://root:Qwerty123@localhost/pallivasal",
 
-    "admin_username": "admin",
-    "admin_password": "1234",
     "error": "Invalid Username or Password"
   }
 }
