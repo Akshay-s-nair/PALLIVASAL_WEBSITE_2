@@ -45,7 +45,7 @@ h5 {
   
 }
 .sec:hover{
-  transform: scale(1.05);
+  transform: scale(1.01);
   transition:0.3s;
 }
 .contents{

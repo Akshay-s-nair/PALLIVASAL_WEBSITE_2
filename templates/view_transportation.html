@@ -41,7 +41,7 @@
         <!-- Navbar logo -->
         <div class="nav-header">
           <div class="nav-logo">
-            <a href="#">
+            <a href="/home">
               <img
                 id="logo"
                 src="{{url_for('static',filename='images/logo.png')}}"
@@ -79,7 +79,7 @@
                 <h5>Things to carry : {{ list1.Things_to_carry }}</h5>
                 
                 {% if list[0].services is not none %}
-                  <a id="atag" href="/transport_view/{{ list[0].services }}"
+                  <a id="atag" href="/transport_view/{{ list[0].sno }}"
                     >Back to previous</a>
                 {% endif %}
                 </h5>
