@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash , Response
+from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash 
 from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.utils import secure_filename
@@ -6,15 +6,11 @@ import os
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
-from flask_session import Session
-from flask_login import current_user ,LoginManager
 from db import db_init, db
 
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
 from sqlalchemy.sql.expression import update
-# login_manager = LoginManager()
-# from sqlalchemy import text
 
 
 with open('config.json', 'r') as c:

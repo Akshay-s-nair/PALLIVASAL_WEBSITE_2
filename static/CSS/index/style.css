@@ -20,7 +20,7 @@ body{
     rgb(0, 0, 0),
     rgb(0, 0, 0) 90%
   ); */
-  background-image:linear-gradient(rgba(0, 0, 0, 0.244), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+  background-image:linear-gradient(rgba(0, 0, 0, 0.244), rgba(0, 0, 0, 1)), url("../../images/bg.webp");
   background-size: cover;
   background-attachment:fixed;
 }
@@ -28,7 +28,7 @@ body{
 
   width: 100%;
   height: 100vh;
-  background-image:linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+  background-image:linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)), url("../../images/bg.webp");
   background-size: cover;
   background-attachment:fixed;
   
@@ -39,7 +39,7 @@ body{
 header{
   width: 100%;
   height: 100vh;
-  background-image:linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)), url("../../images/bg.jpg");
+  background-image:linear-gradient(rgba(83, 105, 118, 0), rgba(0, 0, 0, 1)), url("../../images/bg.webp");
   background-size: cover;
   background-attachment:fixed;
   z-index: 1111;
@@ -404,6 +404,7 @@ body{
 }
 .crdimg{
   height: 140px;
+  border-radius: 60px;
 }
 svg {
   display: inline-block;

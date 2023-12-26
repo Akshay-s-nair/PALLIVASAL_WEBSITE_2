@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='CSS/index/admin.css') }}"/>
     <link
     rel="icon"
-    href="{{url_for('static',filename='images/logo.png')}}"
+    href="{{url_for('static',filename='images/logo.webp')}}"
     type="image/icon type"
   /> 
     <link
@@ -27,7 +27,7 @@
           <a href="#">
             <img
               id="logo"
-              src="{{url_for('static',filename='images/logo.png')}}"
+              src="{{url_for('static',filename='images/logo.webp')}}"
               width="90px"
               alt="logo"
             />
@@ -60,7 +60,7 @@
           <tr class="content" >
             <td><p id="typeOut">{{item.name}}</p></td>
             <td><p id="typeOut">{{item.date}}</p></td>
-            <td><a href="/admin_view/{{ item.sno }}/{{ item.slug }}"><img src="/static/images/_318476.png" alt="" style="width: 25px; height: 25px; margin-left: 30px; margin-right: 30px;"></a></td>
+            <td><a href="/admin_view/{{ item.sno }}/{{ item.slug }}"><img src="/static/images/_318476.webp" alt="" style="width: 25px; height: 25px; margin-left: 30px; margin-right: 30px;"></a></td>
           </tr>  
    {% endfor %} 
     </table>

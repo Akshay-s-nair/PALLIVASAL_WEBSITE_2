@@ -7,7 +7,7 @@
     <title>Pallivasal</title>
     <link
       rel="icon"
-      href="{{url_for('static',filename='images/logo.png')}}"
+      href="{{url_for('static',filename='images/logo.webp')}}"
       type="image/icon type"
     />
     <!-- CSS only -->
@@ -22,10 +22,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <script
-      src="https://kit.fontawesome.com/f5cbf694f9.js"
-      crossorigin="anonymous"
-    ></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
@@ -42,10 +39,10 @@
         <!-- Navbar logo -->
         <div class="nav-header">
           <div class="nav-logo">
-            <a href="#">
+            <a href="{{ url_for('index') }}">
               <img
                 id="logo"
-                src="{{url_for('static',filename='images/logo.png')}}"
+                src="{{url_for('static',filename='images/logo.webp')}}"
                 width="90px"
                 alt="logo"
               />
@@ -60,7 +57,7 @@
     <!----------------------Home------------------------>
     <div class="explorer1">
       <img
-        src="{{url_for('static',filename='images/explore.png')}}"
+        src="{{url_for('static',filename='images/explore.webp')}}"
         class="responsiveimg"
         width="1322"
         height="680"
@@ -91,5 +88,9 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <script
+    src="https://kit.fontawesome.com/f5cbf694f9.js"
+    crossorigin="anonymous"
+  ></script>
   </body>
 </html>

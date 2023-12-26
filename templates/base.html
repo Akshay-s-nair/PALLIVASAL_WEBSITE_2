@@ -11,10 +11,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
         crossorigin="anonymous"
       />
-      <script
-        src="https://kit.fontawesome.com/f5cbf694f9.js"
-        crossorigin="anonymous"
-      ></script>
+      
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
       <link
@@ -48,7 +45,7 @@
           <a href="#">
             <img
               id="logo"
-              src="{{url_for('static',filename='images/logo.png')}}"
+              src="{{url_for('static',filename='images/logo.webp')}}"
               width="90px"
               alt="logo"
             />
@@ -57,7 +54,8 @@
       </div>
 
       <!-- responsive navbar toggle button -->
-      <input type="checkbox" id="nav-check" />
+      <label></label>
+      <input type="checkbox" id="nav-check"/>
       <div class="nav-btn">
         <label for="nav-check">
           <span></span>
@@ -71,9 +69,10 @@
 
         <a href="{{ url_for('view') }}"
           ><img
-            src="{{url_for('static',filename='images/user icon.svg')}}"
+            src="{{url_for('static',filename='images/user_icon.webp')}}"
             width="30px"
             height="30px"
+            alt="User icon"
         /></a>
         <a href="#tourism">Tourism</a>
         <a href="#services">Services</a>
@@ -82,7 +81,12 @@
       </div>
     </nav>
   </div>
+  <script
+  src="https://kit.fontawesome.com/f5cbf694f9.js"
+  crossorigin="anonymous"
+></script>
   <script> 
+    
     // get the navbar element
     const navbar = document.querySelector('nav');
     
@@ -103,17 +107,9 @@
       }
     });
 
-    const nav = document.getElementById('nav-link');
-// Add a click event listener to the document
-document.addEventListener('click', (event) => {
-  // Check if the target of the event is outside the navbar
-  if (!navbar.contains(event.target)) {
-    // If it is, change the display of the navbar to none
-    navc.style.display = 'none';
-  }
-});
+   
   </script>
-    
+
    
   {% block body  %}
 

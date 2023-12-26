@@ -13,7 +13,7 @@
     {% endfor %}
     <link
       rel="icon"
-      href="{{url_for('static',filename='images/logo.png')}}"
+      href="{{url_for('static',filename='images/logo.webp')}}"
       type="image/icon type"
     />
     <link
@@ -22,10 +22,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <script
-      src="https://kit.fontawesome.com/f5cbf694f9.js"
-      crossorigin="anonymous"
-    ></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
@@ -44,7 +41,7 @@
             <a href="/home">
               <img
                 id="logo"
-                src="{{url_for('static',filename='images/logo.png')}}"
+                src="{{url_for('static',filename='images/logo.webp')}}"
                 width="90px"
                 alt="logo"
               />
@@ -67,7 +64,7 @@
                   {% set fname = 'uploads/' + list1.img %}  
                   <img src="{{ url_for('static',filename=fname) }}" class="asd">
                 {% else %}
-                  <img src="/static/images/bg.jpg" alt="">
+                  <img src="/static/images/bg.webp" alt="">
                 {% endif %}
                 <h5>Name of the Driver: {{ list[0].name }}</h5>
                 <h5>Cost : {{ list1.cost }}</h5>
@@ -89,5 +86,9 @@
         </div>
       </div>
     </div>
+    <script
+    src="https://kit.fontawesome.com/f5cbf694f9.js"
+    crossorigin="anonymous"
+  ></script>
   </body>
 </html>

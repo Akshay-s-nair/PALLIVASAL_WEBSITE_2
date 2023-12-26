@@ -11,7 +11,7 @@
     <title>Add Spices</title>
     <link
     rel="icon"
-    href="{{url_for('static',filename='images/logo.png')}}"
+    href="{{url_for('static',filename='images/logo.webp')}}"
     type="image/icon type"
   /> 
 </head>
@@ -58,7 +58,7 @@
             <div class="viewtemp">
               <h4>{{ item2.product }} : {{ item2.price }}</h4>
               <form class="formbut" action="/deletespiceproduct/{{ item.sno }}/{{ item2.local_id }}" method="post">
-                <button class="delete" type="submit"><img class="del" src="{{ url_for('static',filename='images/delete.png') }}" alt=""></button>
+                <button class="delete" type="submit"><img class="del" src="{{ url_for('static',filename='images/delete.webp') }}" alt=""></button>
               </form>
             </div>
         {% endif %}
