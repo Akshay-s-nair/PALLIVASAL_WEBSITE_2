@@ -11,10 +11,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
         crossorigin="anonymous"
       />
-      <script
-        src="https://kit.fontawesome.com/f5cbf694f9.js"
-        crossorigin="anonymous"
-      ></script>
+      
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
       <link
@@ -48,7 +45,7 @@
           <a href="#">
             <img
               id="logo"
-              src="{{url_for('static',filename='images/logo.png')}}"
+              src="{{url_for('static',filename='images/logo.webp')}}"
               width="90px"
               alt="logo"
             />
@@ -72,7 +69,7 @@
 
         <a href="{{ url_for('view') }}"
           ><img
-            src="{{url_for('static',filename='images/user_icon.svg')}}"
+            src="{{url_for('static',filename='images/user_icon.webp')}}"
             width="30px"
             height="30px"
             alt="User icon"
@@ -84,7 +81,12 @@
       </div>
     </nav>
   </div>
+  <script
+  src="https://kit.fontawesome.com/f5cbf694f9.js"
+  crossorigin="anonymous"
+></script>
   <script> 
+    
     // get the navbar element
     const navbar = document.querySelector('nav');
     
@@ -107,7 +109,7 @@
 
    
   </script>
-    
+
    
   {% block body  %}
 

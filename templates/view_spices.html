@@ -13,7 +13,7 @@
     {% endfor %}
     <link
       rel="icon"
-      href="{{url_for('static',filename='images/logo.png')}}"
+      href="{{url_for('static',filename='images/logo.webp')}}"
       type="image/icon type"
     />
     <link
@@ -50,7 +50,7 @@
                         <img class="image_holder" src="{{ url_for('static',filename=fname) }}" 
                         style="margin-top: -10px;">	
                     {% else %}
-                        <img src="/static/images/bg.jpg" alt="">
+                        <img src="/static/images/bg.webp" alt="">
                     {% endif %}
                     <h5>Shop name: {{item2.name}}</h5>
 

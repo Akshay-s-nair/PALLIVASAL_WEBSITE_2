@@ -6,7 +6,7 @@
     <title>Plantation Crops</title>
     <link
       rel="icon"
-      href="{{url_for('static',filename='images/logo.png')}}"
+      href="{{url_for('static',filename='images/logo.webp')}}"
       type="image/icon type"
     />  
     <link
@@ -26,7 +26,7 @@
             <a href="#">
               <img
                 id="logo"
-                src="{{url_for('static',filename='images/logo.png')}}"
+                src="{{url_for('static',filename='images/logo.webp')}}"
                 width="90px"
                 alt="logo"
               />
@@ -52,7 +52,7 @@
               {% set fname = 'uploads/' + i.img %}  
               <img src="{{ url_for('static',filename=fname) }}" class="asd">
             {% else %}
-              <img src="{{url_for('static',filename='images/p1.svg')}}" class="asd" />
+              <img src="{{url_for('static',filename='images/p1.webp')}}" class="asd" />
             {% endif %}
           </div>
           <div class="contents" ;>

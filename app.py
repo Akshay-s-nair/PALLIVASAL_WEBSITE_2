@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash , Response
+from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash 
 from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.utils import secure_filename
@@ -11,8 +11,6 @@ from db import db_init, db
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
 from sqlalchemy.sql.expression import update
-# login_manager = LoginManager()
-# from sqlalchemy import text
 
 
 with open('config.json', 'r') as c:
@@ -40,16 +38,6 @@ def truncate_string(input_string, max_length):
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_SERVER']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db_init(app)
-# db = SQLAlchemy()
-# db.init_app(app)
-
-# # Function that initializes the db and creates the tables
-# def db_init(app):
-#     db.init_app(app)
-
-#     # Creates the logs tables if the db doesnt already exist
-#     with app.app_context():
-#         db.create_all()
 
 @app.route('/')
 def index():
