@@ -1,5 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+a.backtotrans{
+  padding: 8px;
+  font-size: 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  background-color: aliceblue;
+  color: #000000;
+}
+a.backtotrans:hover{
+  background-color: rgb(118, 118, 118);
+  color: aliceblue;
+}
+@media (max-width: 480px) {
+  a.backtotrans{
+    font-size: 13px;
+  }
+}
 body{
     background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
     url("../../images/bg.webp");
@@ -136,6 +154,8 @@ h2{
   .navbar #nav-check, .navbar .nav-btn{
     display: none;
   }
+  
+  
 
 @media (max-width:700px) {
     .box h5{
@@ -148,3 +168,4 @@ h2{
         margin-top: 80px;
     }
 }
+

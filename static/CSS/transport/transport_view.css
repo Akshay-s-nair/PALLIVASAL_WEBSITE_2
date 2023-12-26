@@ -105,11 +105,27 @@ section{
   .navbar #nav-check, .navbar .nav-btn{
     display: none;
   }
+  a.backtotrans{
+    padding: 8px;
+    font-size: 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: aliceblue;
+    color: #000000;
+  }
+  a.backtotrans:hover{
+    background-color: rgb(118, 118, 118);
+    color: aliceblue;
+  }
 @media (max-width: 480px) {
     th,td{
         padding-left: 2%;
         font-size: small;
         
+    }
+    a.backtotrans{
+      font-size: 13px;
     }
 }
 

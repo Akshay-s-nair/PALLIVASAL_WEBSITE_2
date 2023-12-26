@@ -66,7 +66,6 @@ def userdash(sno):
         entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
         entry4 = Plantation.query.join(Details).filter(Details.sno == sno).first()
         entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
-        # entry4 = Spiceproducts.query.join(Spices).filter().first()
  
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -142,8 +141,6 @@ def userdash(sno):
             entry5.Things_to_carry=request.form.get('Things_to_carry')
             pic = request.files['img']
             
-            # if not pic:
-            #     return 'No image uploaded!', 400
             filename = secure_filename(pic.filename)
             entry5.img=filename   
             pic.save(os.path.join('static', 'uploads', filename))
@@ -255,7 +252,7 @@ def logout():
 @app.route("/signin_logout")
 def signin_logout():
     session.pop('user', None)
-    return redirect(url_for('signin'))
+    return redirect(url_for('home'))
 
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
@@ -308,30 +305,104 @@ def admin_accept():
 @app.route('/admin_reject', methods=['POST'])    
 def admin_reject():
     row_id2 = request.form.get('row_id2')
-    row = Details.query.filter_by(sno = row_id2).first()
-    filename = row.file
-    if row:
-        try:
-            os.remove(os.path.join('static', 'uploads', filename))
-        except:
-            pass
-        db.session.delete(row)
-        db.session.commit()     
+    try:
+        row = Details.query.filter_by(sno = row_id2).first()
+        filename = row.file
+        if row:
+            spices_to_delete=Spices.query.filter_by(details_id=row.sno).all()
+            for spice in spices_to_delete:
+                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).all()
+                for spiceproduct in spiceproducts_to_delete:
+                    db.session.delete(spiceproduct)
+                for spice in spices_to_delete:
+                    db.session.delete(spice)
+            try:
+                os.remove(os.path.join('static', 'uploads', filename))
+            except:
+                pass
+
+            try:
+                transportation_to_delete=Transportation.query.filter_by(details_id=row.sno).first()
+                db.session.delete(transportation_to_delete)
+            except:
+                pass
+
+            try:
+                LocalWorkforce_to_delete=LocalWorkforce.query.filter_by(details_id=row.sno).first()
+                db.session.delete(LocalWorkforce_to_delete)
+            except:
+                pass
+
+            try:
+                WhereToStay_to_delete=WhereToStay.query.filter_by(details_id=row.sno).first()
+                db.session.delete(WhereToStay_to_delete)
+            except:
+                pass
+
+            try:
+                Plantation_to_delete=Plantation.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Plantation_to_delete)
+            except:
+                pass
+            db.session.delete(row)
+            db.session.commit()
+    except Exception as e:
+        print(f"Error deleting user: {e}")
+        db.session.rollback()
+        return render_template('admin_reject.html')
+    
     return render_template('admin_reject.html')
+    
 
 
 @app.route('/approved_remove', methods=['POST'])    
 def approved_remove():
     row_id2 = request.form.get('row_id2')
-    row = Details.query.filter_by(sno = row_id2).first()
-    filename = row.file
-    if row:
-        try:
-            os.remove(os.path.join('static', 'uploads', filename))
-        except:
-            pass
-        db.session.delete(row)
-        db.session.commit()     
+    try:
+        row = Details.query.filter_by(sno = row_id2).first()
+        filename = row.file
+        if row:
+            spices_to_delete=Spices.query.filter_by(details_id=row.sno).all()
+            for spice in spices_to_delete:
+                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).all()
+                for spiceproduct in spiceproducts_to_delete:
+                    db.session.delete(spiceproduct)
+                for spice in spices_to_delete:
+                    db.session.delete(spice)
+            try:
+                os.remove(os.path.join('static', 'uploads', filename))
+            except:
+                pass
+            try:
+                transportation_to_delete=Transportation.query.filter_by(details_id=row.sno).first()
+                db.session.delete(transportation_to_delete)
+            except:
+                pass
+
+            try:
+                LocalWorkforce_to_delete=LocalWorkforce.query.filter_by(details_id=row.sno).first()
+                db.session.delete(LocalWorkforce_to_delete)
+            except:
+                pass
+
+            try:
+                WhereToStay_to_delete=WhereToStay.query.filter_by(details_id=row.sno).first()
+                db.session.delete(WhereToStay_to_delete)
+            except:
+                pass
+
+            try:
+                Plantation_to_delete=Plantation.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Plantation_to_delete)
+            except:
+                pass
+
+            
+                    
+            db.session.delete(row)
+            db.session.commit()
+    except Exception as e:
+        db.session.rollback()   
     return render_template('admin_reject.html')
 
 @app.route('/requests', methods=["GET" ,"POST"])
@@ -388,7 +459,6 @@ def edit_pages():
                 entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
             elif(num == 5):
                 entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
-            # elif(num > 5):
         
 
             if(num<=5):
@@ -540,7 +610,6 @@ def spices_view():
     lis4 = Spiceproducts.query.with_entities(Spiceproducts.product).all()
     product_list = [item.product for item in lis4]
     product_list=list(set(product_list))
-    print(product_list)
     return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3,product_list=product_list)
 
 @app.route('/view_spices/<int:sno>', methods=['GET', 'POST'])
@@ -560,9 +629,6 @@ def addspiceproduct(sno):
         spiceobj = Spiceproducts(product=product,price=price,details_id=details_instance_spices.local_id)
         db.session.add(spiceobj)
         db.session.commit()
-        # entry3=Spiceproducts()
-        # db.session.add(entry3)
-        # db.session.commit()
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     list1=Spices.query.filter_by().all()
@@ -584,9 +650,10 @@ def transport():
     list = Details.query.filter_by(accept = 1).all()
     return render_template('transport.html', list = list)
 
-@app.route('/transport_view/<string:services>', methods=["GET" ,"POST"])
-def transport_view(services):
-    list = Details.query.filter_by(services = services , accept = 1)
+@app.route('/transport_view/<int:sno>', methods=["GET" ,"POST"])
+def transport_view(sno):
+    t = Details.query.filter_by(sno=sno , accept = 1).first()
+    list = Details.query.filter_by(services = t.services , accept = 1)
     return render_template('transport_view.html', list=list)
 
 @app.route('/transport_detail_view/<int:sno>', methods=["GET" ,"POST"])
@@ -598,25 +665,6 @@ def transport_detail_view(sno):
 @app.route('/transport_view/busview')
 def busview():
     return render_template('bus.html')
-# @app.route('/taxiservices')
-# def taxiservices():
-#     list = Accept.query.filter_by().all()
-#     for item in list:
-#         if item.services=='Taxi Services':
-#             x=x.append(item)    
-#     return render_template('transport_view.html', list = x)
-
-
-# @app.route('/taxiservices/<string:services>', methods=["GET" ,"POST"])
-# def taxiservices(services):
-#     list = Accept.query.filter_by(services=services)   
-#     return render_template('transport_view.html', list = list)
-
-
-# @app.route('/CarRental')
-# def CarRental():
-#     list = Accept.query.filter_by(services='Car Rental')
-#     return render_template('transport_view.html', list = list)
 
 @app.route('/image/<string:img>', methods=['GET', 'POST'])
 def image(img):
