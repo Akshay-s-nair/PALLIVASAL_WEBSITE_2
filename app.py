@@ -6,8 +6,6 @@ import os
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
-from flask_session import Session
-from flask_login import current_user ,LoginManager
 from db import db_init, db
 
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
