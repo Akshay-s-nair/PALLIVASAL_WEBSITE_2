@@ -25,7 +25,16 @@
       </div>
       <div class="container text-center mt-5">
         <div class="row mb-5">
-          
+          <div class="col-lg blk">
+            <a href="/transport_view/busview">
+            <img
+              src="{{url_for('static',filename='images/ksrtc.webp')}}"
+              alt="" class="imgs"
+              />
+            </a>
+            <h5>Bus Services</h5>
+          </div>
+          {% if "Jeep Safari" in list2 %}
           <div class="col-lg blk">
             {% for item in list %}
               {% if item.services =="Jeep Safari" %}
@@ -39,18 +48,10 @@
             </a>
             <h5>Jeep Safari</h5>
           </div>
-          
-          <div class="col-lg blk">
-            <a href="/transport_view/busview">
-            <img
-              src="{{url_for('static',filename='images/ksrtc.webp')}}"
-              alt="" class="imgs"
-              />
-            </a>
-            <h5>Bus Services</h5>
-              
-            
-          </div>
+          {% endif %}
+
+
+          {% if "Taxi service" in list2 %}
           <div class="col-lg blk">
             {% for item in list %}
               {% if item.services =="Taxi service" %}
@@ -62,12 +63,13 @@
                   alt="" class="imgs"
                 />
                 </a>
-                <h5 id="ts">Taxi Services</h5>
-            
+                <h5 id="ts">Taxi Services</h5>     
           </div>
+          {% endif %}
           
         </div>
         <div class="row">
+          {% if "Car Rental" in list2 %}
           <div class="col-lg blk">
             {% for item in list %}
               {% if item.services =="Car Rental" %}
@@ -81,6 +83,9 @@
                 </a>
                 <h5>Car Rental</h5>
           </div>
+          {% endif %}
+
+          {% if "Bike Rental" in list2 %}
           <div class="col-lg blk">
             {% for item in list %}
               {% if item.services =="Bike Rental" %}
@@ -94,7 +99,9 @@
             </a>
             <h5>Bike Rental</h5>
           </div>
+          {% endif %}
 
+          {% if "Auto Rickshaw" in list2 %}
           <div class="col-lg blk">
             {% for item in list %}
               {% if item.services =="Auto Rickshaw" %}
@@ -108,6 +115,8 @@
             </a>
             <h5>Auto Rickshaw</h5>
           </div>
+          {% endif %}
+
         </div>
       </div>
     </div>
