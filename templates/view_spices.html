@@ -48,7 +48,7 @@
                     {% if item2.img is not none %}
                         {% set fname = 'uploads/' + item2.img %}  
                         <img class="image_holder" src="{{ url_for('static',filename=fname) }}" 
-                        style="margin-top: -10px;">	
+                        style="margin-top: -10px;" alt=".">	
                     {% else %}
                         <img src="/static/images/bg.webp" alt="">
                     {% endif %}

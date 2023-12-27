@@ -188,7 +188,10 @@ a{
     width: 400px;
     height: 300px;
   }
-
+  h5{
+    width: 400px;
+    word-wrap: break-word;
+  }
 @media (max-width: 480px) {
     .cnt{
         width: 100%;
@@ -244,7 +247,10 @@ a{
         width: 300px;
         height: 300px;
       }
-
+      h5{
+        width: 300px;
+        word-wrap: break-word;
+      }
   }
 
  
