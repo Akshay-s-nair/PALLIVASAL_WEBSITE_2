@@ -7,7 +7,7 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
-
+from flask_compress import Compress
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
 from sqlalchemy.sql.expression import update
@@ -18,7 +18,9 @@ with open('config.json', 'r') as c:
 
 local_server=True    
 
+
 app = Flask(__name__)
+Compress(app)
 
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -429,48 +431,43 @@ def approved_view(sno ,slug ):
     else:
         return render_template('admin.html')
 
-@app.route('/edit_pages' , methods=["GET" ,"POST"])
+@app.route('/edit_pages', methods=["GET", "POST"])
 def edit_pages():
     if "user" in session:
-        if(request.method == 'POST'):
+        if request.method == 'POST':
             name = request.form.get('name')
             description = request.form.get('desc')
-            map = request.form.get('map')
+            map_location = request.form.get('map')
 
             if 'files[]' not in request.files:
                 flash('No file selected')
                 return redirect(request.url)
+
             files = request.files.getlist('files[]')
             num = len(files)
             file_names = []
+
             for file in files:
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file_names.append(filename)
                     file.save(os.path.join('static', 'uploads', filename))
 
-            if(num == 1):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
-            elif(num == 2):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] ,img2 = file_names[1] )
-            elif(num == 3):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2] )
-            elif(num == 4):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
-            elif(num == 5):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
-        
+            if num <= 5:
+                entry_data = {'name': name, 'description': description, 'map': map_location}
+                for i in range(1, num + 1):
+                    entry_data[f'img{i}'] = file_names[i - 1]
 
-            if(num<=5):
+                entry = Places(**entry_data)
                 db.session.add(entry)
+                db.session.commit()
             else:
-                flash('only a maximum of 5 should be uploaded!')
-            db.session.commit()
-                
-        return render_template('edit_pages.html' )
+                flash('Only a maximum of 5 should be uploaded!')
+
+        return render_template('edit_pages.html')
     else:
         return render_template('admin.html')
-
+    
 @app.route('/confirm')
 def confirm():
     return render_template('confirm.html')
