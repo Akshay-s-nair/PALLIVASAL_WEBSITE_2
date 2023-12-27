@@ -35,11 +35,11 @@
                                     <img src="{{url_for('static',filename='images/logo.webp')}}" class="img-fluid mx-auto d-block pt-3" width="110px" id="logoimg">
                                     <h2 class="text-white sign">Sign in</h2>
                                     <div class="input-container">		
-                                        <input type="tel" required="" maxlength="10" name="contact"/>
+                                        <input type="tel" maxlength="10" name="contact"/>
                                         <label>Phone Number</label>
                                     </div>
                                     <div class="input-container">		
-                                        <input type="password" required=""  name="password"/>
+                                        <input type="password"   name="password"/>
                                         <label>Password</label>
                                     </div>
                                     
@@ -49,8 +49,10 @@
                                         <a href="/user_dash/{{ item.sno }}">
                                         {% endfor %}
                                         <button type="submit" class="otpbtn" value="Login" >Login</button>
-                                        </a>
                                     </div>
+                                </a>
+                                    <a href="/forgotpass" style="text-decoration: none;color: aliceblue;">Forgot Password
+                                </a>
                                     {% with messages = get_flashed_messages() %}
                                     {% if messages %}
                                         <div class="flashes">
