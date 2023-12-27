@@ -212,10 +212,6 @@ def signin():
             session.permanent = True
             session['user'] = user_contact
             return redirect(url_for('userdash', sno=details.sno))
-        elif user_password==details.password:
-            session.permanent = True
-            session['user'] = user_contact
-            return redirect(url_for('userdash', sno=details.sno))
         else:
             flash('Invalid credentials. Please try again.')
             return redirect(url_for('signin'))
@@ -311,14 +307,7 @@ def admin_accept():
 
     # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-    body='''
-This mail is to inform that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and can make Necessary changes if needed.
-    Your infomation will be available in the website for the public.
-
-    for any queries, contact us through
-explorepallivasalgp@gmail.com
-
-    '''
+    body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath"
     em=EmailMessage()
     em['From']=ems
     em['To']=emr
@@ -721,9 +710,19 @@ def forgotpass():
 def forgotcheck():
     if(request.method == 'POST'):
         email=request.form.get('email')
+        mobile=request.form.get('mobile')
         t = Details.query.filter_by(email=email , accept = 1).first()
         if t:
-            return render_template('forgotnumb.html',list1=t)
+            u=Details.query.filter_by(contact=mobile , accept = 1).first()
+            if u:
+                if t.sno==u.sno:
+                    return render_template('forgotnumb.html',no=t.sno)
+                else:
+                    flash('Password and email does not match! try again.')
+                    return redirect(url_for('forgotcheck'))
+                # return render_template('forgotnumb.html',list1=t)
+            else:
+                flash('Mobile number is incorrect! Try Again.')
         else:
             flash('Email does not Exist! try again.')
             return redirect(url_for('forgotcheck'))
@@ -732,32 +731,35 @@ def forgotcheck():
 @app.route('/forgotemail/<int:sno>', methods=['GET', 'POST'])
 def forgotemail(sno):
     if(request.method == 'POST'):
-        mobile=request.form.get('mobile')
-        t = Details.query.filter_by(sno=sno , accept = 1).first()
-        if t:
-            if mobile==t.contact:
-                ems='explorepallivasalgp@gmail.com'
-                emp='aapnsstawfopxmle'
-                emr=t.email
+        password1=request.form.get('password1')
+        password2=request.form.get('password2')
+        if password1==password2:
+            t = Details.query.get(sno)
+            t.password=bcrypt.generate_password_hash(password1).decode('utf-8')
+            db.session.commit()
 
-                # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-                subject="Hy "+t.name
-                body=" Your password is : "+t.password
-                em=EmailMessage()
-                em['From']=ems
-                em['To']=emr
-                em['Subject']=subject
-                em.set_content(body)
+            ems='explorepallivasalgp@gmail.com'
+            emp='aapnsstawfopxmle'
+            emr=t.email
 
-                c=ssl.create_default_context()
+            # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+            subject="Hy "+t.name
+            body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
+            em=EmailMessage()
+            em['From']=ems
+            em['To']=emr
+            em['Subject']=subject
+            em.set_content(body)
 
-                with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-                    smtp.login(ems,emp)
-                    smtp.sendmail(ems,emr,em.as_string())
-                return render_template('emailsend.html')
-            else:
-                flash('Password and email does not match! try again.')
-                return redirect(url_for('forgotcheck'))
+            c=ssl.create_default_context()
+
+            with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
+                smtp.login(ems,emp)
+                smtp.sendmail(ems,emr,em.as_string())
+            return render_template('emailsend.html')
+        else:
+            flash('Password does not match.')
+            return render_template('forgotnumb.html',no=t.sno)
 
     return render_template('forgotnumb.html',list1=t)
 
