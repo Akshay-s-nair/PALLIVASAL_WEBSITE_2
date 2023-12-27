@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Bus-Timings</title>
+    <title>E-Services And Waste Management</title>
 
     <!-- Font Awesome -->
     <link
@@ -50,11 +50,11 @@
     </header> -->
     <div class="containerr">
       <nav class="head">
-        <h1>Bus Timings</h1>
+        <h1>E-Services And Waste Management</h1>
       </nav>
       <table class="table">
         <thead id="table-head"></thead>
-        <tbody id="table-body"></tbody>
+        <tbody id="table-body" style="text-align: center;"></tbody>
       </table>
     </div>
 
@@ -179,29 +179,48 @@
         // Your API KEY
         const API_KEY = "AIzaSyDtjRBgwXOQnb3n84mTTODlNnptKenIx2c";
 
+        // function displayResult2(response) {
+        //   let tableHead = "";
+        //   let tableBody = "";
+
+        //   response.result.values.forEach((row, index) => {
+        //     if (index === 0) {
+        //       tableHead += "<tr>";
+        //       row.forEach((val) => (tableHead += "<th>" + val + "</th>"));
+        //       tableHead += "</tr>";
+        //     } else {
+        //       tableBody += "<tr>";
+        //       row.forEach((val) => (tableBody += "<td><a href="+val+">" + val + "</a></td>"));
+        //       tableBody += "</tr>";
+        //     }
+        //   });
+
+        //   document.getElementById("table-head").innerHTML = tableHead;
+        //   document.getElementById("table-body").innerHTML = tableBody;
+        // }
+
         function displayResult2(response) {
-          let tableHead = "";
-          let tableBody = "";
+    let tableHead = "";
+    let tableBody = "";
 
-          response.result.values.forEach((row, index) => {
-            if (index === 0) {
-              tableHead += "<tr>";
-              row.forEach((val) => (tableHead += "<th>" + val + "</th>"));
-              tableHead += "</tr>";
-            } else {
-              tableBody += "<tr>";
-              row.forEach((val) => (tableBody += "<td>" + val + "</td>"));
-              tableBody += "</tr>";
-            }
-          });
+    response.result.values.forEach((row, index) => {
+      if (index === 0) {
+        tableHead += "<tr>";
+        row.forEach((val) => (tableHead += "<th>" + val + "</th>"));
+        tableHead += "</tr>";
+      } else {
+        tableBody += "<tr>";
+        row.forEach((val) => (tableBody += "<td><a href='"+val+"' target='_blank'>"+ val + "</a></td>"));
+        tableBody += "</tr>";
+      }
+    });
 
-          document.getElementById("table-head").innerHTML = tableHead;
-          document.getElementById("table-body").innerHTML = tableBody;
-        }
-
+    document.getElementById("table-head").innerHTML = tableHead;
+    document.getElementById("table-body").innerHTML = tableBody;
+  }
         function loadData() {
           // Spreadsheet ID
-          const spreadsheetId = "1TjMO6z5lkt362XtRKgjsS_l4Va8Jym1QH_fxE1MyFvg";
+          const spreadsheetId = "12P5ChHT0z3Cbbi33BBQpYq4EYzvGzYzJ142D3zCT0RU";
           const range = "A:Z";
           getPublicValues({ spreadsheetId, range }, displayResult2);
         }
