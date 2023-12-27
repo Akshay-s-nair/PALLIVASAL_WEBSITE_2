@@ -647,8 +647,11 @@ def deletespiceproduct(sno , id):
 
 @app.route('/transport')
 def transport():
-    list = Details.query.filter_by(accept = 1).all()
-    return render_template('transport.html', list = list)
+    list1 = Details.query.filter_by(accept = 1).all()
+    trans=Details.query.with_entities(Details.services).all()
+    product_list = [item.services for item in trans]
+    product_list=list(set(product_list))
+    return render_template('transport.html', list = list1, list2=product_list)
 
 @app.route('/transport_view/<int:sno>', methods=["GET" ,"POST"])
 def transport_view(sno):
