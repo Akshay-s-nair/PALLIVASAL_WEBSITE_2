@@ -54,6 +54,11 @@ def truncate_string(input_string, max_length):
     
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_SERVER']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+}
+
+
 db_init(app)
 
 @app.route('/')
