@@ -307,8 +307,8 @@ def admin_accept():
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
-    ems='explorepallivasalgp@gmail.com'
-    emp='aapnsstawfopxmle'
+    ems='admin@explorepallivasalgp.org'
+    emp='pallivasal@999'
     emr=details_instance.email
 
     # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
@@ -321,14 +321,17 @@ def admin_accept():
     em.set_content(body)
 
     c=ssl.create_default_context()
-
-    with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-        smtp.login(ems,emp)
-        smtp.sendmail(ems,emr,em.as_string())
+    
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
+            smtp.login(ems,emp)
+            smtp.sendmail(ems,emr,em.as_string())
+    except Exception as e:
+        print(f"Error sending email: {e}")
     return render_template('admin_accept.html')
 
 
-@app.route('/admin_reject', methods=['POST'])    
+@app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
     row_id2 = request.form.get('row_id2')
     try:
@@ -780,4 +783,4 @@ def addadmin():
 
 
 if __name__ == ("__main__"):
-    app.run(debug=True)
+    app.run()
