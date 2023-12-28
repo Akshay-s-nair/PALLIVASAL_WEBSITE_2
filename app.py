@@ -172,45 +172,65 @@ def userdash(sno):
     transport=Transportation.query.filter_by(details_id = sno).all()
     return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
 
-@app.route('/register', methods = ['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         name = request.form.get('name')
         address = request.form.get('address')
         contact = request.form.get('contact')
-        if len(contact)!=10:
+
+        if len(contact) != 10:
             flash('Invalid Mobile number. Please try with a different one.')
             return redirect(url_for('register'))
-        x=Details.query.filter_by(contact=contact).first()
-        if x is not None:
-            flash('Account exists with this number. Please try with a different one.')
+
+        try:
+            existing_entry = Details.query.filter_by(contact=contact).first()
+
+            if existing_entry:
+                flash('Account exists with this number. Please try with a different one.')
+                return redirect(url_for('register'))
+        except Exception as e:
+            flash(f"Error executing query: {e}")
             return redirect(url_for('register'))
+
         password = request.form.get('password')
         confirm = request.form.get('confirm')
-        if password==confirm:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        else:
+
+        if password != confirm:
             flash('Password combination does not match. Please try again.')
             return redirect(url_for('register'))
-        
+
         email = request.form.get('email')
-        if '@' not in email and '.' not in email:
+
+        if '@' not in email or '.' not in email:
             flash('Invalid email format. Please try again.')
             return redirect(url_for('register'))
+
         services = request.form.get('services')
-    
-        pic = request.files['file1']
+        pic = request.files.get('file1')
+
         if not pic:
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('register'))
+
         filename = secure_filename(pic.filename)
-        entry = Details(name=name, address=address, contact=contact , password=hashed_password, email=email, services=services ,date=datetime.now().date() , file=filename)
-        if (request.method == 'POST'):    
+
+        entry = Details(
+            name=name, address=address, contact=contact,
+            password=bcrypt.generate_password_hash(password).decode('utf-8'),
+            email=email, services=services,
+            date=datetime.now().date(), file=filename
+        )
+
+        try:
+            db.session.add(entry)
+            db.session.commit()
             pic.save(os.path.join('static', 'uploads', filename))
-        db.session.add(entry)
-        db.session.commit()
-        
-        return render_template('confirm.html')
+            return render_template('confirm.html')
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('register'))
+
     return render_template('register.html')
 
 @app.route("/signin", methods=['GET', 'POST'])
