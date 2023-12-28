@@ -7,11 +7,8 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
+from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
-
-from email.message import EmailMessage
-import smtplib
-import ssl
 
 
 from flask_compress import Compress
@@ -38,6 +35,15 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['DB_SERVER'] = data['local_uri']
 
+app.config['MAIL_SERVER']="smtp.gmail.com"
+app.config['MAIL_PORT']=465
+app.config['MAIL_USERNAME']="explorepallivasalgp@gmail.com"
+app.config['MAIL_PASSWORD']="aapnsstawfopxmle"
+app.config['MAIL_USE_TLS']=False
+app.config['MAIL_USE_SSL']=True
+
+
+mail=Mail(app)
 
 file_handler = FileHandler('errorlog.txt')
 file_handler.setLevel(WARNING)
@@ -340,27 +346,19 @@ def admin_accept():
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
-    ems='admin@explorepallivasalgp.org'
-    emp='pallivasal@999'
-    emr=details_instance.email
 
-    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-    body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath"
-    em=EmailMessage()
-    em['From']=ems
-    em['To']=emr
-    em['Subject']=subject
-    em.set_content(body)
 
-    c=ssl.create_default_context()
-    
+    sender1="noreply@app.com"
+    msg= Message(subject,sender=sender1,recipients=[details_instance.email])
+    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath"
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-            smtp.login(ems,emp)
-            smtp.sendmail(ems,emr,em.as_string())
-    except Exception as e:
-        print(f"Error sending email: {e}")
+        mail.send(msg)
+        return render_template('admin_accept.html')
+    except Exception:
+        pass
     return render_template('admin_accept.html')
 
 
@@ -409,7 +407,6 @@ def admin_reject():
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
-        print(f"Error deleting user: {e}")
         db.session.rollback()
         return render_template('admin_reject.html')
     
@@ -774,25 +771,15 @@ def forgotemail(sno):
             t = Details.query.get(sno)
             t.password=bcrypt.generate_password_hash(password1).decode('utf-8')
             db.session.commit()
-
-            ems='explorepallivasalgp@gmail.com'
-            emp='aapnsstawfopxmle'
-            emr=t.email
-
-            # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-            subject="Hy "+t.name
-            body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
-            em=EmailMessage()
-            em['From']=ems
-            em['To']=emr
-            em['Subject']=subject
-            em.set_content(body)
-
-            c=ssl.create_default_context()
-
-            with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-                smtp.login(ems,emp)
-                smtp.sendmail(ems,emr,em.as_string())
+            subject="Hi "+t.name
+            sender1="noreply@app.com"
+            msg= Message(subject,sender=sender1,recipients=[t.email])
+            msg.body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
+            try:
+                mail.send(msg)
+                return render_template('emailsend.html')
+            except :
+                pass
             return render_template('emailsend.html')
         else:
             flash('Password does not match.')
