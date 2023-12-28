@@ -7,6 +7,7 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
+from logging import FileHandler , WARNING
 
 from email.message import EmailMessage
 import smtplib
@@ -29,12 +30,19 @@ local_server=True
 app = Flask(__name__)
 Compress(app)
 
+
+
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
 app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['DB_SERVER'] = data['local_uri']
 
+
+file_handler = FileHandler('errorlog.txt')
+file_handler.setLevel(WARNING)
+
+app.logger.addHandler(file_handler)
 
 bcrypt=Bcrypt(app)
 
