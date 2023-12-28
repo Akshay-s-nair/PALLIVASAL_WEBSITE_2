@@ -7,8 +7,11 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
-
 from flask_mail import Mail,Message
+from logging import FileHandler , WARNING
+
+
+from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
@@ -20,7 +23,11 @@ with open('config.json', 'r') as c:
 
 local_server=True    
 
+
 app = Flask(__name__)
+Compress(app)
+
+
 
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -37,6 +44,11 @@ app.config['MAIL_USE_SSL']=True
 
 
 mail=Mail(app)
+
+file_handler = FileHandler('errorlog.txt')
+file_handler.setLevel(WARNING)
+
+app.logger.addHandler(file_handler)
 
 bcrypt=Bcrypt(app)
 
@@ -310,7 +322,9 @@ def admin_accept():
         db.session.add(transport)
         db.session.commit()
 
+
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
+
     sender1="noreply@app.com"
     msg= Message(subject,sender=sender1,recipients=[details_instance.email])
     # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
@@ -320,11 +334,10 @@ def admin_accept():
         return render_template('admin_accept.html')
     except Exception:
         pass
-
     return render_template('admin_accept.html')
 
 
-@app.route('/admin_reject', methods=['POST'])    
+@app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
     row_id2 = request.form.get('row_id2')
     try:
@@ -450,48 +463,43 @@ def approved_view(sno ,slug ):
     else:
         return render_template('admin.html')
 
-@app.route('/edit_pages' , methods=["GET" ,"POST"])
+@app.route('/edit_pages', methods=["GET", "POST"])
 def edit_pages():
     if "user" in session:
-        if(request.method == 'POST'):
+        if request.method == 'POST':
             name = request.form.get('name')
             description = request.form.get('desc')
-            map = request.form.get('map')
+            map_location = request.form.get('map')
 
             if 'files[]' not in request.files:
                 flash('No file selected')
                 return redirect(request.url)
+
             files = request.files.getlist('files[]')
             num = len(files)
             file_names = []
+
             for file in files:
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file_names.append(filename)
                     file.save(os.path.join('static', 'uploads', filename))
 
-            if(num == 1):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
-            elif(num == 2):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] ,img2 = file_names[1] )
-            elif(num == 3):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2] )
-            elif(num == 4):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
-            elif(num == 5):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
-        
+            if num <= 5:
+                entry_data = {'name': name, 'description': description, 'map': map_location}
+                for i in range(1, num + 1):
+                    entry_data[f'img{i}'] = file_names[i - 1]
 
-            if(num<=5):
+                entry = Places(**entry_data)
                 db.session.add(entry)
+                db.session.commit()
             else:
-                flash('only a maximum of 5 should be uploaded!')
-            db.session.commit()
-                
-        return render_template('edit_pages.html' )
+                flash('Only a maximum of 5 should be uploaded!')
+
+        return render_template('edit_pages.html')
     else:
         return render_template('admin.html')
-
+    
 @app.route('/confirm')
 def confirm():
     return render_template('confirm.html')
@@ -741,31 +749,12 @@ def forgotemail(sno):
             subject="Hi "+t.name
             sender1="noreply@app.com"
             msg= Message(subject,sender=sender1,recipients=[t.email])
-            # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
             msg.body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
             try:
                 mail.send(msg)
                 return render_template('emailsend.html')
             except :
                 pass
-            # ems='explorepallivasalgp@gmail.com'
-            # emp='aapnsstawfopxmle'
-            # emr=t.email
-
-            # # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-            # 
-            # body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
-            # em=EmailMessage()
-            # em['From']=ems
-            # em['To']=emr
-            # em['Subject']=subject
-            # em.set_content(body)
-
-            # c=ssl.create_default_context()
-
-            # with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-            #     smtp.login(ems,emp)
-            #     smtp.sendmail(ems,emr,em.as_string())
             return render_template('emailsend.html')
         else:
             flash('Password does not match.')
@@ -789,4 +778,4 @@ def addadmin():
 
 
 if __name__ == ("__main__"):
-    app.run(debug=True)
+    app.run()
