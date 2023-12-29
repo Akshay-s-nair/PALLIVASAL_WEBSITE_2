@@ -433,6 +433,7 @@ a{
     opacity: 0.65;
     min-height: 100px;
     width: 300px;
+    min-width: 200px;
     display: none;
     padding: 50px;
     border-radius: 15px;
@@ -453,6 +454,7 @@ a{
     border-radius:20px  ;
     /* padding-left: 19px; */
     text-align: center;
+    width: 200px;
   }
 
   label.filebutton {
@@ -491,6 +493,7 @@ a{
 
 #myfile{
     margin-left: -10px;
+    width: 220px;
 }
 .ta{
     margin-left: -32px
@@ -524,9 +527,11 @@ input[type=submit]{
     height: 200px;
 }
 
-
+textarea{
+    width: 260px;
+}
 textarea.ta{
-    padding-left: 35px;
+    padding-left: 10px;
     
 }
 /*   edit place page  */
@@ -559,7 +564,7 @@ h5.in{
 }
 @media (max-width: 480px) {
     textarea.ta{
-        padding-left: 45px;
+        padding-left: 10px;
         
     }
 }

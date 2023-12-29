@@ -7,10 +7,8 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
-
-from email.message import EmailMessage
-import smtplib
-import ssl
+from flask_mail import Mail,Message
+from logging import FileHandler , WARNING
 
 
 from flask_compress import Compress
@@ -29,12 +27,28 @@ local_server=True
 app = Flask(__name__)
 Compress(app)
 
+
+
 app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
 app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['DB_SERVER'] = data['local_uri']
 
+app.config['MAIL_SERVER']="smtp.gmail.com"
+app.config['MAIL_PORT']=465
+app.config['MAIL_USERNAME']="explorepallivasalgp@gmail.com"
+app.config['MAIL_PASSWORD']="aapnsstawfopxmle"
+app.config['MAIL_USE_TLS']=False
+app.config['MAIL_USE_SSL']=True
+
+
+mail=Mail(app)
+
+file_handler = FileHandler('errorlog.txt')
+file_handler.setLevel(WARNING)
+
+app.logger.addHandler(file_handler)
 
 bcrypt=Bcrypt(app)
 
@@ -46,6 +60,11 @@ def truncate_string(input_string, max_length):
     
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_SERVER']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+}
+
+
 db_init(app)
 
 @app.route('/')
@@ -164,45 +183,65 @@ def userdash(sno):
     transport=Transportation.query.filter_by(details_id = sno).all()
     return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
 
-@app.route('/register', methods = ['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         name = request.form.get('name')
         address = request.form.get('address')
         contact = request.form.get('contact')
-        if len(contact)!=10:
+
+        if len(contact) != 10:
             flash('Invalid Mobile number. Please try with a different one.')
             return redirect(url_for('register'))
-        x=Details.query.filter_by(contact=contact).first()
-        if x is not None:
-            flash('Account exists with this number. Please try with a different one.')
+
+        try:
+            existing_entry = Details.query.filter_by(contact=contact).first()
+
+            if existing_entry:
+                flash('Account exists with this number. Please try with a different one.')
+                return redirect(url_for('register'))
+        except Exception as e:
+            flash(f"Error executing query: {e}")
             return redirect(url_for('register'))
+
         password = request.form.get('password')
         confirm = request.form.get('confirm')
-        if password==confirm:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        else:
+
+        if password != confirm:
             flash('Password combination does not match. Please try again.')
             return redirect(url_for('register'))
-        
+
         email = request.form.get('email')
-        if '@' not in email and '.' not in email:
+
+        if '@' not in email or '.' not in email:
             flash('Invalid email format. Please try again.')
             return redirect(url_for('register'))
+
         services = request.form.get('services')
-    
-        pic = request.files['file1']
+        pic = request.files.get('file1')
+
         if not pic:
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('register'))
+
         filename = secure_filename(pic.filename)
-        entry = Details(name=name, address=address, contact=contact , password=hashed_password, email=email, services=services ,date=datetime.now().date() , file=filename)
-        if (request.method == 'POST'):    
+
+        entry = Details(
+            name=name, address=address, contact=contact,
+            password=bcrypt.generate_password_hash(password).decode('utf-8'),
+            email=email, services=services,
+            date=datetime.now().date(), file=filename
+        )
+
+        try:
+            db.session.add(entry)
+            db.session.commit()
             pic.save(os.path.join('static', 'uploads', filename))
-        db.session.add(entry)
-        db.session.commit()
-        
-        return render_template('confirm.html')
+            return render_template('confirm.html')
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('register'))
+
     return render_template('register.html')
 
 @app.route("/signin", methods=['GET', 'POST'])
@@ -215,10 +254,6 @@ def signin():
 
         details = Details.query.filter_by(contact=user_contact).first()
         if details and bcrypt.check_password_hash(details.password, user_password):
-            session.permanent = True
-            session['user'] = user_contact
-            return redirect(url_for('userdash', sno=details.sno))
-        elif user_password==details.password:
             session.permanent = True
             session['user'] = user_contact
             return redirect(url_for('userdash', sno=details.sno))
@@ -311,35 +346,23 @@ def admin_accept():
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
-    ems='explorepallivasalgp@gmail.com'
-    emp='aapnsstawfopxmle'
-    emr=details_instance.email
 
-    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-    body='''
-This mail is to inform that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and can make Necessary changes if needed.
-    Your infomation will be available in the website for the public.
 
-    for any queries, contact us through
-explorepallivasalgp@gmail.com
-
-    '''
-    em=EmailMessage()
-    em['From']=ems
-    em['To']=emr
-    em['Subject']=subject
-    em.set_content(body)
-
-    c=ssl.create_default_context()
-
-    with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-        smtp.login(ems,emp)
-        smtp.sendmail(ems,emr,em.as_string())
+    sender1="noreply@app.com"
+    msg= Message(subject,sender=sender1,recipients=[details_instance.email])
+    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath"
+    try:
+        mail.send(msg)
+        return render_template('admin_accept.html')
+    except Exception:
+        pass
     return render_template('admin_accept.html')
 
 
-@app.route('/admin_reject', methods=['POST'])    
+@app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
     row_id2 = request.form.get('row_id2')
     try:
@@ -384,7 +407,6 @@ def admin_reject():
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
-        print(f"Error deleting user: {e}")
         db.session.rollback()
         return render_template('admin_reject.html')
     
@@ -722,9 +744,19 @@ def forgotpass():
 def forgotcheck():
     if(request.method == 'POST'):
         email=request.form.get('email')
+        mobile=request.form.get('mobile')
         t = Details.query.filter_by(email=email , accept = 1).first()
         if t:
-            return render_template('forgotnumb.html',list1=t)
+            u=Details.query.filter_by(contact=mobile , accept = 1).first()
+            if u:
+                if t.sno==u.sno:
+                    return render_template('forgotnumb.html',no=t.sno)
+                else:
+                    flash('Password and email does not match! try again.')
+                    return redirect(url_for('forgotcheck'))
+                # return render_template('forgotnumb.html',list1=t)
+            else:
+                flash('Mobile number is incorrect! Try Again.')
         else:
             flash('Email does not Exist! try again.')
             return redirect(url_for('forgotcheck'))
@@ -733,32 +765,25 @@ def forgotcheck():
 @app.route('/forgotemail/<int:sno>', methods=['GET', 'POST'])
 def forgotemail(sno):
     if(request.method == 'POST'):
-        mobile=request.form.get('mobile')
-        t = Details.query.filter_by(sno=sno , accept = 1).first()
-        if t:
-            if mobile==t.contact:
-                ems='explorepallivasalgp@gmail.com'
-                emp='aapnsstawfopxmle'
-                emr=t.email
-
-                # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-                subject="Hy "+t.name
-                body=" Your password is : "+t.password
-                em=EmailMessage()
-                em['From']=ems
-                em['To']=emr
-                em['Subject']=subject
-                em.set_content(body)
-
-                c=ssl.create_default_context()
-
-                with smtplib.SMTP_SSL('smtp.gmail.com',465,context=c) as smtp:
-                    smtp.login(ems,emp)
-                    smtp.sendmail(ems,emr,em.as_string())
+        password1=request.form.get('password1')
+        password2=request.form.get('password2')
+        if password1==password2:
+            t = Details.query.get(sno)
+            t.password=bcrypt.generate_password_hash(password1).decode('utf-8')
+            db.session.commit()
+            subject="Hi "+t.name
+            sender1="noreply@app.com"
+            msg= Message(subject,sender=sender1,recipients=[t.email])
+            msg.body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
+            try:
+                mail.send(msg)
                 return render_template('emailsend.html')
-            else:
-                flash('Password and email does not match! try again.')
-                return redirect(url_for('forgotcheck'))
+            except :
+                pass
+            return render_template('emailsend.html')
+        else:
+            flash('Password does not match.')
+            return render_template('forgotnumb.html',no=t.sno)
 
     return render_template('forgotnumb.html',list1=t)
 
@@ -778,4 +803,4 @@ def addadmin():
 
 
 if __name__ == ("__main__"):
-    app.run(debug=True)
+    app.run()
