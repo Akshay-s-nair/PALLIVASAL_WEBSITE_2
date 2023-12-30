@@ -7,6 +7,7 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
+from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
 
@@ -29,7 +30,7 @@ Compress(app)
 
 
 
-app.secret_key = 'dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
+app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
 app.permanent_session_lifetime = timedelta(minutes=10)
@@ -347,20 +348,18 @@ def admin_accept():
         db.session.add(transport)
         db.session.commit()
 
-
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-
     sender1="noreply@app.com"
     msg= Message(subject,sender=sender1,recipients=[details_instance.email])
     # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath"
+    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath\nWebsite: https://explorepallivasalgp.org/"
     try:
         mail.send(msg)
         return render_template('admin_accept.html')
     except Exception:
         pass
-    return render_template('admin_accept.html')
 
+    return render_template('admin_accept.html')
 
 @app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
@@ -752,7 +751,7 @@ def forgotcheck():
                 if t.sno==u.sno:
                     return render_template('forgotnumb.html',no=t.sno)
                 else:
-                    flash('Password and email does not match! try again.')
+                    flash('Phonenumber and email does not match! try again.')
                     return redirect(url_for('forgotcheck'))
                 # return render_template('forgotnumb.html',list1=t)
             else:
@@ -768,13 +767,16 @@ def forgotemail(sno):
         password1=request.form.get('password1')
         password2=request.form.get('password2')
         if password1==password2:
-            t = Details.query.get(sno)
+            # t = Details.query.get(sno)
+            t=db.session.get(Details, sno)
+            
             t.password=bcrypt.generate_password_hash(password1).decode('utf-8')
             db.session.commit()
             subject="Hi "+t.name
             sender1="noreply@app.com"
             msg= Message(subject,sender=sender1,recipients=[t.email])
-            msg.body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nexplorepallivasalgp@gmail.com" 
+            # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
+            msg.body="Your password to login the pallivasal website is changed successfully.\nif not done by you, please contact us.\n\n\nRegards,\nPallivasal Gramapanchayath\nMail: explorepallivasalgp@gmail.com\nWebsite: https://explorepallivasalgp.org/" 
             try:
                 mail.send(msg)
                 return render_template('emailsend.html')
@@ -783,10 +785,9 @@ def forgotemail(sno):
             return render_template('emailsend.html')
         else:
             flash('Password does not match.')
-            return render_template('forgotnumb.html',no=t.sno)
+            return render_template('forgotnumb.html',no=sno)
 
-    return render_template('forgotnumb.html',list1=t)
-
+    return render_template('forgotnumb.html',no=sno)
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
