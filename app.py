@@ -8,8 +8,11 @@ from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from db import db_init, db
 from sqlalchemy.orm import Session
-
 from flask_mail import Mail,Message
+from logging import FileHandler , WARNING
+
+
+from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
@@ -21,7 +24,11 @@ with open('config.json', 'r') as c:
 
 local_server=True    
 
+
 app = Flask(__name__)
+Compress(app)
+
+
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -39,6 +46,11 @@ app.config['MAIL_USE_SSL']=True
 
 mail=Mail(app)
 
+file_handler = FileHandler('errorlog.txt')
+file_handler.setLevel(WARNING)
+
+app.logger.addHandler(file_handler)
+
 bcrypt=Bcrypt(app)
 
 def truncate_string(input_string, max_length):
@@ -49,6 +61,11 @@ def truncate_string(input_string, max_length):
     
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_SERVER']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+}
+
+
 db_init(app)
 
 @app.route('/')
@@ -167,45 +184,65 @@ def userdash(sno):
     transport=Transportation.query.filter_by(details_id = sno).all()
     return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
 
-@app.route('/register', methods = ['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         name = request.form.get('name')
         address = request.form.get('address')
         contact = request.form.get('contact')
-        if len(contact)!=10:
+
+        if len(contact) != 10:
             flash('Invalid Mobile number. Please try with a different one.')
             return redirect(url_for('register'))
-        x=Details.query.filter_by(contact=contact).first()
-        if x is not None:
-            flash('Account exists with this number. Please try with a different one.')
+
+        try:
+            existing_entry = Details.query.filter_by(contact=contact).first()
+
+            if existing_entry:
+                flash('Account exists with this number. Please try with a different one.')
+                return redirect(url_for('register'))
+        except Exception as e:
+            flash(f"Error executing query: {e}")
             return redirect(url_for('register'))
+
         password = request.form.get('password')
         confirm = request.form.get('confirm')
-        if password==confirm:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        else:
+
+        if password != confirm:
             flash('Password combination does not match. Please try again.')
             return redirect(url_for('register'))
-        
+
         email = request.form.get('email')
-        if '@' not in email and '.' not in email:
+
+        if '@' not in email or '.' not in email:
             flash('Invalid email format. Please try again.')
             return redirect(url_for('register'))
+
         services = request.form.get('services')
-    
-        pic = request.files['file1']
+        pic = request.files.get('file1')
+
         if not pic:
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('register'))
+
         filename = secure_filename(pic.filename)
-        entry = Details(name=name, address=address, contact=contact , password=hashed_password, email=email, services=services ,date=datetime.now().date() , file=filename)
-        if (request.method == 'POST'):    
+
+        entry = Details(
+            name=name, address=address, contact=contact,
+            password=bcrypt.generate_password_hash(password).decode('utf-8'),
+            email=email, services=services,
+            date=datetime.now().date(), file=filename
+        )
+
+        try:
+            db.session.add(entry)
+            db.session.commit()
             pic.save(os.path.join('static', 'uploads', filename))
-        db.session.add(entry)
-        db.session.commit()
-        
-        return render_template('confirm.html')
+            return render_template('confirm.html')
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('register'))
+
     return render_template('register.html')
 
 @app.route("/signin", methods=['GET', 'POST'])
@@ -324,8 +361,7 @@ def admin_accept():
 
     return render_template('admin_accept.html')
 
-
-@app.route('/admin_reject', methods=['POST'])    
+@app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
     row_id2 = request.form.get('row_id2')
     try:
@@ -451,48 +487,43 @@ def approved_view(sno ,slug ):
     else:
         return render_template('admin.html')
 
-@app.route('/edit_pages' , methods=["GET" ,"POST"])
+@app.route('/edit_pages', methods=["GET", "POST"])
 def edit_pages():
     if "user" in session:
-        if(request.method == 'POST'):
+        if request.method == 'POST':
             name = request.form.get('name')
             description = request.form.get('desc')
-            map = request.form.get('map')
+            map_location = request.form.get('map')
 
             if 'files[]' not in request.files:
                 flash('No file selected')
                 return redirect(request.url)
+
             files = request.files.getlist('files[]')
             num = len(files)
             file_names = []
+
             for file in files:
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file_names.append(filename)
                     file.save(os.path.join('static', 'uploads', filename))
 
-            if(num == 1):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] )
-            elif(num == 2):
-                entry = Places(name=name, description = description ,  map = map , img1 = file_names[0] ,img2 = file_names[1] )
-            elif(num == 3):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2] )
-            elif(num == 4):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] )
-            elif(num == 5):
-                entry = Places(name=name, description = description ,  map = map ,img1 = file_names[0] ,img2 = file_names[1], img3 = file_names[2], img4 = file_names[3] ,img5 = file_names[4])
-        
+            if num <= 5:
+                entry_data = {'name': name, 'description': description, 'map': map_location}
+                for i in range(1, num + 1):
+                    entry_data[f'img{i}'] = file_names[i - 1]
 
-            if(num<=5):
+                entry = Places(**entry_data)
                 db.session.add(entry)
+                db.session.commit()
             else:
-                flash('only a maximum of 5 should be uploaded!')
-            db.session.commit()
-                
-        return render_template('edit_pages.html' )
+                flash('Only a maximum of 5 should be uploaded!')
+
+        return render_template('edit_pages.html')
     else:
         return render_template('admin.html')
-
+    
 @app.route('/confirm')
 def confirm():
     return render_template('confirm.html')
@@ -758,7 +789,6 @@ def forgotemail(sno):
 
     return render_template('forgotnumb.html',no=sno)
 
-
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):
@@ -774,4 +804,4 @@ def addadmin():
 
 
 if __name__ == ("__main__"):
-    app.run(debug=True)
+    app.run()
