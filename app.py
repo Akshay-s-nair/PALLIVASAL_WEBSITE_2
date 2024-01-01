@@ -29,7 +29,7 @@ local_server=True
 app = Flask(__name__)
 Compress(app)
 
-client = Client(keys.account_sid , keys.auth_token)
+# client = Client(keys.account_sid , keys.auth_token)
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
