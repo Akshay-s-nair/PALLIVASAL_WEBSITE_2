@@ -254,10 +254,13 @@ def signin():
         user_password = request.form.get('password')
 
         details = Details.query.filter_by(contact=user_contact).first()
-        if details and bcrypt.check_password_hash(details.password, user_password):
+        if details and bcrypt.check_password_hash(details.password, user_password) and details.accept==1:
             session.permanent = True
             session['user'] = user_contact
             return redirect(url_for('userdash', sno=details.sno))
+        elif details.accept!=1:
+            flash("Account is not yet verified.")
+            return redirect(url_for('signin'))
         else:
             flash('Invalid credentials. Please try again.')
             return redirect(url_for('signin'))
