@@ -10,7 +10,8 @@ from db import db_init, db
 from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
-
+from twilio.rest import Client
+import keys
 
 from flask_compress import Compress
 
@@ -28,7 +29,7 @@ local_server=True
 app = Flask(__name__)
 Compress(app)
 
-
+client = Client(keys.account_sid , keys.auth_token)
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -234,6 +235,12 @@ def register():
             date=datetime.now().date(), file=filename
         )
 
+        number = '+91'+contact
+        message = client.messages.create(
+                body="Thank you for registering you will get a conformation after the admins verify your application.",
+                from_=keys.twilio_number,
+                to=number
+            )
         try:
             db.session.add(entry)
             db.session.commit()
