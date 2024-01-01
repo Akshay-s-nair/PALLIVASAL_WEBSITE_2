@@ -492,8 +492,9 @@ hr{
     padding: 10px;
   }
   .responsiveimg{
-    width: 300px;
-    height: 180px;
+    width: auto;
+    height: 155px;
+    margin-top: 50px;
   }
   header{
     height: 700px;
@@ -512,4 +513,9 @@ hr{
   position: fixed;
   z-index: 100000000;
 
+}
+@media (max-width:700px){
+ #preloader{
+background-size: 35%;
+ }
 }
