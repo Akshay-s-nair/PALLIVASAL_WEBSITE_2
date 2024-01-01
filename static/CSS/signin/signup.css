@@ -61,11 +61,10 @@ select {
   outline: none;
   border-bottom: 1px solid #fffefe85;
 }
-.input-container input:focus ~ label {
+.input-container input:focus ~ label ,.input-container input:user-valid ~ label{
   top: -12px;
   font-size: 12px;
 }
-
 .input-containers {
   position: relative;
   margin-bottom: 15px;
@@ -141,14 +140,16 @@ select {
   font-size: 12px;
 }
 .otpbtn {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   color: #000000;
   background: rgba(255, 255, 255, 0.856);
-  border-radius: 15px;
+  border-radius: 5px;
   margin-top: 10px;
   border: none;
 }

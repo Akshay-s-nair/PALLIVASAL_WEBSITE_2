@@ -151,7 +151,8 @@ nav.head{
     .table,nav.head{
         padding: 1px;
         font-size: 12px;
-        width: 350px;
+        width: 90%;
+        
     }
     nav.head{
         position: sticky;
@@ -163,6 +164,7 @@ nav.head{
         padding: 5px;
         background-color: rgb(112, 112, 112);
         font-size: 13px;
+        width: 20px;
     }
     th{
         padding:15px;
@@ -171,4 +173,14 @@ nav.head{
     nav.head h1{
         padding-top: 15px;
     }
+    td a{
+      margin: 2px;
+      width: fit-content;
+      max-width: 300px;
+     display: flex;
+      padding: 5px;
+      text-align: left;
+     word-break: break-all;
+    }
+    
 }

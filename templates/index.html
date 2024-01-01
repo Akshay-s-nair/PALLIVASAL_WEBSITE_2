@@ -20,6 +20,10 @@
           {% endblock head %}
           
           {% block body  %}
+          <!----------------------Project------------------------>
+          <div id="preloader"></div>
+
+
           <!----------------------Home------------------------>
           <section id="home">
           <div class="wrapper">
@@ -280,6 +284,13 @@
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
     crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='JS/main.js')}}"></script>
+    <script>
+      var loader = document.getElementById("preloader");
+
+      window.addEventListener("load",function(){
+        loader.style.display = "none";
+      })
+    </script>
 
    {% endblock body %}
 
