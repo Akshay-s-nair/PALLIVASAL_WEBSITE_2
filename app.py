@@ -10,8 +10,8 @@ from db import db_init, db
 from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
-from twilio.rest import Client
-import keys
+# from twilio.rest import Client
+# import keys
 
 from flask_compress import Compress
 
@@ -235,12 +235,12 @@ def register():
             date=datetime.now().date(), file=filename
         )
 
-        number = '+91'+contact
-        message = client.messages.create(
-                body="Thank you for registering you will get a conformation after the admins verify your application.",
-                from_=keys.twilio_number,
-                to=number
-            )
+        # number = '+91'+contact
+        # message = client.messages.create(
+        #         body="Thank you for registering you will get a conformation after the admins verify your application.",
+        #         from_=keys.twilio_number,
+        #         to=number
+        #     )
         try:
             db.session.add(entry)
             db.session.commit()
