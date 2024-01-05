@@ -20,6 +20,7 @@
 
 </head>
 <body>
+    <div id="preloader"></div>
     <header>
         <section class="100vh gradient-custom">
             <div class="container h-100" id="box1">
@@ -31,7 +32,7 @@
                                 <div class="mb-md-5 mt-md-4 ">
                                     <img src="{{url_for('static',filename='images/logo.webp')}}" class="img-fluid mx-auto d-block pt-3" width="110px" id="logoimg">
                                     <h2 class="text-white sign">Sign UP</h2>
-                                    <form id="form1" action="/register" method='post' enctype="multipart/form-data" >
+                                    <form onsubmit="preloader()" id="form1" action="/register" method='post' enctype="multipart/form-data" >
                                         <div class="input-containers pb-3">
                                             <input type="text" id="name" name='name' required=""/>
                                             <label> Full Name</label>		
@@ -106,6 +107,12 @@
                 </div>
             </section>
         </header>
+        <script>
+            function preloader(){
+               var pre = document.getElementById('preloader');
+               pre.style.display = "block";
+        }
 
+        </script>
     </body>
     </html>
