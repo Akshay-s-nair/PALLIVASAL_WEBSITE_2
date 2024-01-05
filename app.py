@@ -10,6 +10,7 @@ from db import db_init, db
 from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
+from PIL import Image
 # from twilio.rest import Client
 # import keys
 
@@ -226,7 +227,7 @@ def register():
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('register'))
 
-        filename = secure_filename(pic.filename)
+        filename = secure_filename(pic.filename)[:15]
 
         entry = Details(
             name=name, address=address, contact=contact,
@@ -242,9 +243,10 @@ def register():
         #         to=number
         #     )
         try:
+            img = Image.open(pic)
             db.session.add(entry)
             db.session.commit()
-            pic.save(os.path.join('static', 'uploads', filename))
+            img.save(os.path.join('static', 'uploads', filename), format=img.format, quality=70)
             return render_template('confirm.html')
         except Exception as e:
             flash(f"Error committing changes: {e}")
