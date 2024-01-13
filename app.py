@@ -382,7 +382,7 @@ def admin_accept():
         db.session.add(PharmacyStore)
         db.session.commit()
 
-    elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']:
+    elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw","Ambulance","Bike mechanic","Car mechanic" , 'Car Rental']:
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
         db.session.commit()
@@ -900,6 +900,11 @@ def Pharmacyfn():
     list=Pharmacy.query.filter_by().all()
     return render_template('Pharmacy.html',list=list)
 
+
+@app.route('/pharmacyview/<int:id>', methods = ["GET" , "POST"])
+def pharmacyview(id):
+    list = Pharmacy.query.filter_by(local_id = id ).first()                
+    return render_template('pharmacyview.html' , list = list)
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):

@@ -105,7 +105,7 @@
               alt="bike rental"
             />
             {% endif %}
-            {% if item.services == "Car Rental" %}
+            {% if item.services in ["Car Rental","Car mechanic","Ambulance","Bike mechanic"] %}
             <img
               src="{{url_for('static',filename='images/car_rental.webp')}}"
               alt="car rental"
@@ -150,7 +150,7 @@
         <h5>Address</h5>
         <h3>{{ item.address }}</h3>
     </div>
-    {% if item.services in ["Jeep Safari" ,"Ambulance", 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
+    {% if item.services in ["Jeep Safari" ,"Ambulance","Bike mechanic","Car mechanic", "Taxi service" , "Bike Rental" , "Auto Rickshaw" , "Car Rental"]  %}
     <div class="box2">
     {% for item5 in transport %}
     <div id="change">
