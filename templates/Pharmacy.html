@@ -1,0 +1,25 @@
+{% extends 'commonNav.html' %}
+{% block head %}
+  <title>Pharmacy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/placestovisit/tourstyle.css') }}">
+  <script defer src="{{ url_for('static', filename='JS/slider.js') }}"></script>
+{% endblock head %}
+
+{% block body %}
+  <main>
+    <h1 class="headng">Pharmacy</h1>
+    <div class="container-wrapper">
+      {% for item in list %}
+        <div class="container mx-auto">
+          <h2>{{ item.name }}</h2>
+          <div class="slider mx-auto">
+            <a href="/place/{{ item.id }}">
+             {% set fname = 'uploads/' + item.img %}
+                <img class="image_holder" src="{{ url_for('static', filename=fname) }}" loading="lazy">
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock body %}

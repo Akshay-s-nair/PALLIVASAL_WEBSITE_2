@@ -129,3 +129,23 @@ class Admin(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
+
+class HealthCare(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=False, nullable=False)
+    img = db.Column(db.Text , nullable=True)
+    map =  db.Column(db.String(50) , nullable=True)
+
+class Pharmacy(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    address = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    contact = db.Column(db.String(80), nullable=True, default=None)
+    type = db.Column(db.String(80), nullable=True, default=None)
+    img = db.Column(db.Text , nullable=True)
+
+    details = relationship("Details", back_populates="pharmacy")
+
+Details.pharmacy = relationship("Pharmacy", order_by=Pharmacy.local_id, back_populates="details")

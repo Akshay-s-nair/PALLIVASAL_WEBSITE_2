@@ -16,7 +16,8 @@ from PIL import Image
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices , WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
 
 from sqlalchemy.sql.expression import update
 
@@ -97,6 +98,7 @@ def userdash(sno):
         entry3 = WhereToStay.query.join(Details).filter(Details.sno == sno).first()
         entry4 = Plantation.query.join(Details).filter(Details.sno == sno).first()
         entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
+        entry6 = Pharmacy.query.join(Details).filter(Details.sno == sno).first()
  
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -177,6 +179,21 @@ def userdash(sno):
             pic.save(os.path.join('static', 'uploads', filename))
             db.session.commit()
 
+        elif entry6:
+            entry6.name=request.form.get('name')
+            entry6.address=request.form.get('address')
+            entry6.location=request.form.get('location')
+            entry6.contact=request.form.get('contact')
+            entry6.type=request.form.get('type')
+            pic = request.files['img']
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
+            entry6.img=filename   
+            db.session.commit()
+
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     localworkforce = LocalWorkforce.query.filter_by(details_id = sno).all()
     wheretostay = WhereToStay.query.filter_by(details_id = sno).all()
@@ -184,7 +201,8 @@ def userdash(sno):
     spiceproducts = Spiceproducts.query.filter_by().all()
     plantation = Plantation.query.filter_by(details_id = sno).all()
     transport=Transportation.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation)
+    pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -263,16 +281,21 @@ def signin():
         user_password = request.form.get('password')
 
         details = Details.query.filter_by(contact=user_contact).first()
-        if details and bcrypt.check_password_hash(details.password, user_password) and details.accept==1:
-            session.permanent = True
-            session['user'] = user_contact
-            return redirect(url_for('userdash', sno=details.sno))
-        elif details.accept!=1:
-            flash("Account is not yet verified.")
+        try:
+            if details and bcrypt.check_password_hash(details.password, user_password) and details.accept==1:
+                session.permanent = True
+                session['user'] = user_contact
+                return redirect(url_for('userdash', sno=details.sno))
+            elif details.accept!=1:
+                flash("Account is not yet verified.")
+                return redirect(url_for('signin'))
+            else:
+                flash('Invalid credentials. Please try again.')
+                return redirect(url_for('signin'))
+        except:
+            flash('Please enter valid contact number and password.')
             return redirect(url_for('signin'))
-        else:
-            flash('Invalid credentials. Please try again.')
-            return redirect(url_for('signin'))
+
 
     if 'user' in session and session['user'] == user_contact:
         return render_template('admin_dash.html', data=data)
@@ -354,6 +377,10 @@ def admin_accept():
         plantation = Plantation(details_id=details_instance.sno)
         db.session.add(plantation)
         db.session.commit()
+    elif service=='Pharmacy Store':
+        PharmacyStore = Pharmacy(details_id=details_instance.sno)
+        db.session.add(PharmacyStore)
+        db.session.commit()
 
     elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']:
         transport = Transportation(details_id=details_instance.sno)
@@ -401,6 +428,12 @@ def admin_reject():
             try:
                 LocalWorkforce_to_delete=LocalWorkforce.query.filter_by(details_id=row.sno).first()
                 db.session.delete(LocalWorkforce_to_delete)
+            except:
+                pass
+
+            try:
+                Pharmacy_to_delete=Pharmacy.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Pharmacy_to_delete)
             except:
                 pass
 
@@ -456,6 +489,11 @@ def approved_remove():
                 pass
 
             try:
+                Pharmacy_to_delete=Pharmacy.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Pharmacy_to_delete)
+            except:
+                pass
+            try:
                 WhereToStay_to_delete=WhereToStay.query.filter_by(details_id=row.sno).first()
                 db.session.delete(WhereToStay_to_delete)
             except:
@@ -473,7 +511,7 @@ def approved_remove():
             db.session.commit()
     except Exception as e:
         db.session.rollback()   
-    return render_template('admin_reject.html')
+    return render_template('approved_remove.html')
 
 @app.route('/requests', methods=["GET" ,"POST"])
 def requests():
@@ -800,6 +838,67 @@ def forgotemail(sno):
             return render_template('forgotnumb.html',no=sno)
 
     return render_template('forgotnumb.html',no=sno)
+
+@app.route('/addHealthcare', methods=['GET','POST'])
+def addHealthcare():
+    if(request.method == 'POST'):
+        name=request.form.get('name')
+        map=request.form.get('map')
+        pic = request.files.get('img')
+
+        if not pic:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addedHealthcare'))
+
+        filename = secure_filename(pic.filename)[:15]
+
+        entry = HealthCare(name=name,img=filename,map=map)
+        db.session.add(entry)
+        db.session.commit()
+        flash('Hospital '+ name+' added. click + button to add more')
+        return render_template('addHealthcare.html')
+    else:
+        return render_template('addHealthcare.html')
+    
+@app.route('/addedhospital_detail/<int:id>' , methods = ["GET" , "POST"])
+def addedhospital_detail(id):
+    list = HealthCare.query.filter_by(id = id ).first()                
+    return render_template('addedplace_detail.html' , list=list,x=1 )
+
+@app.route('/addedHealthcare', methods=['GET','POST'])
+def addedHealthcare():
+        list=HealthCare.query.filter_by().all()
+        return render_template('adminviewHealthcare.html',list=list)
+
+@app.route('/Hospital_remove', methods=['GET','POST'])
+def Hospital_remove():
+    rid = request.form.get('id')
+    row = HealthCare.query.filter_by(id = rid).first()
+    img = row.img
+    if row:
+        try:
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()     
+    return redirect(url_for('addedHealthcare'))
+
+@app.route('/Hospitals', methods=['GET','POST'])
+def Hospitals():
+    list=HealthCare.query.filter_by().all()
+    return render_template('view_hospitals.html',list=list)
+
+@app.route('/hospitalview/<int:id>', methods=['GET','POST'])
+def hospitalview(id):
+    list=HealthCare.query.filter_by(id=id).first()
+    return render_template('hospitalview.html',list=list)
+
+
+@app.route('/Pharmacyfn', methods=['GET','POST'])
+def Pharmacyfn():
+    list=Pharmacy.query.filter_by().all()
+    return render_template('Pharmacy.html',list=list)
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
