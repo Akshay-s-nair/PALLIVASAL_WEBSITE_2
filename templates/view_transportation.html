@@ -66,15 +66,37 @@
                 {% else %}
                   <img src="/static/images/bg.webp" alt="">
                 {% endif %}
+
                 <h5>Name of the Driver: {{ list[0].name }}</h5>
-                <h5>Cost : {{ list1.cost }}</h5>
-                <h5>Trip available : {{ list1.Trip_available }}</h5>
-                <h5>Pick up and Drop : {{ list1.Pick_up_and_Drop }}</h5>
-                <h5>Duration : {{ list1.Duration }}</h5>
-                <h5>Vehicle : {{ list1.vehicle }}</h5>
-                <h5>No. of persons allowed : {{ list1.no_of_persons }}</h5>
-                <h5>Things to carry : {{ list1.Things_to_carry }}</h5>
-                
+
+                {% if list1.cost is not none %}
+                  <h5>Cost : {{ list1.cost }}</h5>
+                {% endif %}
+
+                {% if list1.Trip_available is not in ["None"] %}
+                  <h5>Trip available : {{ list1.Trip_available }}</h5>
+                {% endif %}
+
+                {% if list1.Pick_up_and_Drop is not in ["None"] %}
+                  <h5>Pick up and Drop : {{ list1.Pick_up_and_Drop }}</h5>
+                {% endif %}
+
+                {% if list1.Duration is not in ["None"] %}
+                  <h5>Duration : {{ list1.Duration }}</h5>
+                {% endif %}
+
+                {% if list1.vehicle is not in ["None"] %}
+                  <h5>Vehicle : {{ list1.vehicle }}</h5>
+                {% endif %}
+
+                {% if list1.no_of_persons is not in ["None"] %}
+                  <h5>No. of persons allowed : {{ list1.no_of_persons }}</h5>
+                {% endif %}
+
+                {% if list1.Things_to_carry is not in ["None"] %}
+                  <h5>Things to carry : {{ list1.Things_to_carry }}</h5>
+                {% endif %}
+
                 {% if list[0].services is not none %}
                   <a id="atag" href="/transport_view/{{ list[0].sno }}"
                     >Back to previous</a>

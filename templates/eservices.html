@@ -6,6 +6,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link
+        rel="icon"
+        href="{{url_for('static',filename='images/logo.webp')}}"
+        type="image/icon type"
+      /> 
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>E-Services And Waste Management</title>
 
@@ -216,11 +221,11 @@
     response.result.values.forEach((row, index) => {
       if (index === 0) {
         tableHead += "<tr>";
-        row.forEach((val) => (tableHead += "<th>" + val + "</th>"));
+          tableHead += "<th style='font-size:23px'>" + row[0] + "</th>";
         tableHead += "</tr>";
       } else {
         tableBody += "<tr>";
-        row.forEach((val) => (tableBody += "<td><a href='"+val+"' target='_blank'>"+ val + "</a></td>"));
+          tableBody += "<td><a href='"+row[1]+"' target='_blank'>"+ row[0] + "</a></td>";
         tableBody += "</tr>";
       }
     });

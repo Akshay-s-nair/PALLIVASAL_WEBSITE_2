@@ -105,7 +105,7 @@
               alt="bike rental"
             />
             {% endif %}
-            {% if item.services == "Car Rental" %}
+            {% if item.services in ["Car Rental","Car mechanic","Ambulance","Bike mechanic"] %}
             <img
               src="{{url_for('static',filename='images/car_rental.webp')}}"
               alt="car rental"
@@ -135,6 +135,12 @@
               alt="tent camping"
             />
             {% endif %}
+            {% if item.services == "Pharmacy Store" %}
+            <img
+              src="{{url_for('static',filename='images/Plantation_crops.webp')}}"
+              alt="Plantation crops"
+            />
+            {% endif %}
         <h5>User Name</h5>
         <h3>{{ item.name }}</h3>
         <h5>Contact Number</h5>
@@ -144,7 +150,7 @@
         <h5>Address</h5>
         <h3>{{ item.address }}</h3>
     </div>
-    {% if item.services in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw" , 'Car Rental']  %}
+    {% if item.services in ["Jeep Safari" ,"Ambulance","Bike mechanic","Car mechanic", "Taxi service" , "Bike Rental" , "Auto Rickshaw" , "Car Rental"]  %}
     <div class="box2">
     {% for item5 in transport %}
     <div id="change">
@@ -384,10 +390,54 @@
     </div>
     {% endfor %}
   </div>
-</div>
-    
-    {% endif %}
+
+
+  {% elif item.services == "Pharmacy Store"  %}
+  <div class="box2">
+    {% for item5 in pharma %}
+    <div id="change">
+    <form id="form4" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+      <h2>Enter the Details</h2>
+        <label>Name of The Pharmacy Store</label>
+        <input value="{{ item5.name | default('') }}" type="text" name="name">
+        <label>Address</label>
+        <input value="{{ item5.address | default('') }}" type="text" name="address">
+        <label>Location Details</label>
+        <input value="{{ item5.location | default('') }}" type="text" name="location">
+        <label>Additional contact number</label>
+        <input value="{{ item5.contact | default('') }}" type="text" name="contact">
+        <label>Type (Homeo,English, Ayurveda, Other)</label>
+        <input value="{{ item5.Crops | default('') }}" type="text" placeholder="Use comma if more than one" name="type">
+        <label>Photo of the Shop</label>
+        <input type="file" name="img">
+        <button type="submit">Save Changes</button>  
+      </form>
+    </div>
+    <div id="edit">
+      <h2>Details</h2>
+      <h5>Name of The Pharmacy Store</h5>
+        <h3>{{ item5.name | default('') }}</h3>
+        <h5>Address</h5>
+        <h3>{{ item5.location | default('') }}</h3>
+      <h5>Location Details</h5>
+        <h3>{{ item5.location | default('') }}</h3>
+      <h5>Additional contact number</h5>
+        <h3>{{ item5.contact | default('') }}</h3>
+      <h5>Type (Homeo,English, Ayurveda, Other)</h5>
+        <h3>{{ item5.Crops | default('') }}</h3>
+        {% if item5.img1 is not none %}
+        <h5>Uploaded Photo</h5>
+        <h3><a href="/image/{{ item5.img }}" target="_blank">click here to view the picture
+        </a></h3>        
+        {% endif %}
+        <button onclick="changeDivContent()" >Edit</button>
+    </div>
     {% endfor %}
+  </div>
+  
+</div>
+    {% endif %}
+  {% endfor %}
 
     <script type="text/javascript">
       function changeDivContent() {

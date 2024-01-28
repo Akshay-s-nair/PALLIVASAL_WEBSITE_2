@@ -40,7 +40,7 @@
           <div>
             <p class="content1">
               Pallivasal is a village in Idukki district in the Indian state of
-              Kerala. The firsthydro-electric project in Kerala was established
+              Kerala. The first hydro-electric project in Kerala was established
               at Pallivasal during the reign of Maharajah Sree Chithira Thirunal
               Balarama Varma.
             </p>
@@ -112,6 +112,35 @@
         <div class="row">
           <div class="col-md-3 p-4 mx-auto cont">
             <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+              Hospitals
+            </h2>
+            <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
+              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+                <img
+                  src="{{url_for('static',filename='images/hospital.jpg')}}"
+                  class="card-img-top crdimg p-1"
+                  alt="..."/>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3 p-4 mx-auto cont">
+            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+              Pharmacy
+            </h2>
+            <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
+              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+                <img
+                  src="{{url_for('static',filename='images/pharmacy.jpg')}}"
+                  class="card-img-top crdimg p-1"
+                  alt="..."/>
+              </div>
+            </a>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-3 p-4 mx-auto cont">
+            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
               Transportation
             </h2>
             <a href="{{ url_for('transport') }}" style="text-decoration: none">
@@ -148,7 +177,7 @@
             <a href="{{ url_for('eservices') }}" style="text-decoration: none">
             <div class="cards mx-auto" style="width: 18rem; height: 10rem">
               <img
-                src="{{url_for('static',filename='images/Rectangle3.webp')}}"
+                src="{{url_for('static',filename='images/eservice.jpg')}}"
                 class="card-img-top crdimg p-1"
                 alt="..."/>
             </div>

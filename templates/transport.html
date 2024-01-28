@@ -68,6 +68,63 @@
           {% endif %}
           
         </div>
+
+        <div class="row">
+          {% if "Ambulance" in list2 %}
+          <div class="col-lg blk">
+            {% for item in list %}
+              {% if item.services =="Ambulance" %}
+              <a href="/transport_view/{{ item.sno }}">
+              {% endif %}
+            {% endfor %}
+                <img
+                  src="{{url_for('static',filename='images/innova.webp')}}"
+                  alt="" class="imgs"
+                />
+                </a>
+                <h5>Ambulance</h5>
+          </div>
+          {% endif %}
+
+          {% if "Bike mechanic" in list2 %}
+          <div class="col-lg blk">
+            {% for item in list %}
+              {% if item.services =="Bike mechanic" %}
+              <a href="/transport_view/{{ item.sno }}">
+              {% endif %}
+            {% endfor %}
+            <img
+              src="{{url_for('static',filename='images/scooter.webp')}}"
+              alt="" class="imgs"
+            />
+            </a>
+            <h5>Bike mechanic</h5>
+          </div>
+          {% endif %}
+
+          {% if "Car mechanic" in list2 %}
+          <div class="col-lg blk">
+            {% for item in list %}
+              {% if item.services =="Car mechanic" %}
+              <a href="/transport_view/{{ item.sno }}">
+              {% endif %}
+            {% endfor %}
+            <img
+              src="{{url_for('static',filename='images/auto.webp')}}"
+              alt="" class="imgs"
+            />
+            </a>
+            <h5>Car mechanic</h5>
+          </div>
+          {% endif %}
+
+        </div>
+
+
+
+
+
+
         <div class="row">
           {% if "Car Rental" in list2 %}
           <div class="col-lg blk">
