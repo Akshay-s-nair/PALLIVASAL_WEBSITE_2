@@ -50,7 +50,7 @@
             <input type="hidden" name="row_id" value="{{ list.sno }}" />
             <button type="submit" class="button-25" id="accept">Accept</button>
           </form>
-          <form method="post" action="{{ url_for('admin_reject') }}">
+          <form method="post" action="{{ url_for('admin_reject',x=1) }}">
             <input type="hidden" name="row_id2" value="{{ list.sno }}" />
             <button type="submit" class="button-24" id="reject" role="button">
               Reject

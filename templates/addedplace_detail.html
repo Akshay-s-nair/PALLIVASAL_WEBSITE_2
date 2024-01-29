@@ -26,48 +26,73 @@
     <div class="body mx-auto">
       <h3>Details of {{ list.name }}</h3>
       <div class="line mx-auto"></div>
+      {% if x==1 %}
+      <div class="details">
+        <p>Name : {{ list.name }}</p>
+        <p>map : {{ list.map }}</p>
+      </div>
+      <div class="line mx-auto"></div>
+        <div class="details">
+          <div class="image">
+              {% if list.img is not none %}
+                  {% set fname1 = 'uploads/' + list.img %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname1) }}" alt="photo of Hospital">	
+              {% endif %}
+          </div>
+          <div class="button-center">
+            <form method="post" action="{{ url_for('Hospital_remove') }}">
+              <input type="hidden" name="id" value="{{ list.id }}" />
+              <button type="submit" class="button-20 bt" id="reject" role="button">
+                Remove
+              </button>
+            </form>
+          </div>
+        </div>
+      {% else %}
       <div class="details">
         <p>Name : {{ list.name }}</p>
         <p>Description : {{ list.description }}</p>
         <p>map : {{ list.map }}</p>
       </div>
       <div class="line mx-auto"></div>
-      <div class="details">
-        <div class="image">
-            {% if list.img1 is not none %}
-                {% set fname1 = 'uploads/' + list.img1 %}  
-                <img class="imgs" src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
-            {% endif %}
+        <div class="details">
+          <div class="image">
+              {% if list.img1 is not none %}
+                  {% set fname1 = 'uploads/' + list.img1 %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
+              {% endif %}
 
-            {% if list.img2 is not none %}
-                {% set fname2 = 'uploads/' + list.img2 %}  
-                <img class="imgs" src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
-            {% endif %}
+              {% if list.img2 is not none %}
+                  {% set fname2 = 'uploads/' + list.img2 %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
+              {% endif %}
 
-            {% if list.img3 is not none %}
-                {% set fname3 = 'uploads/' + list.img3 %}  
-                <img class="imgs" src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
-            {% endif %}
+              {% if list.img3 is not none %}
+                  {% set fname3 = 'uploads/' + list.img3 %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
+              {% endif %}
 
-            {% if list.img4 is not none %}
-                {% set fname4 = 'uploads/' + list.img4 %}  
-                <img class="imgs" src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
-            {% endif %}
+              {% if list.img4 is not none %}
+                  {% set fname4 = 'uploads/' + list.img4 %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
+              {% endif %}
 
-            {% if list.img5 is not none %}
-                {% set fname5 = 'uploads/' + list.img5 %}  
-                <img class="imgs" src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
-            {% endif %}
+              {% if list.img5 is not none %}
+                  {% set fname5 = 'uploads/' + list.img5 %}  
+                  <img class="imgs" src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
+              {% endif %}
+          </div>
+          <div class="button-center">
+            <form method="post" action="{{ url_for('place_remove') }}">
+              <input type="hidden" name="row_id2" value="{{ list.id }}" />
+              <button type="submit" class="button-20 bt" id="reject" role="button">
+                Remove
+              </button>
+            </form>
+          </div>
         </div>
-        <div class="button-center">
-          <form method="post" action="{{ url_for('place_remove') }}">
-            <input type="hidden" name="row_id2" value="{{ list.id }}" />
-            <button type="submit" class="button-20 bt" id="reject" role="button">
-              Remove
-            </button>
-          </form>
-        </div>
-      </div>
+      {% endif %}
+      
       <br />
     </div>
     <br />

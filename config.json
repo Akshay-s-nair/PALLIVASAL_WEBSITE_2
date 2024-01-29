@@ -5,6 +5,7 @@
     "local_uri": "mysql://root:12345678@localhost/pallivasal",
 
 
+
     "error": "Invalid Username or Password"
   }
 }
