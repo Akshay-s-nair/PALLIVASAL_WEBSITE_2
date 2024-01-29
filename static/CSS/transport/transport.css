@@ -107,13 +107,13 @@ nav.head{
   .navbar{
     height: 70px;
     width: 100%;
-    background-color: #000000e5;
+    background-color: #00000025;
     
     
   }
   #logo{
-   padding-top: 25px;
-   padding-left: 20px;
+   padding-top: 10px;
+   padding-left: 10px;
   }
   
   .navbar .nav-header{
