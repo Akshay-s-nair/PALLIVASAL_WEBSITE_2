@@ -296,6 +296,53 @@
       {% endfor %}
   </div>
 
+  {% elif item.services in ["Adventure Activity"]  %}
+    
+    <div class="box2">
+      {% for item2 in stay %}
+      <div id="change">
+      <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+        <h2>Enter the Details</h2>
+          <label>Name of Adventure Activity</label>
+          <input value="{{ item2.name | default('') }}" type="text" name="name">
+          <label>Location Details(Link of Google Map)</label>
+          <input value="{{ item2.location | default('') }}" type="text" name="location">
+          <label>Property description</label>
+          <input value="{{ item2.description | default('') }}" type="text" name="description">
+          <label>Additional contact number</label>
+          <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
+          <label>Place</label>
+          <input value="{{ item2.place | default('') }}" type="text" name="place">
+          <label>Tariff</label>
+          <input value="{{ item2.tariff | default('') }}" type="text" name="tariff">
+          <label>Photo</label>
+          <input type="file" name="img1" required>
+          <button id="click-btn" type="submit">Save Changes</button>
+        </form>  
+      </div>
+        <div id="edit">
+          <h2>Details</h2>
+          <h5>Name</h5>
+            <h3>{{ item2.name | default('') }}</h3>
+          <h5>Location Details</h5>
+            <h3>{{ item2.location | default('') }}</h3>
+          <h5>Property description</h5>
+            <h3>{{ item2.description | default('') }}</h3>
+          <h5>Additional contact number</h5>
+            <h3>{{ item2.contact2 | default('') }}</h3>
+          <h5>Place</h5>
+            <h3>{{ item2.place | default('') }}</h3>
+            {% if item2.img1 is not none %}
+            <h5>Uploaded Photo</h5>
+            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view the picture
+            </a> </h3>       
+            {% endif %}
+            <button onclick="changeDivContent()" >Edit</button>
+        </div>
+      {% endfor %}
+  </div>
+
+
   {% elif item.services == "Spices outlet" %}
   <div class="box2">
     {% for item3 in spices %}

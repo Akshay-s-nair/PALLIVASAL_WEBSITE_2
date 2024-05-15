@@ -6,3 +6,4 @@ get-pip.py
 config.json
 uploads
 errorlog.txt
+.venv
