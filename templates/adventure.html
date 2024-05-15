@@ -14,7 +14,7 @@
           <h2>{{ item.name }}</h2>
           <div class="slider mx-auto">
             <a href="/view_adventure/{{ item.id }}">
-              
+              {% set fname = 'uploads/' + item.img1 %}  
                 <img class="image_holder" src="{{ url_for('static', filename=fname) }}" loading="lazy">
              
             </a>
