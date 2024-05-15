@@ -10,10 +10,11 @@
     <h1 class="headng">Art and Cultural</h1>
     <div class="container-wrapper">
       {% for item in list %}
+      {% if item.name is not none %}
         <div class="container mx-auto">
           <h2>{{ item.name }}</h2>
           <div class="slider mx-auto">
-            <a href="/view_art.html/{{ item.id }}">
+            <a href="/view_art/{{ item.details_id }}">
               {% for img in [item.img1, item.img2, item.img3, item.img4, item.img5] if img is not none %}
                 {% set fname = 'uploads/' + img %}
                 <img class="image_holder" src="{{ url_for('static', filename=fname) }}" loading="lazy">
@@ -21,6 +22,7 @@
             </a>
           </div>
         </div>
+        {%endif%}
       {% endfor %}
     </div>
   </main>

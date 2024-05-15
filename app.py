@@ -16,7 +16,7 @@ from PIL import Image
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art
 from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure
 
 from sqlalchemy.sql.expression import update
@@ -100,7 +100,8 @@ def userdash(sno):
         entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
         entry6 = Pharmacy.query.join(Details).filter(Details.sno == sno).first()
         entry7 = Adventure.query.join(Details).filter(Details.sno == sno).first()
- 
+        entry8 = Art.query.join(Details).filter(Details.sno == sno).first()
+
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
             entry1.remuneration_details = request.form.get('remuneration')
@@ -210,6 +211,37 @@ def userdash(sno):
                 filename = None
             entry7.img1=filename   
             db.session.commit()
+                
+        elif entry8:
+            entry8.name = request.form.get('name')
+            entry8.location = request.form.get('location')
+            entry8.description = request.form.get('description')
+            entry8.contact2 = request.form.get('contact')
+            entry8.place = request.form.get('place')
+
+            if 'files[]' not in request.files:
+                flash('No file selected')
+                return redirect(request.url)
+
+            files = request.files.getlist('files[]')
+            num = len(files)
+            file_names = []
+
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_names.append(filename)
+                    file.save(os.path.join('static', 'uploads', filename))
+
+            if num <= 5:
+                for i in range(num):
+                    setattr(entry8, f'img{i+1}', file_names[i])
+
+                db.session.commit()
+            else:
+                flash('Only a maximum of 5 should be uploaded!')
+
+
 
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
@@ -221,7 +253,8 @@ def userdash(sno):
     transport=Transportation.query.filter_by(details_id = sno).all()
     pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
     adventure=Adventure.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure)
+    art=Art.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -411,6 +444,11 @@ def admin_accept():
         db.session.add(adventure)
         db.session.commit()
 
+    elif service =='Art and Cultural':
+        art = Art(details_id=details_instance.sno)
+        db.session.add(art)
+        db.session.commit()
+
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
     sender1="noreply@app.com"
     msg= Message(subject,sender=sender1,recipients=[details_instance.email])
@@ -528,9 +566,7 @@ def approved_remove():
                 db.session.delete(Plantation_to_delete)
             except:
                 pass
-
-            
-                    
+    
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
@@ -935,8 +971,22 @@ def adventure():
     list = Adventure.query.filter_by().all()  
     return render_template('adventure.html',list=list)
 
+@app.route('/view_adventure/<int:id>', methods = ["GET" , "POST"])
+def view_adventure(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = Adventure.query.filter_by(details_id = id)        
+    return render_template('view_adventure.html' , list = list ,info = info)
 
+@app.route('/art', methods=['GET','POST'])
+def art():
+    list = Art.query.filter_by().all()  
+    return render_template('art.html',list=list)
 
+@app.route('/view_art/<int:id>', methods = ["GET" , "POST"])
+def view_art(id):
+    list = Art.query.filter_by(details_id = id)
+    for_contact = Details.query.filter_by(sno = id , accept = 1)       
+    return render_template('view_art.html' ,info = for_contact , list = list)
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():

@@ -164,3 +164,22 @@ class Adventure(db.Model):
     details = relationship("Details", back_populates="adventure")
 
 Details.adventure = relationship("Adventure", order_by=Adventure.local_id, back_populates="details")
+
+
+class Art(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    description = db.Column(db.String(80), nullable=True, default=None)
+    contact2 = db.Column(db.String(80), nullable=True, default=None)
+    place = db.Column(db.String(80), nullable=True, default=None)
+    img1 = db.Column(db.Text , nullable=True)
+    img2 = db.Column(db.Text , nullable=True)
+    img3 = db.Column(db.Text , nullable=True)
+    img4 = db.Column(db.Text , nullable=True)
+    img5 = db.Column(db.Text , nullable=True)
+
+    details = relationship("Details", back_populates="art")
+
+Details.art = relationship("Art", order_by=Art.local_id, back_populates="details")
