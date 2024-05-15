@@ -149,3 +149,18 @@ class Pharmacy(db.Model):
     details = relationship("Details", back_populates="pharmacy")
 
 Details.pharmacy = relationship("Pharmacy", order_by=Pharmacy.local_id, back_populates="details")
+
+class Adventure(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    description = db.Column(db.String(80), nullable=True, default=None)
+    contact2 = db.Column(db.String(80), nullable=True, default=None)
+    tariff = db.Column(db.String(80), nullable=True, default=None)
+    img1 = db.Column(db.Text , nullable=True)
+
+
+    details = relationship("Details", back_populates="adventure")
+
+Details.adventure = relationship("Adventure", order_by=Adventure.local_id, back_populates="details")

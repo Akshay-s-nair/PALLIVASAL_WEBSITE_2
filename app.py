@@ -17,7 +17,7 @@ from PIL import Image
 from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure
 
 from sqlalchemy.sql.expression import update
 
@@ -99,6 +99,7 @@ def userdash(sno):
         entry4 = Plantation.query.join(Details).filter(Details.sno == sno).first()
         entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
         entry6 = Pharmacy.query.join(Details).filter(Details.sno == sno).first()
+        entry7 = Adventure.query.join(Details).filter(Details.sno == sno).first()
  
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -193,6 +194,23 @@ def userdash(sno):
                 filename = None
             entry6.img=filename   
             db.session.commit()
+        
+        
+        elif entry7:
+            entry7.name=request.form.get('name')
+            entry7.location=request.form.get('location')
+            entry7.description=request.form.get('description')
+            entry7.contact=request.form.get('contact')
+            entry7.tariff=request.form.get('tariff')
+            pic = request.files['img1']
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
+            entry7.img1=filename   
+            db.session.commit()
+
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
     localworkforce = LocalWorkforce.query.filter_by(details_id = sno).all()
@@ -202,7 +220,8 @@ def userdash(sno):
     plantation = Plantation.query.filter_by(details_id = sno).all()
     transport=Transportation.query.filter_by(details_id = sno).all()
     pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy)
+    adventure=Adventure.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -365,7 +384,7 @@ def admin_accept():
         new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
         db.session.add(new_local_workforce)
         db.session.commit()
-    elif service=='Spices outlet':
+    elif service =='Spices outlet':
         spiceobj = Spices(details_id=details_instance.sno)
         db.session.add(spiceobj)
         db.session.commit()
@@ -373,11 +392,11 @@ def admin_accept():
         new_wheretostay = WhereToStay(details_id=details_instance.sno)
         db.session.add(new_wheretostay)
         db.session.commit()
-    elif service=='plantation':
+    elif service =='plantation':
         plantation = Plantation(details_id=details_instance.sno)
         db.session.add(plantation)
         db.session.commit()
-    elif service=='Pharmacy Store':
+    elif service =='Pharmacy Store':
         PharmacyStore = Pharmacy(details_id=details_instance.sno)
         db.session.add(PharmacyStore)
         db.session.commit()
@@ -385,6 +404,11 @@ def admin_accept():
     elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw","Ambulance","Bike mechanic","Car mechanic" , 'Car Rental']:
         transport = Transportation(details_id=details_instance.sno)
         db.session.add(transport)
+        db.session.commit()
+
+    elif service =='Adventure Activity':
+        adventure = Adventure(details_id=details_instance.sno)
+        db.session.add(adventure)
         db.session.commit()
 
     subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
@@ -905,6 +929,15 @@ def Pharmacyfn():
 def pharmacyview(id):
     list = Pharmacy.query.filter_by(local_id = id ).first()                
     return render_template('pharmacyview.html' , list = list)
+
+@app.route('/adventure', methods=['GET','POST'])
+def adventure():
+    list = Adventure.query.filter_by().all()  
+    return render_template('adventure.html',list=list)
+
+
+
+
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):
