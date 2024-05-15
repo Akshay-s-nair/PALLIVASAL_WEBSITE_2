@@ -58,13 +58,13 @@
         </div>
         <section class=" pb-4">
           <div class="row">
-            <div class="col-md-3 p-4 mx-auto">
+            <div class="col-md-3 p-4 mx-auto cont">
               <a
                 href="{{ url_for('tour') }}"
                 style="text-decoration: none"
               >
-              <div class="cont">
-              <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+              
+              <h2>
                 Places to Visit
               </h2>
               <div class="cards mx-auto " style="width: 18rem; height: 10rem">
@@ -72,16 +72,16 @@
                   src="{{url_for('static',filename='images/waterfall.webp')}}"
                   class="card-img-top crdimg p-1"
                   alt="..."/>
-              </div>
+             
             </div></a>
             </div>
-            <div class="col-md-3 p-4 mx-auto">
+            <div class="col-md-3 p-4 mx-auto cont">
               <a
                 href="{{ url_for('where_to_stay') }}"
                 style="text-decoration: none"
               >
-              <div class="cont">
-                <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;" >
+              
+                <h2 >
                   Place to Stay
                 </h2>
                 <div class="cards mx-auto " style="width: 18rem; height: 10rem">
@@ -89,10 +89,12 @@
                     src="{{url_for('static',filename='images/stay.webp')}}"
                     class="card-img-top crdimg p-1"
                     alt="..."/>
-                </div>
+                
               </div></a>
             </div>
-            <div class="col-md-3 p-4 mx-auto">
+          </div>
+          <div class="row">
+            <div class="col-md-3 p-4 mx-auto cont">
               <a
 
 
@@ -100,8 +102,8 @@
 
                 style="text-decoration: none"
               >
-              <div class="cont">
-                <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;" >
+              
+                <h2>
                   Adventure Activities
                 </h2>
                 <div class="cards mx-auto " style="width: 18rem; height: 10rem">
@@ -109,16 +111,16 @@
                     src="{{url_for('static',filename='images/adventure.jpg')}}"
                     class="card-img-top crdimg p-1"
                     alt="..."/>
-                </div>
+                
               </div></a>
             </div>
-            <div class="col-md-3 p-4 mx-auto">
+            <div class="col-md-3 p-4 mx-auto cont">
               <a
                 href="{{ url_for('where_to_stay') }}"
                 style="text-decoration: none"
               >
-              <div class="cont">
-                <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;" >
+              
+                <h2>
                   Art and Cultural
                 </h2>
                 <div class="cards mx-auto " style="width: 18rem; height: 10rem">
@@ -126,7 +128,7 @@
                     src="{{url_for('static',filename='images/culture.jpg')}}"
                     class="card-img-top crdimg p-1"
                     alt="..."/>
-                </div>
+                
               </div></a>
             </div>
           </div>
@@ -148,7 +150,7 @@
       </div>
         <div class="row">
           <div class="col-md-3 p-4 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               Hospitals
             </h2>
             <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
@@ -162,7 +164,7 @@
           </div>
 
           <div class="col-md-3 p-4 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               Pharmacy
             </h2>
             <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
@@ -177,7 +179,7 @@
           </div>
           <div class="row">
           <div class="col-md-3 p-4 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               Transportation
             </h2>
             <a href="{{ url_for('transport') }}" style="text-decoration: none">
@@ -191,7 +193,7 @@
           </div>
 
           <div class="col-md-3 p-4 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               Local Workforce
             </h2>
               <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
@@ -208,7 +210,7 @@
         </div>
         <div class="row">
           <div class="col-md-3 p-5 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               E-Services And Waste Management
             </h2>
             <a href="{{ url_for('eservices') }}" style="text-decoration: none">
@@ -221,7 +223,7 @@
             </a>
           </div>
           <div class="col-md-3 p-5 mx-auto cont">
-            <h2 style="color: white; text-align: center; font-size: 1.5rem; padding: 20px;">
+            <h2>
               Spices & Plantations
             </h2>
             <a href="{{ url_for('spices') }}" style="text-decoration: none">

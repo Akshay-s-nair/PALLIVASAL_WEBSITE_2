@@ -661,3 +661,9 @@ background-size: 35%;
   object-fit: contain;
 }
 }
+.cont h2{
+  color: white; 
+  text-align: center; 
+  font-size: 1.5rem; 
+  padding: 20px 0px 20px 0px;
+}
