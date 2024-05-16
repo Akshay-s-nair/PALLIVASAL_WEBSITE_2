@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
 from PIL import Image
+from sqlalchemy.exc import SQLAlchemyError
 # from twilio.rest import Client
 # import keys
 
@@ -510,6 +511,16 @@ def admin_reject():
                 db.session.delete(Plantation_to_delete)
             except:
                 pass
+            try:
+                Adventure_to_delete=Adventure.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Adventure_to_delete)
+            except:
+                pass
+            try:
+                Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Art_to_delete)
+            except:
+                pass    
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
@@ -517,8 +528,6 @@ def admin_reject():
         return render_template('admin_reject.html')
     
     return render_template('admin_reject.html')
-    
-
 
 @app.route('/approved_remove', methods=['POST'])    
 def approved_remove():
@@ -566,12 +575,22 @@ def approved_remove():
                 db.session.delete(Plantation_to_delete)
             except:
                 pass
-    
+            try:
+                Adventure_to_delete=Adventure.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Adventure_to_delete)
+            except:
+                pass
+            try:
+                Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Art_to_delete)
+            except:
+                pass    
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
         db.session.rollback()   
     return render_template('approved_remove.html')
+
 
 @app.route('/requests', methods=["GET" ,"POST"])
 def requests():
@@ -905,16 +924,22 @@ def addHealthcare():
         name=request.form.get('name')
         map=request.form.get('map')
         pic = request.files.get('img')
-
+        types = request.form.get('hospital-type')
+        category = request.form.get('hospital-catogery')
+        description = request.form.get('description')
+        contact = request.form.get('contact')
+        place = request.form.get('place')
+        time = request.form.get('workingtime')
         if not pic:
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('addedHealthcare'))
 
         filename = secure_filename(pic.filename)[:15]
 
-        entry = HealthCare(name=name,img=filename,map=map)
+        entry = HealthCare(name=name,img=filename,map=map,types = types , category = category,description=description , contact2=contact,place=place,time= time)
         db.session.add(entry)
         db.session.commit()
+        pic.save(os.path.join('static', 'uploads', filename))
         flash('Hospital '+ name+' added. click + button to add more')
         return render_template('addHealthcare.html')
     else:
@@ -927,8 +952,8 @@ def addedhospital_detail(id):
 
 @app.route('/addedHealthcare', methods=['GET','POST'])
 def addedHealthcare():
-        list=HealthCare.query.filter_by().all()
-        return render_template('adminviewHealthcare.html',list=list)
+    list=HealthCare.query.filter_by().all()
+    return render_template('adminviewHealthcare.html',list=list)
 
 @app.route('/Hospital_remove', methods=['GET','POST'])
 def Hospital_remove():
@@ -951,9 +976,9 @@ def Hospitals():
 
 @app.route('/hospitalview/<int:id>', methods=['GET','POST'])
 def hospitalview(id):
-    list=HealthCare.query.filter_by(id=id).first()
-    return render_template('hospitalview.html',list=list)
-
+    list=HealthCare.query.filter_by(id=id)
+    return render_template('hospitalview.html',info=list)
+  
 
 @app.route('/Pharmacyfn', methods=['GET','POST'])
 def Pharmacyfn():

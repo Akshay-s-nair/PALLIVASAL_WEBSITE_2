@@ -135,6 +135,13 @@ class HealthCare(db.Model):
     name = db.Column(db.String(100), unique=False, nullable=False)
     img = db.Column(db.Text , nullable=True)
     map =  db.Column(db.String(50) , nullable=True)
+    types = db.Column(db.String(50) , nullable=True)
+    category = db.Column(db.String(50) , nullable=True)
+    description = db.Column(db.Text , nullable=True)
+    contact2 = db.Column(db.String(50) , nullable=True)
+    place = db.Column(db.String(50) , nullable=True)
+    time = db.Column(db.String(50) , nullable=True)
+    
 
 class Pharmacy(db.Model):
     local_id = db.Column(db.Integer, primary_key=True)
