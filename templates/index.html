@@ -20,6 +20,7 @@
           {% endblock head %}
           
           {% block body  %}
+          {% include 'basenav.html' %}
           <!----------------------Project------------------------>
           <div id="preloader"></div>
 
@@ -116,7 +117,7 @@
             </div>
             <div class="col-md-3 p-4 mx-auto cont">
               <a
-                href="{{ url_for('art') }}"
+                href="{{ url_for('where_to_stay') }}"
                 style="text-decoration: none"
               >
               
