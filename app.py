@@ -394,7 +394,7 @@ def signin_logout():
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
     if "user" in session:
-        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()                
+        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()           
         return render_template('admin_view.html' , list=list )
     else:
         return render_template('admin.html')
@@ -406,62 +406,48 @@ def admin_dash():
     else:
         return render_template('admin.html')
 
-@app.route('/admin_accept', methods=['GET' , 'POST'])
+@app.route('/admin_accept', methods=['POST'])
 def admin_accept():
-
-    row_id = request.form.get('row_id')
-    details_instance = Details.query.filter_by(sno=row_id).first()
-    details_instance.accept = 1
-    service=details_instance.services
-    db.session.commit()
-    if service in ["Carpentary works" , 'Plumbing services' , 'Electrical works']:
-        new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
-        db.session.add(new_local_workforce)
-        db.session.commit()
-    elif service =='Spices outlet':
-        spiceobj = Spices(details_id=details_instance.sno)
-        db.session.add(spiceobj)
-        db.session.commit()
-    elif service in ["Home stay" , "Resorts" , "Tent Camping" , "Dormitories"]:
-        new_wheretostay = WhereToStay(details_id=details_instance.sno)
-        db.session.add(new_wheretostay)
-        db.session.commit()
-    elif service =='plantation':
-        plantation = Plantation(details_id=details_instance.sno)
-        db.session.add(plantation)
-        db.session.commit()
-    elif service =='Pharmacy Store':
-        PharmacyStore = Pharmacy(details_id=details_instance.sno)
-        db.session.add(PharmacyStore)
-        db.session.commit()
-
-    elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw","Ambulance","Bike mechanic","Car mechanic" , 'Car Rental']:
-        transport = Transportation(details_id=details_instance.sno)
-        db.session.add(transport)
-        db.session.commit()
-
-    elif service =='Adventure Activity':
-        adventure = Adventure(details_id=details_instance.sno)
-        db.session.add(adventure)
-        db.session.commit()
-
-    elif service =='Art and Cultural':
-        art = Art(details_id=details_instance.sno)
-        db.session.add(art)
-        db.session.commit()
-
-    subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-    sender1="noreply@app.com"
-    msg= Message(subject,sender=sender1,recipients=[details_instance.email])
-    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath\nWebsite: https://explorepallivasalgp.org/"
     try:
-        mail.send(msg)
-        return render_template('admin_accept.html')
-    except Exception:
-        pass
+        row_id = request.form.get('row_id')
+        details_instance = Details.query.filter_by(sno=row_id).first()
+        details_instance.accept = 1
+        service = details_instance.services
+        db.session.commit()
 
-    return render_template('admin_accept.html')
+        if service in ["Carpentary works", 'Plumbing services', 'Electrical works']:
+            new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
+            db.session.add(new_local_workforce)
+        elif service == 'Spices outlet':
+            spiceobj = Spices(details_id=details_instance.sno)
+            db.session.add(spiceobj)
+        elif service in ["Home stay", "Resorts", "Tent Camping", "Dormitories"]:
+            new_wheretostay = WhereToStay(details_id=details_instance.sno)
+            db.session.add(new_wheretostay)
+        elif service == 'plantation':
+            plantation = Plantation(details_id=details_instance.sno)
+            db.session.add(plantation)
+        elif service == 'Pharmacy Store':
+            pharmacy_store = Pharmacy(details_id=details_instance.sno)
+            db.session.add(pharmacy_store)
+        elif service in ["Jeep Safari", 'Taxi service', 'Bike Rental', "Auto Rickshaw", "Ambulance", "Bike mechanic", "Car mechanic", 'Car Rental']:
+            transport = Transportation(details_id=details_instance.sno)
+            db.session.add(transport)
+        elif service == 'Adventure Activity':
+            adventure = Adventure(details_id=details_instance.sno)
+            db.session.add(adventure)
+        elif service == 'Art and Cultural':
+            art = Art(details_id=details_instance.sno)
+            db.session.add(art)
+
+        db.session.commit()
+        
+        return render_template('admin_accept.html')
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"Error in admin_accept: {e}")
+        return render_template('admin_view.html')
+
 
 @app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
