@@ -20,8 +20,11 @@
           {% endblock head %}
           
           {% block body  %}
+
+          <!----------------------Preloader------------------------>
+
           {% include 'basenav.html' %}
-          <!----------------------Project------------------------>
+
           <div id="preloader"></div>
 
 
@@ -52,50 +55,52 @@
     <!-- <div id="A"></div>> -->
       <!----------------------Tourism------------------------>
       <section class=" p-4" id="tourism">
-        <div class="container-fluid pt-4 pb-4">
+        <div class="container-fluid">
           <div class="h" style="display: flex;justify-content: center;align-items: center;">
             <h1  id="myHeading" style="text-align: center" class="headings hidden">Tourism</h1>
           </div>
-        </div>
-        <section class=" pb-4">
+        
+        <section class=" p-2">
           <div class="row">
-            <div class="col-md-3 p-4 mx-auto cont">
+            <div class="col mx-auto cont">
               <a
                 href="{{ url_for('tour') }}"
                 style="text-decoration: none"
               >
               
-              <h2>
-                Places to Visit
-              </h2>
-              <div class="cards mx-auto " style="width: 18rem; height: 10rem">
+              
+              <div class="cards mx-auto " >
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/waterfall.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/>
+                  alt="..."/><p class="cen">
+                    Places to Visit
+                  </p></img>
              
             </div></a>
             </div>
-            <div class="col-md-3 p-4 mx-auto cont">
+            <div class="col mx-auto cont">
               <a
                 href="{{ url_for('where_to_stay') }}"
                 style="text-decoration: none"
               >
               
-                <h2 >
-                  Place to Stay
-                </h2>
-                <div class="cards mx-auto " style="width: 18rem; height: 10rem">
+                
+                <div class="cards mx-auto " >
+                  <div class="gradient"></div>
                   <img
                     src="{{url_for('static',filename='images/stay.webp')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/>
+                    alt="..."/><p class="cen" >
+                      Place to Stay
+                    </p></img>
                 
               </div></a>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3 p-4 mx-auto cont">
+            <div class="col mx-auto cont">
               <a
 
 
@@ -104,139 +109,142 @@
                 style="text-decoration: none"
               >
               
-                <h2>
-                  Adventure Activities
-                </h2>
-                <div class="cards mx-auto " style="width: 18rem; height: 10rem">
+                
+                <div class="cards mx-auto ">
+                  <div class="gradient"></div>
                   <img
                     src="{{url_for('static',filename='images/adventure.jpg')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/>
+                    alt="..."/><p class="cen">
+                      Adventure Activities
+                    </p></img>
                 
               </div></a>
             </div>
-            <div class="col-md-3 p-4 mx-auto cont">
+            <div class="col mx-auto cont">
               <a
                 href="{{ url_for('where_to_stay') }}"
                 style="text-decoration: none"
               >
               
-                <h2>
-                  Art and Cultural
-                </h2>
-                <div class="cards mx-auto " style="width: 18rem; height: 10rem">
+                
+                <div class="cards mx-auto " >
+                  <div class="gradient"></div>
                   <img
                     src="{{url_for('static',filename='images/culture.jpg')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/>
+                    alt="..."/><p class="cen">
+                      Art and Cultural
+                    </p></img>
                 
               </div></a>
             </div>
-          </div>
+          </div></div>
         </section>
       </section>
 
       <!----------------------Services------------------------>
-      <div class="container-fluid  pb-4" >
-        <!-- <div class="row">
-          <div class="col-6"></div>
-          <div class="col-6 headings">
-            <h1 style="text-align: center">Services</h1>
-          </div>
-        </div> -->
-      </div>
-      <section class="" id="services">
+      
+      <section class="p-4" id="services">
+        <div class="container-fluid" >
         <div class="h" style="display: flex;justify-content: center;align-items: center;">
           <h1 style="text-align: center" class="headings">Services</h1>
       </div>
         <div class="row">
-          <div class="col-md-3 p-4 mx-auto cont">
-            <h2>
-              Hospitals
-            </h2>
+          <div class="col mx-auto cont">
+            
             <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
-              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+              <div class="cards mx-auto">
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/hospital.jpg')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/>
+                  alt="..."/><p class="cen">
+                    Hospitals
+                  </p></img>
               </div>
             </a>
           </div>
 
-          <div class="col-md-3 p-4 mx-auto cont">
-            <h2>
-              Pharmacy
-            </h2>
+          <div class="col mx-auto cont">
+            
             <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
-              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+              <div class="cards mx-auto" >
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/pharmacy.jpg')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/>
+                  alt="..."/><p class="cen">
+                    Pharmacy
+              </p></img>
               </div>
             </a>
           </div>
           </div>
           <div class="row">
-          <div class="col-md-3 p-4 mx-auto cont">
-            <h2>
-              Transportation
-            </h2>
+          <div class="col mx-auto cont">
+            
             <a href="{{ url_for('transport') }}" style="text-decoration: none">
-              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+              <div class="cards mx-auto" >
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/Rectangle1.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/>
+                  alt="..."/><p class="cen">
+                    Transportation
+                  </p></img>
               </div>
             </a>
           </div>
 
-          <div class="col-md-3 p-4 mx-auto cont">
-            <h2>
-              Local Workforce
-            </h2>
+          <div class="col mx-auto cont">
+            
               <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
-              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+              <div class="cards mx-auto">
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/Rectangle2.webp')}}"
                   class="card-img-top crdimg p-1"
                   alt="..."
-                />
+                /><p class="cen">
+                  Local Workforce
+                </p></img>
             </div>
           </a>
           </div>
         
         </div>
         <div class="row">
-          <div class="col-md-3 p-5 mx-auto cont">
-            <h2>
-              E-Services And Waste Management
-            </h2>
+          <div class="col mx-auto cont">
+            
             <a href="{{ url_for('eservices') }}" style="text-decoration: none">
-            <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+            <div class="cards mx-auto" >
+              <div class="gradient"></div>
               <img
                 src="{{url_for('static',filename='images/eservice.jpg')}}"
                 class="card-img-top crdimg p-1"
-                alt="..."/>
+                alt="..."/><p class="cen">
+                  E-Services And Waste Management
+                </p>
             </div>
             </a>
           </div>
-          <div class="col-md-3 p-5 mx-auto cont">
-            <h2>
-              Spices & Plantations
-            </h2>
+          <div class="col mx-auto cont">
+            
             <a href="{{ url_for('spices') }}" style="text-decoration: none">
-              <div class="cards mx-auto" style="width: 18rem; height: 10rem">
+              <div class="cards mx-auto">
+                <div class="gradient"></div>
                 <img
                   src="{{url_for('static',filename='images/spices.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/>
+                  alt="..."/><p class="cen">
+                    Spices & Plantations
+                  </p></img>
               </div>
             </a>
           </div>
         </div>
+      </div>
       </section>
       <h1 style="text-align: center" class="headings">Projects</h1>
       <div class="slideshow-container">
