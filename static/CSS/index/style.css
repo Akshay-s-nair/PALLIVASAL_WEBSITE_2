@@ -140,7 +140,7 @@ color: black;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
 } */
-.cards{
+/* .cards{
   box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.2), 5px 6px 20px 10px rgba(0, 0, 0, 0.19);
   text-align: center;
 
@@ -149,10 +149,43 @@ color: black;
   padding-top: 0px;
   padding-bottom: 0px;
 
+} */
+.container-fluid{
+  padding-left: 80px;
+  padding-right: 80px;
+}
+@media (max-width:600px) {
+  .container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+.cards{
+  /* box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.2), 5px 6px 20px 10px rgba(0, 0, 0, 0.19); */
+  text-align: center;
+  width: 100%;
+  min-width: 200px;
+  height: 250px;
+  /* border-radius: 48px;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px; */
+  position: relative;
+  text-align: center;
+  color: white;
+  margin: 0;
+
+}
+.cen{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .cont:hover {
-	transform: scale(1.05);
-  transition: 0.5s;
+	transform: scale(1.02);
+  transition: 0.2s;
+  z-index: 11;
 }
 
 .content1{
@@ -395,16 +428,42 @@ body{
   
 
 }  
-
+.cen{
+  font-size: 24px;
+  font-weight: 350;
+}
+@media (max-width:500px){
+  .cards{
+    height: 120px;
+  }
+  .cen{
+    font-size: 18px;
+  }
+ }
 /* ..modif.. */
 .cards{
   display: flex;
   justify-content: center;
   align-items: center;
+ 
+}
+.gradient{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom, rgba(255,0,0,0),20%, rgba(0, 0, 0, 0.885));
 }
 .crdimg{
-  height: 140px;
-  border-radius: 60px;
+  height: 100%;
+  background-color: #000000d8;
+  object-fit: cover;
+  border-radius: 10px;
+  
+}
+.cont{
+  padding: 0;
 }
 svg {
   display: inline-block;
@@ -430,8 +489,8 @@ svg {
   font-family: 'Permanent Marker', cursive;
   color: #eeeeeed9;
   font-size: 70px;
-
-  padding-top: 120px;
+  padding-bottom: 10px;
+  padding-top: 60px;
 }
 .hidden {
   opacity: 1;
@@ -488,7 +547,7 @@ hr{
 }
 @media (max-width:400px) {
   .headings{
-    font-size: 50px;
+    font-size: 38px;
     padding: 10px;
   }
   .responsiveimg{
