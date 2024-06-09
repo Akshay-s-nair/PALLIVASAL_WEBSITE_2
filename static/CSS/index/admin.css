@@ -53,6 +53,9 @@ body{
     .cards-content{
         margin-top: 70px;
     }
+    .cards{
+        margin: 20px;
+    }
 }
 
 

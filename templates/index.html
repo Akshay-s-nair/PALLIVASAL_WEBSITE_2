@@ -60,7 +60,7 @@
             <h1  id="myHeading" style="text-align: center" class="headings hidden">Tourism</h1>
           </div>
         
-        <section class=" p-2">
+        <section class="show p-2">
           <div class="row">
             <div class="col mx-auto cont">
               <a
@@ -150,37 +150,6 @@
         <div class="h" style="display: flex;justify-content: center;align-items: center;">
           <h1 style="text-align: center" class="headings">Services</h1>
       </div>
-        <div class="row">
-          <div class="col mx-auto cont">
-            
-            <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
-              <div class="cards mx-auto">
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/hospital.jpg')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen">
-                    Hospitals
-                  </p></img>
-              </div>
-            </a>
-          </div>
-
-          <div class="col mx-auto cont">
-            
-            <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
-              <div class="cards mx-auto" >
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/pharmacy.jpg')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen">
-                    Pharmacy
-              </p></img>
-              </div>
-            </a>
-          </div>
-          </div>
           <div class="row">
           <div class="col mx-auto cont">
             
@@ -246,6 +215,81 @@
         </div>
       </div>
       </section>
+
+<!----------------------Public Services------------------------>
+      
+<section class="p-4" id="services">
+  <div class="container-fluid" >
+  <div class="h" style="display: flex;justify-content: center;align-items: center;">
+    <h1 style="text-align: center" class="headings">Public Services</h1>
+</div>
+  <div class="row">
+    <div class="col mx-auto cont">
+      
+      <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
+        <div class="cards mx-auto">
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/hospital.jpg')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen">
+              Hospitals
+            </p></img>
+        </div>
+      </a>
+    </div>
+
+    <div class="col mx-auto cont">
+      
+      <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
+        <div class="cards mx-auto" >
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/pharmacy.jpg')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen">
+              Pharmacy
+        </p></img>
+        </div>
+      </a>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col mx-auto cont">
+      
+      <a href="{{ url_for('transport') }}" style="text-decoration: none">
+        <div class="cards mx-auto" >
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/bank.jpg')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen">
+              Banks
+            </p></img>
+        </div>
+      </a>
+    </div>
+
+    <div class="col mx-auto cont">
+      
+        <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
+        <div class="cards mx-auto">
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/Rectangle2.webp')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."
+          /><p class="cen">
+            Other Services
+          </p></img>
+      </div>
+    </a>
+    </div>
+  
+  </div>
+</div>
+</section>
+    
       <h1 style="text-align: center" class="headings">Projects</h1>
       <div class="slideshow-container">
 
