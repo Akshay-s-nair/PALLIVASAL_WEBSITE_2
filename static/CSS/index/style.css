@@ -432,6 +432,7 @@ body{
   font-size: 24px;
   font-weight: 350;
 }
+
 @media (max-width:500px){
   .cards{
     height: 120px;
@@ -545,9 +546,9 @@ hr{
   margin-left: 50px;
   margin-right: 50px;
 }
-@media (max-width:400px) {
+@media (max-width:500px) {
   .headings{
-    font-size: 38px;
+    font-size: 34px;
     padding: 10px;
   }
   .responsiveimg{
@@ -606,13 +607,13 @@ background-size: 35%;
   width: auto;
   margin-top: 15%;
   padding: 10px;
-  color: rgb(72, 72, 72);
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
-  background-color: aliceblue;
+  background-color: rgba(240, 248, 255, 0.426);
   text-decoration: none;
   
 }
@@ -703,13 +704,13 @@ background-size: 35%;
   width: auto;
   margin-top: 25%;
   padding: 7px;
-  color: rgb(72, 72, 72);
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-size: 15px;
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
-  background-color: aliceblue;
+  background-color: rgba(240, 248, 255, 0.426);
   text-decoration: none;
   
 }

@@ -28,8 +28,9 @@ body{
     border-radius: 66px;
   }
 .images{
-    width: 400px;
-    height: 200px;
+    width: 300px;
+    height: 150px;
+    border-radius: 50px;
 }
 .headings{
     color: rgba(240, 248, 255, 0.824);
