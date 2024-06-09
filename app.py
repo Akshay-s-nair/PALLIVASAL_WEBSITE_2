@@ -18,7 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure 
 
 from sqlalchemy.sql.expression import update
 
@@ -998,6 +998,16 @@ def view_art(id):
     list = Art.query.filter_by(details_id = id)
     for_contact = Details.query.filter_by(sno = id , accept = 1)       
     return render_template('view_art.html' ,info = for_contact , list = list)
+
+@app.route('/bank', methods=['GET','POST'])
+def bank():
+    return render_template('banks.html')
+
+
+# @app.route('/bankview', methods=['GET','POST'])
+# def addedHealthcare():
+#     return render_template('adminviewHealthcare.html',list=list)
+
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
