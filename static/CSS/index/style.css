@@ -518,18 +518,20 @@ svg {
 #aboutus{
  text-align: center;
  justify-content: center;
+ background-color: #000;
 }
 .contactus{
   display: flex;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+  justify-content: left;
   flex-wrap: wrap;
 
 }
 
 .contct{
   margin: 10px;
+  color: #eee;
 }
 
 hr{
