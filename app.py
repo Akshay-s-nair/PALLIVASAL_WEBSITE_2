@@ -11,12 +11,13 @@ from sqlalchemy.orm import Session
 from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
 from PIL import Image
+from sqlalchemy.exc import SQLAlchemyError
 # from twilio.rest import Client
 # import keys
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art
 from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure
 
 from sqlalchemy.sql.expression import update
@@ -100,7 +101,8 @@ def userdash(sno):
         entry5 = Transportation.query.join(Details).filter(Details.sno == sno).first()
         entry6 = Pharmacy.query.join(Details).filter(Details.sno == sno).first()
         entry7 = Adventure.query.join(Details).filter(Details.sno == sno).first()
- 
+        entry8 = Art.query.join(Details).filter(Details.sno == sno).first()
+
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
             entry1.remuneration_details = request.form.get('remuneration')
@@ -210,6 +212,37 @@ def userdash(sno):
                 filename = None
             entry7.img1=filename   
             db.session.commit()
+                
+        elif entry8:
+            entry8.name = request.form.get('name')
+            entry8.location = request.form.get('location')
+            entry8.description = request.form.get('description')
+            entry8.contact2 = request.form.get('contact')
+            entry8.place = request.form.get('place')
+
+            if 'files[]' not in request.files:
+                flash('No file selected')
+                return redirect(request.url)
+
+            files = request.files.getlist('files[]')
+            num = len(files)
+            file_names = []
+
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_names.append(filename)
+                    file.save(os.path.join('static', 'uploads', filename))
+
+            if num <= 5:
+                for i in range(num):
+                    setattr(entry8, f'img{i+1}', file_names[i])
+
+                db.session.commit()
+            else:
+                flash('Only a maximum of 5 should be uploaded!')
+
+
 
 
     list = Details.query.filter_by(sno=sno , accept = 1).all()
@@ -221,7 +254,8 @@ def userdash(sno):
     transport=Transportation.query.filter_by(details_id = sno).all()
     pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
     adventure=Adventure.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure)
+    art=Art.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -360,7 +394,7 @@ def signin_logout():
 @app.route('/admin_view/<int:sno>/<string:slug>' , methods = ["GET" , "POST"])
 def admin_view(sno ,slug):
     if "user" in session:
-        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()                
+        list = Details.query.filter_by(sno = sno ,slug=slug ,accept = None).first()           
         return render_template('admin_view.html' , list=list )
     else:
         return render_template('admin.html')
@@ -372,57 +406,48 @@ def admin_dash():
     else:
         return render_template('admin.html')
 
-@app.route('/admin_accept', methods=['GET' , 'POST'])
+@app.route('/admin_accept', methods=['POST'])
 def admin_accept():
-
-    row_id = request.form.get('row_id')
-    details_instance = Details.query.filter_by(sno=row_id).first()
-    details_instance.accept = 1
-    service=details_instance.services
-    db.session.commit()
-    if service in ["Carpentary works" , 'Plumbing services' , 'Electrical works']:
-        new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
-        db.session.add(new_local_workforce)
-        db.session.commit()
-    elif service =='Spices outlet':
-        spiceobj = Spices(details_id=details_instance.sno)
-        db.session.add(spiceobj)
-        db.session.commit()
-    elif service in ["Home stay" , "Resorts" , "Tent Camping" , "Dormitories"]:
-        new_wheretostay = WhereToStay(details_id=details_instance.sno)
-        db.session.add(new_wheretostay)
-        db.session.commit()
-    elif service =='plantation':
-        plantation = Plantation(details_id=details_instance.sno)
-        db.session.add(plantation)
-        db.session.commit()
-    elif service =='Pharmacy Store':
-        PharmacyStore = Pharmacy(details_id=details_instance.sno)
-        db.session.add(PharmacyStore)
-        db.session.commit()
-
-    elif service in ["Jeep Safari" , 'Taxi service' , 'Bike Rental' , "Auto Rickshaw","Ambulance","Bike mechanic","Car mechanic" , 'Car Rental']:
-        transport = Transportation(details_id=details_instance.sno)
-        db.session.add(transport)
-        db.session.commit()
-
-    elif service =='Adventure Activity':
-        adventure = Adventure(details_id=details_instance.sno)
-        db.session.add(adventure)
-        db.session.commit()
-
-    subject="Thank you for Registering in Pallivasal Website as "+details_instance.services
-    sender1="noreply@app.com"
-    msg= Message(subject,sender=sender1,recipients=[details_instance.email])
-    # subject="Your application for "+details_instance.services+" in Pallivasal website is Accepted"
-    msg.body="This mail is to inform you that your application in pallivasal panchayath has been approved. You can now login to your user dashboard and shall make Necessary changes.\nYour infomation will be available in the website for the public.\nfor any queries, contact us through email: explorepallivasalgp@gmail.com\n\n\nRegards,\nPallivasal Gramapanchayath\nWebsite: https://explorepallivasalgp.org/"
     try:
-        mail.send(msg)
-        return render_template('admin_accept.html')
-    except Exception:
-        pass
+        row_id = request.form.get('row_id')
+        details_instance = Details.query.filter_by(sno=row_id).first()
+        details_instance.accept = 1
+        service = details_instance.services
+        db.session.commit()
 
-    return render_template('admin_accept.html')
+        if service in ["Carpentary works", 'Plumbing services', 'Electrical works']:
+            new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
+            db.session.add(new_local_workforce)
+        elif service == 'Spices outlet':
+            spiceobj = Spices(details_id=details_instance.sno)
+            db.session.add(spiceobj)
+        elif service in ["Home stay", "Resorts", "Tent Camping", "Dormitories"]:
+            new_wheretostay = WhereToStay(details_id=details_instance.sno)
+            db.session.add(new_wheretostay)
+        elif service == 'plantation':
+            plantation = Plantation(details_id=details_instance.sno)
+            db.session.add(plantation)
+        elif service == 'Pharmacy Store':
+            pharmacy_store = Pharmacy(details_id=details_instance.sno)
+            db.session.add(pharmacy_store)
+        elif service in ["Jeep Safari", 'Taxi service', 'Bike Rental', "Auto Rickshaw", "Ambulance", "Bike mechanic", "Car mechanic", 'Car Rental']:
+            transport = Transportation(details_id=details_instance.sno)
+            db.session.add(transport)
+        elif service == 'Adventure Activity':
+            adventure = Adventure(details_id=details_instance.sno)
+            db.session.add(adventure)
+        elif service == 'Art and Cultural':
+            art = Art(details_id=details_instance.sno)
+            db.session.add(art)
+
+        db.session.commit()
+        
+        return render_template('admin_accept.html')
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"Error in admin_accept: {e}")
+        return render_template('admin_view.html')
+
 
 @app.route('/admin_reject', methods=['POST'])     
 def admin_reject():
@@ -472,6 +497,16 @@ def admin_reject():
                 db.session.delete(Plantation_to_delete)
             except:
                 pass
+            try:
+                Adventure_to_delete=Adventure.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Adventure_to_delete)
+            except:
+                pass
+            try:
+                Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Art_to_delete)
+            except:
+                pass    
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
@@ -479,8 +514,6 @@ def admin_reject():
         return render_template('admin_reject.html')
     
     return render_template('admin_reject.html')
-    
-
 
 @app.route('/approved_remove', methods=['POST'])    
 def approved_remove():
@@ -528,14 +561,22 @@ def approved_remove():
                 db.session.delete(Plantation_to_delete)
             except:
                 pass
-
-            
-                    
+            try:
+                Adventure_to_delete=Adventure.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Adventure_to_delete)
+            except:
+                pass
+            try:
+                Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Art_to_delete)
+            except:
+                pass    
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
         db.session.rollback()   
     return render_template('approved_remove.html')
+
 
 @app.route('/requests', methods=["GET" ,"POST"])
 def requests():
@@ -869,16 +910,22 @@ def addHealthcare():
         name=request.form.get('name')
         map=request.form.get('map')
         pic = request.files.get('img')
-
+        types = request.form.get('hospital-type')
+        category = request.form.get('hospital-catogery')
+        description = request.form.get('description')
+        contact = request.form.get('contact')
+        place = request.form.get('place')
+        time = request.form.get('workingtime')
         if not pic:
             flash('No Image uploaded. Please try again.')
             return redirect(url_for('addedHealthcare'))
 
         filename = secure_filename(pic.filename)[:15]
 
-        entry = HealthCare(name=name,img=filename,map=map)
+        entry = HealthCare(name=name,img=filename,map=map,types = types , category = category,description=description , contact2=contact,place=place,time= time)
         db.session.add(entry)
         db.session.commit()
+        pic.save(os.path.join('static', 'uploads', filename))
         flash('Hospital '+ name+' added. click + button to add more')
         return render_template('addHealthcare.html')
     else:
@@ -891,8 +938,8 @@ def addedhospital_detail(id):
 
 @app.route('/addedHealthcare', methods=['GET','POST'])
 def addedHealthcare():
-        list=HealthCare.query.filter_by().all()
-        return render_template('adminviewHealthcare.html',list=list)
+    list=HealthCare.query.filter_by().all()
+    return render_template('adminviewHealthcare.html',list=list)
 
 @app.route('/Hospital_remove', methods=['GET','POST'])
 def Hospital_remove():
@@ -915,9 +962,9 @@ def Hospitals():
 
 @app.route('/hospitalview/<int:id>', methods=['GET','POST'])
 def hospitalview(id):
-    list=HealthCare.query.filter_by(id=id).first()
-    return render_template('hospitalview.html',list=list)
-
+    list=HealthCare.query.filter_by(id=id)
+    return render_template('hospitalview.html',info=list)
+  
 
 @app.route('/Pharmacyfn', methods=['GET','POST'])
 def Pharmacyfn():
@@ -935,8 +982,22 @@ def adventure():
     list = Adventure.query.filter_by().all()  
     return render_template('adventure.html',list=list)
 
+@app.route('/view_adventure/<int:id>', methods = ["GET" , "POST"])
+def view_adventure(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = Adventure.query.filter_by(details_id = id)        
+    return render_template('view_adventure.html' , list = list ,info = info)
 
+@app.route('/art', methods=['GET','POST'])
+def art():
+    list = Art.query.filter_by().all()  
+    return render_template('art.html',list=list)
 
+@app.route('/view_art/<int:id>', methods = ["GET" , "POST"])
+def view_art(id):
+    list = Art.query.filter_by(details_id = id)
+    for_contact = Details.query.filter_by(sno = id , accept = 1)       
+    return render_template('view_art.html' ,info = for_contact , list = list)
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():

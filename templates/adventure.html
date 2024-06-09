@@ -10,16 +10,18 @@
     <h1 class="headng">Adventure Activities</h1>
     <div class="container-wrapper">
       {% for item in list %}
+      {% if item.name is not none%}
         <div class="container mx-auto">
           <h2>{{ item.name }}</h2>
           <div class="slider mx-auto">
-            <a href="/view_adventure/{{ item.id }}">
+            <a href="/view_adventure/{{ item.details_id }}">
               {% set fname = 'uploads/' + item.img1 %}  
                 <img class="image_holder" src="{{ url_for('static', filename=fname) }}" loading="lazy">
              
             </a>
           </div>
         </div>
+        {%endif%}
       {% endfor %}
     </div>
   </main>

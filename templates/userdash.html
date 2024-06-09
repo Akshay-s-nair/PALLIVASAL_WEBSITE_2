@@ -348,7 +348,7 @@
   {% elif item.services in ["Art and Cultural"]  %}
     
     <div class="box2">
-      {% for item2 in stay %}
+      {% for item2 in art %}
       <div id="change">
       <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <h2>Enter the Details</h2>
@@ -362,16 +362,15 @@
           <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
           <label>Place</label>
           <input value="{{ item2.place | default('') }}" type="text" name="place">
-          <label>Photo 1</label>
-          <input type="file" name="img1" required>
-          <label>Photo 2</label>
-          <input type="file" name="img2" >
-          <label>Photo 3</label>
-          <input type="file" name="img3" >
-          <label>Photo 4</label>
-          <input type="file" name="img4" >
-          <label>Photo 5</label>
-          <input type="file" name="img5" >
+          <label>Photos(maximum 5)</label>
+          <input
+                  id="myfile"
+                  type="file"
+                  name="files[]"
+                  multiple="true"
+                  autocomplete="off"
+                  required
+              />
           <button id="click-btn" type="submit">Save Changes</button>
         </form>  
       </div>
@@ -387,19 +386,28 @@
             <h3>{{ item2.contact2 | default('') }}</h3>
           <h5>Place</h5>
             <h3>{{ item2.place | default('') }}</h3>
-            {% if item2.img1 is not none %}
             <h5>Uploaded Photo</h5>
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 1
-            </a> </h3> 
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 2
-            </a> </h3> 
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 3
-            </a> </h3>  
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 4
-            </a> </h3>
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 5
-            </a> </h3>   
-            {% endif %}
+            <div class="image">
+              {% if item2.img1 is not none %}
+                  <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view the 1st Image</h3>
+              {% endif %}
+
+              {% if item2.img2 is not none %}
+                <h3><a href="/image/{{ item2.img2 }}" target="_blank">click here to view the 2nd Image</h3>
+              {% endif %}
+
+              {% if item2.img3 is not none %}
+                <h3><a href="/image/{{ item2.img3 }}" target="_blank">click here to view the 3rd Image</h3>
+              {% endif %}
+
+              {% if item2.img4 is not none %}
+                <h3><a href="/image/{{ item2.img4 }}" target="_blank">click here to view the 4th Image</h3>
+              {% endif %}
+
+              {% if item2.img5 is not none %}
+                <h3><a href="/image/{{ item2.img5 }}" target="_blank">click here to view the 5th Image</h3>
+              {% endif %}
+          </div>
             <button onclick="changeDivContent()" >Edit</button>
         </div>
       {% endfor %}
