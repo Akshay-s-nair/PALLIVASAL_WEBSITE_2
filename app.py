@@ -1003,7 +1003,13 @@ def view_art(id):
 def bank():
     return render_template('banks.html')
 
+@app.route('/addmore', methods=['GET','POST'])
+def addmore():
+    return render_template('addmore.html')
 
+@app.route('/addbank', methods=['GET','POST'])
+def addbank():
+    return render_template('addbank.html')
 # @app.route('/bankview', methods=['GET','POST'])
 # def addedHealthcare():
 #     return render_template('adminviewHealthcare.html',list=list)

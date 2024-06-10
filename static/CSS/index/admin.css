@@ -627,3 +627,26 @@ h5.in{
     display: none;
   }
   
+
+    /* addmore page */
+    .toogle{
+        top: 15%;
+        left: 50%;
+        position: relative;
+        transform: translate(-50%,-0%);
+        justify-content: center;
+        text-align: center;
+        margin-bottom: -40px;
+    }
+    @media (max-width: 480px) {
+        .toogle{
+            padding-bottom: 30px;
+            margin-bottom: 0px;
+        }
+    }
+    #show-add{
+        display: block;
+    }
+    #show-added{
+        display: none;
+    }

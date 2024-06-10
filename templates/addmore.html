@@ -32,62 +32,63 @@
                   alt="logo"
                 />
               </a>
+              <a href="{{ url_for('admin_dash') }}">
+                <div class="logout-btn">
+                    <button type="button" class="btn btn-success">Home</button>
+                </div></a>
             </div>
           </div>
     
         </nav>
       </div>
-  <div>
-    <button>
-      Add Items
-    </button>
-    <button>
-      Added items
-    </button>
-  </div>
-  <div class="cards-content">
+      <div class="toogle">
+        <button onclick="showAdd()">
+          Add Items
+        </button>
+        <button onclick="showAdded()">
+          Added items
+        </button>
+      </div>
 
+      <div id="show-add">
+          <div class="cards-content">
+            <a href="{{ url_for('addbank') }}" style="text-decoration: none;">
+            <div class="cards">
+                <h5 >Add Bank</h5>
+            </div></a>
+          </div>
+      </div>
 
-
-    <a href="{{ url_for('requests') }}" style="text-decoration: none;">
-    <div class="cards">
-        <h5 >A</h5>
-    </div></a>
-
-    <a href="{{ url_for('approved_app') }}" style="text-decoration: none;">
-    <div class="cards">
-        <h5 >Approved Applications</h5>
-    </div></a>
-    
-    <a href="{{ url_for('edit_pages') }}" style="text-decoration: none;">
-        <div class="cards">
-            <h5>Places To Visit</h5>
-        </div></a>
-
-    <a href="{{ url_for('added_places') }}" style="text-decoration: none;">
-        <div class="cards">
-            <h5>Added Places</h5>
-        </div></a>
-
-
-        <a href="{{ url_for('addHealthcare') }}" style="text-decoration: none;">
-          <div class="cards">
-              <h5>HealthCare</h5>
-          </div></a>
-  
-      <a href="{{ url_for('addedHealthcare') }}" style="text-decoration: none;">
-          <div class="cards">
-              <h5>Added Healthcare</h5>
-          </div></a>
-    
-        <a href="{{ url_for('admin_dash') }}" style="text-decoration: none;">
-    <div class="cards">
-        <h5>Add More...</h5>
-    </div></a>
-
- 
-
-</div>
-
+      <div id="show-added">
+          <div class="cards-content">
+            <a href="{{ url_for('requests') }}" style="text-decoration: none;">
+            <div class="cards">
+                <h5 >Banks</h5>
+            </div></a>
+          </div>
+      </div>
 </body>
+<script>
+  const element = document.getElementById("show-add");
+  const ele = document.getElementById("show-added");
+  function showAdd() {
+    if (element.style.display === "none") {
+      element.style.display = "block";
+      ele.style.display = "none";
+    } else{
+      element.style.display = "block";
+      ele.style.display = "none";
+    }
+   
+  }
+  function showAdded() {
+    if (ele.style.display === "none") {
+      ele.style.display = "block";
+      element.style.display = "none"; 
+    }else{
+      ele.style.display = "block";
+      element.style.display = "none"; 
+    }
+  }
+</script>
 </html>
