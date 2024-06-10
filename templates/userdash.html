@@ -344,7 +344,7 @@
       {% endfor %}
   </div>
 
-  {% elif item.services in ["Restaurants","Beauty Parlour","Hair Saloon"]  %}
+  {% elif item.services in ["Restaurants","Beauty Parlour","Hair Saloon","Studio"]  %}
     
     <div class="box2">
       {% for item2 in restaurants %}
@@ -451,76 +451,6 @@
                 <h3><a href="/image/{{ item2.img5 }}" target="_blank">click here to view the 5th Image</h3>
               {% endif %}
           </div>
-            <button onclick="changeDivContent()" >Edit</button>
-        </div>
-      {% endfor %}
-  </div>
-
-
-  {% elif item.services in ["Hospital"]  %}
-    
-    <div class="box2">
-      {% for item2 in stay %}
-      <div id="change">
-      <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
-        <h2>Enter the Details</h2>
-          <label>Name of the Hospital</label>
-          <input value="{{ item2.name | default('') }}" type="text" name="name">
-          <label for="">Hospital type</label>
-          <input type="radio" id="Government" name="hospital-type" value="Government">
-          <label >Government</label>
-          <input type="radio" id="Private" name="hospital-type" value="Private">
-          <label >Private</label>
-          <label for="">Hospital Category</label>
-          <input type="radio" name="hospital-catogery" value="Allopathy">
-          <label >Allopathy</label>
-          <input type="radio" name="hospital-catogery" value="Homeo">
-          <label >Homeo</label>
-          <input type="radio" name="hospital-catogery" value="Ayuevedha">
-          <label >Ayurveda</label>
-          <input type="radio" name="hospital-catogery" value="Siddha">
-          <label >Siddha</label>
-          <input type="radio" name="hospital-catogery" value="Modern medicine">
-          <label >Modern medicine</label>
-          <input type="radio" name="hospital-catogery" value="Wellness">
-          <label >Wellness</label>
-          <label>Location Details(Link of Google Map)</label>
-          <input value="{{ item2.location | default('') }}" type="text" name="location">
-          <label>Description</label>
-          <input value="{{ item2.description | default('') }}" type="text" name="description">
-          <label>Additional contact number</label>
-          <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
-          <label>Place</label>
-          <input value="{{ item2.place | default('') }}" type="text" name="place">
-          <label>Working Time</label>
-          <input value="{{ item2.wt | default('') }}" type="text" name="workingtime">
-          <label>Photo</label>
-          <input type="file" name="img1" required>
-
-          <button id="click-btn" type="submit">Save Changes</button>
-        </form>  
-      </div>
-        <div id="edit">
-          <h2>Details</h2>
-          <h5>Name</h5>
-            <h3>{{ item2.name | default('') }}</h3>
-          <h5>Hospital Type</h5>
-            <h3>{{ item2.type | default('') }}</h3>
-          <h5>Hospital Category</h5>
-            <h3>{{ item2.type | default('') }}</h3>
-          <h5>Location Details</h5>
-            <h3>{{ item2.location | default('') }}</h3>
-          <h5>Description</h5>
-            <h3>{{ item2.description | default('') }}</h3>
-          <h5>Additional contact number</h5>
-            <h3>{{ item2.contact2 | default('') }}</h3>
-          <h5>Place</h5>
-            <h3>{{ item2.place | default('') }}</h3>
-            {% if item2.img1 is not none %}
-            <h5>Uploaded Photo</h5>
-            <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 
-            </a> </h3>    
-            {% endif %}
             <button onclick="changeDivContent()" >Edit</button>
         </div>
       {% endfor %}

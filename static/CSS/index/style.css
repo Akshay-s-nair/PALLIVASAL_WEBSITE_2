@@ -489,7 +489,7 @@ svg {
   /* font-family: 'Love Light', cursive; */
   font-family: 'Permanent Marker', cursive;
   color: #eeeeeed9;
-  font-size: 70px;
+  font-size: 62px;
   padding-bottom: 10px;
   padding-top: 60px;
 }
@@ -774,6 +774,13 @@ background-size: 35%;
 }
 .services-side{
   padding: 0 40px;
+}
+details p{
+  text-align: left;
+}
+details{
+  text-align: left;
+  justify-content: left;
 }
 @media (max-width:700px){
   #google_translate_element{
