@@ -17,7 +17,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank
 from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure 
 
 from sqlalchemy.sql.expression import update
@@ -1001,7 +1001,8 @@ def view_art(id):
 
 @app.route('/bank', methods=['GET','POST'])
 def bank():
-    return render_template('banks.html')
+    list = Bank.query.filter_by().all()  
+    return render_template('banks.html', list = list)
 
 @app.route('/addmore', methods=['GET','POST'])
 def addmore():
@@ -1009,7 +1010,18 @@ def addmore():
 
 @app.route('/addbank', methods=['GET','POST'])
 def addbank():
-    return render_template('addbank.html')
+    if(request.method == 'POST'):
+        name=request.form.get('name')
+        map=request.form.get('map')
+        contact = request.form.get('contact')
+
+        entry = Bank(name=name,map=map,contact=contact)
+        db.session.add(entry)
+        db.session.commit()
+        flash('Bank '+ name+' added. click + button to add more')
+        return render_template('addbank.html')
+    else:
+        return render_template('addbank.html')
 
 @app.route('/other_services', methods=['GET','POST'])
 def other_services():

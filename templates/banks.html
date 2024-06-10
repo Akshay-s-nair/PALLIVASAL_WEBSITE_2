@@ -7,10 +7,10 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link
-        rel="icon"
-        href="{{url_for('static',filename='images/logo.webp')}}"
-        type="image/icon type"
-      /> 
+      rel="icon"
+      href="{{url_for('static',filename='images/logo.webp')}}"
+      type="image/icon type"
+    /> 
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Banks</title>
 
@@ -71,18 +71,26 @@
       <table class="table">
         <thead id="table-head">
           <th>Bank Name</th>
+          <th>Contact No.</th>
+          <th>Location</th>
         </thead>
         <tbody id="table-body" style="text-align: center;">
+          {% for item in list %}
           <tr>
             <td>
-              <a href="">bank name</a>
+              <a href="">{{ item.name }}</a>
+            </td>
+            <td>
+              <a href="">{{ item.contact }}</a>
+            </td>
+            <td>
+              <a href="">{{ item.map }}</a>
             </td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
-
   
-</body>
-
+  </body>
 </html>

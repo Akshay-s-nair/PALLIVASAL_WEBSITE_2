@@ -190,3 +190,10 @@ class Art(db.Model):
     details = relationship("Details", back_populates="art")
 
 Details.art = relationship("Art", order_by=Art.local_id, back_populates="details")
+
+
+class Bank(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=False, nullable=False)
+    contact = db.Column(db.String(15), nullable=False)
+    map = db.Column(db.Text, nullable=False)
