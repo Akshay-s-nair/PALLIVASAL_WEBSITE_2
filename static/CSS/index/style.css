@@ -772,9 +772,18 @@ background-size: 35%;
   padding-top: 6%;
   padding-left: 90%;
 }
+.services-side{
+  padding: 0 40px;
+}
 @media (max-width:700px){
   #google_translate_element{
     top: 50px;
     padding-left: 65%;
+  }
+  .pservices{
+    margin-top: 50px;
+  }
+  .services-side{
+    padding: 0;
   }
 }
