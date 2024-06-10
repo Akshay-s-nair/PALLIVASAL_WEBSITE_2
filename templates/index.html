@@ -186,20 +186,6 @@
         <div class="row">
           <div class="col mx-auto cont">
             
-            <a href="{{ url_for('eservices') }}" style="text-decoration: none">
-            <div class="cards mx-auto" >
-              <div class="gradient"></div>
-              <img
-                src="{{url_for('static',filename='images/eservice.jpg')}}"
-                class="card-img-top crdimg p-1"
-                alt="..."/><p class="cen">
-                  E-Services And Waste Management
-                </p>
-            </div>
-            </a>
-          </div>
-          <div class="col mx-auto cont">
-            
             <a href="{{ url_for('spices') }}" style="text-decoration: none">
               <div class="cards mx-auto">
                 <div class="gradient"></div>
@@ -212,6 +198,21 @@
               </div>
             </a>
           </div>
+          <div class="col mx-auto cont">
+      
+            <a href="{{ url_for('other_services') }}" style="text-decoration: none">
+            <div class="cards mx-auto">
+              <div class="gradient"></div>
+              <img
+                src="{{url_for('static',filename='images/Rectangle2.webp')}}"
+                class="card-img-top crdimg p-1"
+                alt="..."
+              /><p class="cen">
+                Other Services
+              </p></img>
+          </div>
+        </a>
+        </div>
         </div>
       </div>
       </section>
@@ -269,21 +270,19 @@
         </div>
       </a>
     </div>
-
     <div class="col mx-auto cont">
-      
-        <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
-        <div class="cards mx-auto">
-          <div class="gradient"></div>
-          <img
-            src="{{url_for('static',filename='images/Rectangle2.webp')}}"
-            class="card-img-top crdimg p-1"
-            alt="..."
-          /><p class="cen">
-            Other Services
-          </p></img>
+            
+      <a href="{{ url_for('eservices') }}" style="text-decoration: none">
+      <div class="cards mx-auto" >
+        <div class="gradient"></div>
+        <img
+          src="{{url_for('static',filename='images/eservice.jpg')}}"
+          class="card-img-top crdimg p-1"
+          alt="..."/><p class="cen">
+            E-Services And Waste Management
+          </p>
       </div>
-    </a>
+      </a>
     </div>
   
   </div>

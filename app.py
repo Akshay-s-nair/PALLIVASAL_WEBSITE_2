@@ -1010,6 +1010,11 @@ def addmore():
 @app.route('/addbank', methods=['GET','POST'])
 def addbank():
     return render_template('addbank.html')
+
+@app.route('/other_services', methods=['GET','POST'])
+def other_services():
+    return render_template('other_services.html')
+
 # @app.route('/bankview', methods=['GET','POST'])
 # def addedHealthcare():
 #     return render_template('adminviewHealthcare.html',list=list)
