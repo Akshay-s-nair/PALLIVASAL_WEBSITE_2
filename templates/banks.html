@@ -1,27 +1,88 @@
-{% extends 'commonNav.html' %}
-{% block head %}
-  <title>Banks</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/placestovisit/tourstyle.css') }}">
-  <script defer src="{{ url_for('static', filename='JS/slider.js') }}"></script>
-{% endblock head %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+        rel="icon"
+        href="{{url_for('static',filename='images/logo.webp')}}"
+        type="image/icon type"
+      /> 
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Banks</title>
 
-{% block body %}
-  <main>
-    <h1 class="headng">Banks</h1>
-    <div class="container-wrapper">
-      {% for item in list %}
-        <div class="container mx-auto">
-          <h2>{{ item.name }}</h2>
-          <div class="slider mx-auto">
-            <a href="/place/{{ item.id }}">
-              {% for img in [item.img1, item.img2, item.img3, item.img4, item.img5] if img is not none %}
-                {% set fname = 'uploads/' + img %}
-                <img class="image_holder" src="{{ url_for('static', filename=fname) }}" loading="lazy">
-              {% endfor %}
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='CSS/transport/transport.css') }}"
+    />
+    <style>
+      a{
+        text-decoration: none;
+        color: #ffffff;
+      }
+      a:hover{
+        text-decoration: none;
+        color: #323232;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--Main Navigation-->
+    <div class="navv">
+      <nav class="navbar">
+        <!-- Navbar logo -->
+        <div class="nav-header">
+          <div class="nav-logo">
+            <a href="/home">
+              <img
+                id="logo"
+                src="{{url_for('static',filename='images/logo.webp')}}"
+                width="90px"
+                alt="logo"
+                style="margin-top: 15px;"
+              />
             </a>
           </div>
         </div>
-      {% endfor %}
+
+        <!-- responsive navbar toggle button -->
+      </nav>
     </div>
-  </main>
-{% endblock body %}
+    <!-- <header class="mb-10">
+    </header> -->
+    <div class="containerr">
+      <nav class="head">
+        <h1>Banks</h1>
+      </nav>
+      <table class="table">
+        <thead id="table-head">
+          <th>Bank Name</th>
+        </thead>
+        <tbody id="table-body" style="text-align: center;">
+          <tr>
+            <td>
+              <a href="">bank name</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  
+</body>
+
+</html>
