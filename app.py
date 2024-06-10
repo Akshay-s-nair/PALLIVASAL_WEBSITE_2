@@ -18,7 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure 
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others
 
 from sqlalchemy.sql.expression import update
 
@@ -102,6 +102,7 @@ def userdash(sno):
         entry6 = Pharmacy.query.join(Details).filter(Details.sno == sno).first()
         entry7 = Adventure.query.join(Details).filter(Details.sno == sno).first()
         entry8 = Art.query.join(Details).filter(Details.sno == sno).first()
+        entry9 = Others.query.join(Details).filter(Details.sno == sno).first()
 
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -242,6 +243,20 @@ def userdash(sno):
             else:
                 flash('Only a maximum of 5 should be uploaded!')
 
+        elif entry9:
+            entry9.name=request.form.get('name')
+            entry9.location=request.form.get('location')
+            entry9.description=request.form.get('description')
+            entry9.contact=request.form.get('contact')
+            entry9.place=request.form.get('place')
+            pic = request.files['img1']
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
+            entry9.img1=filename   
+            db.session.commit()
 
 
 
@@ -255,7 +270,8 @@ def userdash(sno):
     pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
     adventure=Adventure.query.filter_by(details_id = sno).all()
     art=Art.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art) 
+    others=Others.query.filter_by(details_id = sno).all()
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art , others=others) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -439,6 +455,9 @@ def admin_accept():
         elif service == 'Art and Cultural':
             art = Art(details_id=details_instance.sno)
             db.session.add(art)
+        elif service in '["Restaurants","Beauty Parlour","Hair Saloon"]':
+            others = Others(details_id=details_instance.sno)
+            db.session.add(others)
 
         db.session.commit()
         
@@ -506,7 +525,12 @@ def admin_reject():
                 Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
                 db.session.delete(Art_to_delete)
             except:
-                pass    
+                pass
+            try:
+                other_to_delete=Others.query.filter_by(details_id=row.sno).first()
+                db.session.delete(other_to_delete)
+            except:
+                pass           
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
@@ -571,6 +595,11 @@ def approved_remove():
                 db.session.delete(Art_to_delete)
             except:
                 pass    
+            try:
+                other_to_delete=Others.query.filter_by(details_id=row.sno).first()
+                db.session.delete(other_to_delete)
+            except:
+                pass  
             db.session.delete(row)
             db.session.commit()
     except Exception as e:
@@ -1023,13 +1052,11 @@ def addbank():
     else:
         return render_template('addbank.html')
 
+#delete bank need to be added
+
 @app.route('/other_services', methods=['GET','POST'])
 def other_services():
     return render_template('other_services.html')
-
-# @app.route('/bankview', methods=['GET','POST'])
-# def addedHealthcare():
-#     return render_template('adminviewHealthcare.html',list=list)
 
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])

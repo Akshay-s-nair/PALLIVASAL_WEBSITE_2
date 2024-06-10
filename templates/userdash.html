@@ -347,7 +347,7 @@
   {% elif item.services in ["Restaurants","Beauty Parlour","Hair Saloon"]  %}
     
     <div class="box2">
-      {% for item2 in restaurants %}
+      {% for item2 in others %}
       <div id="change">
       <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
         <h2>Enter the Details</h2>
