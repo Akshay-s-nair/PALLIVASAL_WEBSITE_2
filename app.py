@@ -1059,6 +1059,43 @@ def other_services():
     return render_template('other_services.html')
 
 
+@app.route('/restaurants', methods=['GET','POST'])
+def restaurants():
+    return render_template('restaurants.html')
+
+@app.route('/view_restaurant', methods=['GET','POST'])
+def view_restaurant():
+    return render_template('view_restaurant.html')
+
+@app.route('/hair_saloons', methods=['GET','POST'])
+def hair_saloons():
+    return render_template('hair_saloons.html')
+
+@app.route('/view_hair_saloon', methods=['GET','POST'])
+def view_hair_saloon():
+    return render_template('view_hair_saloon.html')
+
+@app.route('/studio', methods=['GET','POST'])
+def studio():
+    return render_template('studio.html')
+
+@app.route('/view_studio', methods=['GET','POST'])
+def view_studio():
+    return render_template('view_studio.html')
+
+@app.route('/shops', methods=['GET','POST'])
+def shops():
+    return render_template('shops.html')
+
+@app.route('/view_shop', methods=['GET','POST'])
+def view_shop():
+    return render_template('view_shop.html')
+# @app.route('/bankview', methods=['GET','POST'])
+# def addedHealthcare():
+#     return render_template('adminviewHealthcare.html',list=list)
+
+
+
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):
