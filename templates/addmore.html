@@ -56,15 +56,23 @@
             <div class="cards">
                 <h5 >Add Bank</h5>
             </div></a>
+            <a href="{{ url_for('addproject') }}" style="text-decoration: none;">
+              <div class="cards">
+                  <h5 >Add project</h5>
+              </div></a>
           </div>
       </div>
 
       <div id="show-added">
           <div class="cards-content">
-            <a href="{{ url_for('requests') }}" style="text-decoration: none;">
+            <a href="{{ url_for('addedbank') }}" style="text-decoration: none;">
             <div class="cards">
                 <h5 >Banks</h5>
             </div></a>
+            <a href="{{ url_for('addedproject') }}" style="text-decoration: none;">
+              <div class="cards">
+                  <h5 >Projects</h5>
+              </div></a>
           </div>
       </div>
 </body>
