@@ -51,24 +51,20 @@
       </nav>
     </div>
     <div class="view-container">
-      {% for item2 in info %}
-      {% set fname = 'uploads/' + item2.img1 %}  
+      {% set fname = 'uploads/' + info.img1 %}  
       <img src="{{ url_for('static',filename=fname) }}">
         <div class="box">
-        <h5>Studio name : {{ item2.name }}</h5>
-        {% for item1 in list %}
-        <h5>Contact number 1 : {{ item1.contact }}</h5>
-        {% endfor %}
-        <h5>Contact number 2 : {{ item2.contact }}</h5>
-        <h5>Property description : {{ item2.description }}</h5>
-        <h5>Place : {{ item2.place }}</h5>
-        <a href="{{ item2.location }}">
+        <h5>Studio name : {{ info.name }}</h5>
+        <h5>Contact number 1 : {{ info.details.contact }}</h5>
+        <h5>Contact number 2 : {{ info.contact2 }}</h5>
+        <h5>Property description : {{ info.description }}</h5>
+        <h5>Place : {{ info.place }}</h5>
+        <a href="{{ info.location }}">
           <button  class = "but">
             <!-- <img src="{{url_for('static',filename='images/map.webp')}}" alt="map"> -->
             <p>  Location </p>
           </button>
         </a>
-        {% endfor %}
       </div>
     </div>
 

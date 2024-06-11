@@ -344,7 +344,7 @@
       {% endfor %}
   </div>
 
-  {% elif item.services in ["Restaurants","Beauty Parlour","Hair Saloon","Studio"]  %}
+  {% elif item.services in ["Restaurant","Beauty Parlour","Hair Saloon","Studio"]  %}
     
     <div class="box2">
       {% for item2 in others %}
@@ -456,41 +456,41 @@
       {% endfor %}
   </div>
 
-  {% elif item.services in ["Shops"]  %}
+  {% elif item.services in ["Shop"]  %}
     
   <div class="box2">
-    {% for item2 in stay %}
+    {% for item2 in shop %}
     <div id="change">
     <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
       <h2>Enter the Details</h2>
         <label>Name of the Shop</label>
         <input value="{{ item2.name | default('') }}" type="text" name="name">
         <label for="">Shop type</label>
-        <input type="radio" name="shop-type" value="Grocery">
+        <input type="radio" name="shop_type" value="Grocery">
         <label >Grocery</label>
-        <input type="radio" name="shop-type" value="Vegetables">
+        <input type="radio" name="shop_type" value="Vegetables">
         <label >Vegetables</label>
-        <input type="radio" name="shop-type" value="MeatandFish">
+        <input type="radio" name="shop_type" value="MeatandFish">
         <label >Meat and Fish</label>
-        <input type="radio" name="shop-type" value="SuperMarket">
+        <input type="radio" name="shop_type" value="SuperMarket">
         <label >Super Market</label>
-        <input type="radio" name="shop-type" value="Stationary">
+        <input type="radio" name="shop_type" value="Stationary">
         <label >Stationary</label>
-        <input type="radio" name="shop-type" value="Textiles">
+        <input type="radio" name="shop_type" value="Textiles">
         <label >Textiles</label>
-        <input type="radio" name="shop-type" value="Jewellery">
+        <input type="radio" name="shop_type" value="Jewellery">
         <label >Jewellery</label>
-        <input type="radio" name="shop-type" value="Sportsitems">
+        <input type="radio" name="shop_type" value="Sportsitems">
         <label >Sports items</label>
-        <input type="radio" name="shop-type" value="Fruits">
+        <input type="radio" name="shop_type" value="Fruits">
         <label >Fruits</label>
-        <input type="radio" name="shop-type" value="Bakery">
+        <input type="radio" name="shop_type" value="Bakery">
         <label >Bakery</label>
-        <input type="radio" name="shop-type" value="BookShop">
+        <input type="radio" name="shop_type" value="BookShop">
         <label >Book Shop</label>
-        <input type="radio" name="shop-type" value="PetShop">
+        <input type="radio" name="shop_type" value="PetShop">
         <label >Pet Shop</label>
-        <input type="radio" name="shop-type" value="Flower/PlantShop">
+        <input type="radio" name="shop_type" value="Flower/PlantShop">
         <label >Flower/Plant Shop</label>
         <label>Location Details(Link of Google Map)</label>
         <input value="{{ item2.location | default('') }}" type="text" name="location">
@@ -501,7 +501,7 @@
         <label>Place</label>
         <input value="{{ item2.place | default('') }}" type="text" name="place">
         <label>Working Time</label>
-        <input value="{{ item2.wt | default('') }}" type="text" name="workingtime">
+        <input value="{{ item2.wt | default('') }}" type="text" name="wt">
         <label>Photo</label>
         <input type="file" name="img1" required>
 
@@ -513,7 +513,7 @@
         <h5>Name</h5>
           <h3>{{ item2.name | default('') }}</h3>
         <h5>Shop Type</h5>
-          <h3>{{ item2.type | default('') }}</h3>
+          <h3>{{ item2.shop_type | default('') }}</h3>
         <h5>Location Details</h5>
           <h3>{{ item2.location | default('') }}</h3>
         <h5>Description</h5>
@@ -522,6 +522,8 @@
           <h3>{{ item2.contact2 | default('') }}</h3>
         <h5>Place</h5>
           <h3>{{ item2.place | default('') }}</h3>
+        <h5>Working Time</h5>
+          <h3>{{ item2.wt | default('') }}</h3>
           {% if item2.img1 is not none %}
           <h5>Uploaded Photo</h5>
           <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 
@@ -549,9 +551,6 @@
 
         <label>Photo of the shop</label>
         <input type="file" name="img">
-        
-
-        
 
         <button type="submit" onclick="deleteSessionData()">Save Changes</button>  
       </form>
