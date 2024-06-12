@@ -53,10 +53,8 @@
     </div>
     <h2>Shops</h2>
     <div class="container">
-      {% for item1 in list %}
-      {% if item1.services == "Home stay" %}
-      {% for item in info %}
-      {% if item.details_id == item1.sno and item.img1 is not none and item.name is not none%}
+      {% for item in list %}
+      {% if item.img1 is not none and item.name is not none%}
       <a href="/view_shop/{{ item.details_id }}" style="text-decoration: none;">
         <div class="card">
           {% set fname = 'uploads/' + item.img1 %}  
@@ -64,8 +62,6 @@
           <h5>{{ item.name }}</h5>
         </div>
       </a>
-      {% endif %}
-      {% endfor %}
       {% endif %}
       {% endfor %}
     

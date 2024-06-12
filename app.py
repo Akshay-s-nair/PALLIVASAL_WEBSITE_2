@@ -17,7 +17,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop
 from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others
 
 from sqlalchemy.sql.expression import update
@@ -103,6 +103,7 @@ def userdash(sno):
         entry7 = Adventure.query.join(Details).filter(Details.sno == sno).first()
         entry8 = Art.query.join(Details).filter(Details.sno == sno).first()
         entry9 = Others.query.join(Details).filter(Details.sno == sno).first()
+        entry10 = Shop.query.join(Details).filter(Details.sno == sno).first()
 
         if entry1:
             entry1.whatsapp_number = request.form.get('whatsapp')
@@ -247,7 +248,7 @@ def userdash(sno):
             entry9.name=request.form.get('name')
             entry9.location=request.form.get('location')
             entry9.description=request.form.get('description')
-            entry9.contact=request.form.get('contact')
+            entry9.contact2=request.form.get('contact')
             entry9.place=request.form.get('place')
             pic = request.files['img1']
             if pic:
@@ -256,6 +257,23 @@ def userdash(sno):
             else:
                 filename = None
             entry9.img1=filename   
+            db.session.commit()
+
+        elif entry10:
+            entry10.name=request.form.get('name')
+            entry10.shop_type=request.form.get('shop_type')
+            entry10.location=request.form.get('location')
+            entry10.description=request.form.get('description')
+            entry10.contact2=request.form.get('contact')
+            entry10.place=request.form.get('place')
+            entry10.wt=request.form.get('wt')
+            pic = request.files['img1']
+            if pic:
+                filename = secure_filename(pic.filename)
+                pic.save(os.path.join('static', 'uploads', filename))
+            else:
+                filename = None
+            entry10.img1=filename   
             db.session.commit()
 
 
@@ -270,8 +288,9 @@ def userdash(sno):
     pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
     adventure=Adventure.query.filter_by(details_id = sno).all()
     art=Art.query.filter_by(details_id = sno).all()
+    shop=Shop.query.filter_by(details_id = sno).all()
     others=Others.query.filter_by(details_id = sno).all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art , others=others) 
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art ,shop = shop, others=others) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -455,7 +474,10 @@ def admin_accept():
         elif service == 'Art and Cultural':
             art = Art(details_id=details_instance.sno)
             db.session.add(art)
-        elif service in '["Restaurants","Beauty Parlour","Hair Saloon"]':
+        elif service == 'Shop':
+            shop = Shop(details_id=details_instance.sno)
+            db.session.add(shop)
+        elif service in '["Restaurant","Beauty Parlour","Hair Saloon" ,"Studio"]':
             others = Others(details_id=details_instance.sno)
             db.session.add(others)
 
@@ -527,6 +549,11 @@ def admin_reject():
             except:
                 pass
             try:
+                Shop_to_delete=Shop.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Shop_to_delete)
+            except:
+                pass
+            try:
                 other_to_delete=Others.query.filter_by(details_id=row.sno).first()
                 db.session.delete(other_to_delete)
             except:
@@ -594,7 +621,12 @@ def approved_remove():
                 Art_to_delete=Art.query.filter_by(details_id=row.sno).first()
                 db.session.delete(Art_to_delete)
             except:
-                pass    
+                pass 
+            try:
+                Shop_to_delete=Shop.query.filter_by(details_id=row.sno).first()
+                db.session.delete(Shop_to_delete)
+            except:
+                pass   
             try:
                 other_to_delete=Others.query.filter_by(details_id=row.sno).first()
                 db.session.delete(other_to_delete)
@@ -1061,30 +1093,50 @@ def other_services():
 
 @app.route('/restaurants', methods=['GET','POST'])
 def restaurants():
-    return render_template('restaurants.html')
+    desired_services = ['Restaurant']
+    result = db.session.query(Others).join(Details).filter(
+        Details.accept == 1,
+        Details.services.in_(desired_services)
+    ).all()
+    return render_template('restaurants.html', result = result)
 
-@app.route('/view_restaurant', methods=['GET','POST'])
-def view_restaurant():
-    return render_template('view_restaurant.html')
+@app.route('/view_restaurant/<int:id>', methods=['GET','POST'])
+def view_restaurant(id):
+    info = Others.query.filter_by(local_id = id).first()
+    return render_template('view_restaurant.html' , info = info)
 
 @app.route('/hair_saloons', methods=['GET','POST'])
 def hair_saloons():
-    return render_template('hair_saloons.html')
+    desired_services = ['Hair Saloon', 'Beauty Parlour']
+    result = db.session.query(Others).join(Details).filter(
+        Details.accept == 1,
+        Details.services.in_(desired_services)
+    ).all()
+    return render_template('hair_saloons.html',result = result)
 
-@app.route('/view_hair_saloon', methods=['GET','POST'])
-def view_hair_saloon():
-    return render_template('view_hair_saloon.html')
+
+@app.route('/view_hair_saloon/<int:id>', methods=['GET','POST'])
+def view_hair_saloon(id):
+    info = Others.query.filter_by(local_id = id).first()
+    return render_template('view_hair_saloon.html' , info = info)
 
 @app.route('/studio', methods=['GET','POST'])
 def studio():
-    return render_template('studio.html')
+    desired_services = ['Studio']
+    result = db.session.query(Others).join(Details).filter(
+        Details.accept == 1,
+        Details.services.in_(desired_services)
+    ).all()
+    return render_template('studio.html', result = result)
 
-@app.route('/view_studio', methods=['GET','POST'])
-def view_studio():
-    return render_template('view_studio.html')
+@app.route('/view_studio/<int:id>', methods=['GET','POST'])
+def view_studio(id):
+    info = Others.query.filter_by(local_id = id).first()
+    return render_template('view_studio.html',info = info)
 
 @app.route('/shops', methods=['GET','POST'])
 def shops():
+
     return render_template('shops.html')
 
 @app.route('/view_shop', methods=['GET','POST'])
@@ -1106,6 +1158,11 @@ def addedproject():
 # def addedHealthcare():
 #     return render_template('adminviewHealthcare.html',list=list)
 
+
+@app.route('/view_shop/<int:id>', methods=['GET','POST'])
+def view_shop(id):
+    list = Shop.query.filter_by(details_id = id).first()    
+    return render_template('view_shop.html', list=list)
 
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])

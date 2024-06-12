@@ -50,14 +50,29 @@
   
         <!-- responsive navbar toggle button -->
       </nav>
+
+      {% if "Bike Rental" in list2 %}
+      <div class="col-lg blk">
+        {% for item in list %}
+          {% if item.services =="Bike Rental" %}
+          <a href="/transport_view/{{ item.sno }}">
+          {% endif %}
+        {% endfor %}
+        <img
+          src="{{url_for('static',filename='images/scooter.webp')}}"
+          alt="" class="imgs"
+        />
+        </a>
+        <h5>Bike Rental</h5>
+      </div>
+      {% endif %}
+
     </div>
     <h2>Beauty Parlours and Hair Saloons</h2>
     <div class="container">
-      {% for item1 in list %}
-      {% if item1.services == "Home stay" %}
-      {% for item in info %}
-      {% if item.details_id == item1.sno and item.img1 is not none and item.name is not none%}
-      <a href="/view_hair_saloon/{{ item.details_id }}" style="text-decoration: none;">
+      {% for item in result %}
+      {% if item.img1 is not none and item.name is not none%}
+      <a href="/view_hair_saloon/{{ item.local_id }}" style="text-decoration: none;">
         <div class="card">
           {% set fname = 'uploads/' + item.img1 %}  
           <img src="{{ url_for('static',filename=fname) }}">
@@ -66,9 +81,7 @@
       </a>
       {% endif %}
       {% endfor %}
-      {% endif %}
-      {% endfor %}
-    
+
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

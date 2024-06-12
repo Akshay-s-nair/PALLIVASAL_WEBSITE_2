@@ -34,7 +34,7 @@ class Places(db.Model):
     img3 = db.Column(db.Text , nullable=True)
     img4 = db.Column(db.Text , nullable=True)
     img5 = db.Column(db.Text , nullable=True)
-    map =  db.Column(db.String(40) , nullable=True)
+    map =  db.Column(db.Text , nullable=True)
 
 
 class LocalWorkforce(db.Model):
@@ -198,6 +198,21 @@ class Bank(db.Model):
     contact = db.Column(db.String(15), nullable=False)
     map = db.Column(db.Text, nullable=False)
 
+class Shop(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+    details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
+    name = db.Column(db.String(80), nullable=True, default=None)
+    shop_type = db.Column(db.String(80), nullable=True, default=None)
+    location = db.Column(db.String(80), nullable=True, default=None)
+    description = db.Column(db.String(80), nullable=True, default=None)
+    contact2 = db.Column(db.String(80), nullable=True, default=None)
+    place = db.Column(db.String(80), nullable=True, default=None)
+    img1 = db.Column(db.Text , nullable=True)
+    wt= db.Column(db.String(80), nullable=True, default=None)
+    details = relationship("Details", back_populates="shop")
+
+Details.shop = relationship("Shop", order_by=Shop.local_id, back_populates="details")
+
 
 class Others(db.Model):
     local_id = db.Column(db.Integer, primary_key=True)
@@ -209,6 +224,6 @@ class Others(db.Model):
     place = db.Column(db.String(80), nullable=True, default=None)
     img1 = db.Column(db.Text , nullable=True)
 
-    details = relationship("Details", back_populates="art")
+    details = relationship("Details", back_populates="others")
 
-Details.art = relationship("Art", order_by=Art.local_id, back_populates="details")
+Details.others = relationship("Others", order_by=Others.local_id, back_populates="details")
