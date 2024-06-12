@@ -1136,12 +1136,13 @@ def view_studio(id):
 
 @app.route('/shops', methods=['GET','POST'])
 def shops():
+    list = Shop.query.filter_by().all()  
+    return render_template('shops.html' , list = list)
 
-    return render_template('shops.html')
-
-@app.route('/view_shop', methods=['GET','POST'])
-def view_shop():
-    return render_template('view_shop.html')
+@app.route('/view_shop/<int:id>', methods=['GET','POST'])
+def view_shop(id):
+    list = Shop.query.filter_by(details_id = id).first()    
+    return render_template('view_shop.html', list=list)
 
 @app.route('/addedbank', methods=['GET','POST'])
 def addedbank():
@@ -1157,12 +1158,6 @@ def addedproject():
 # @app.route('/bankview', methods=['GET','POST'])
 # def addedHealthcare():
 #     return render_template('adminviewHealthcare.html',list=list)
-
-
-@app.route('/view_shop/<int:id>', methods=['GET','POST'])
-def view_shop(id):
-    list = Shop.query.filter_by(details_id = id).first()    
-    return render_template('view_shop.html', list=list)
 
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
