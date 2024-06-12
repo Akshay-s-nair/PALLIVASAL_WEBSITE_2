@@ -1136,8 +1136,28 @@ def view_studio(id):
 
 @app.route('/shops', methods=['GET','POST'])
 def shops():
-    list = Shop.query.filter_by().all()  
-    return render_template('shops.html' , list = list)
+
+    return render_template('shops.html')
+
+@app.route('/view_shop', methods=['GET','POST'])
+def view_shop():
+    return render_template('view_shop.html')
+
+@app.route('/addedbank', methods=['GET','POST'])
+def addedbank():
+    return render_template('addedbank.html',list=list)
+
+@app.route('/addproject', methods=['GET','POST'])
+def addproject():
+    return render_template('addproject.html',list=list)
+
+@app.route('/addedproject', methods=['GET','POST'])
+def addedproject():
+    return render_template('addedproject.html',list=list)
+# @app.route('/bankview', methods=['GET','POST'])
+# def addedHealthcare():
+#     return render_template('adminviewHealthcare.html',list=list)
+
 
 @app.route('/view_shop/<int:id>', methods=['GET','POST'])
 def view_shop(id):
