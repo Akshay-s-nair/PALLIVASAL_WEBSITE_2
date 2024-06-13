@@ -18,7 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project
 
 from sqlalchemy.sql.expression import update
 
@@ -74,11 +74,13 @@ db_init(app)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    list = Project.query.filter_by().all()
+    return render_template("index.html",list = list)
 
 @app.route('/home')
 def home():
-    return render_template("index.html")
+    list = Project.query.filter_by().all()
+    return render_template("index.html",list = list)
 
 @app.route('/view')
 def view():
@@ -1084,7 +1086,6 @@ def addbank():
     else:
         return render_template('addbank.html')
 
-#delete bank need to be added
 
 @app.route('/other_services', methods=['GET','POST'])
 def other_services():
@@ -1146,18 +1147,70 @@ def view_shop(id):
 
 @app.route('/addedbank', methods=['GET','POST'])
 def addedbank():
+    list = Bank.query.filter_by().all()
     return render_template('addedbank.html',list=list)
 
-@app.route('/addproject', methods=['GET','POST'])
+@app.route('/bank_remove', methods=['POST'])    
+def bank_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Bank.query.filter_by(id = row_id2).first()
+    db.session.delete(row)
+    db.session.commit()     
+    return redirect(url_for('addedbank'))
+
+@app.route('/addproject', methods=['GET', 'POST'])
 def addproject():
-    return render_template('addproject.html',list=list)
+    if request.method == 'POST':
+        img = request.files.get('img')
+        description = request.form.get('desc')
+        
+        if not img:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addproject'))
+
+        filename = secure_filename(img.filename)
+        if not filename:
+            flash('Invalid image filename. Please try again.')
+            return redirect(url_for('addproject'))
+
+        try:
+            img_path = os.path.join('static', 'uploads', filename)
+            img = Image.open(img)
+            img.save(img_path)
+        except Exception as e:
+            flash(f"Error saving image: {e}")
+            return redirect(url_for('addproject'))
+
+        entry = Project(img=filename, desc=description)
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('Project is added. Click + button to add more')
+            return redirect(url_for('addproject'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addproject'))
+
+    return render_template('addproject.html')
 
 @app.route('/addedproject', methods=['GET','POST'])
 def addedproject():
+    list = Project.query.all()
     return render_template('addedproject.html',list=list)
-# @app.route('/bankview', methods=['GET','POST'])
-# def addedHealthcare():
-#     return render_template('adminviewHealthcare.html',list=list)
+
+@app.route('/project_remove', methods=['POST'])    
+def project_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Project.query.filter_by(id = row_id2).first()
+    if row:
+        try:
+            img = row.img
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()     
+    return redirect(url_for('addedproject'))
 
 
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])

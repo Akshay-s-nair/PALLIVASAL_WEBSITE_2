@@ -198,6 +198,11 @@ class Bank(db.Model):
     contact = db.Column(db.String(15), nullable=False)
     map = db.Column(db.Text, nullable=False)
 
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    img = db.Column(db.Text, nullable=False)
+    desc = db.Column(db.Text, unique=False, nullable=False)
+
 class Shop(db.Model):
     local_id = db.Column(db.Integer, primary_key=True)
     details_id = db.Column(db.Integer, db.ForeignKey('details.sno'))
