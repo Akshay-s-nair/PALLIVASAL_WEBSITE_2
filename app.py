@@ -1155,6 +1155,60 @@ def addproject():
 @app.route('/addedproject', methods=['GET','POST'])
 def addedproject():
     return render_template('addedproject.html',list=list)
+
+@app.route('/public_departments', methods=['GET','POST'])
+def public_departments():
+    return render_template('public_departments.html',list=list)
+
+@app.route('/addpublicdepartments', methods=['GET','POST'])
+def addpublicdepartments():
+    return render_template('addpublicdepartments.html',list=list)
+
+@app.route('/addedpublicdepartments', methods=['GET','POST'])
+def addedpublicdepartments():
+    return render_template('addedpublicdepartments.html',list=list)
+
+@app.route('/addsupplyco', methods=['GET','POST'])
+def addsupplyco():
+    return render_template('addsupplyco.html',list=list)
+
+@app.route('/addrationshop', methods=['GET','POST'])
+def addrationshop():
+    return render_template('addrationshop.html',list=list)
+
+@app.route('/addedsupplyco', methods=['GET','POST'])
+def addedsupplyco():
+    return render_template('addedsupplyco.html',list=list)
+
+@app.route('/addworkship', methods=['GET','POST'])
+def addworkship():
+    return render_template('addworkship.html',list=list)
+
+@app.route('/addedrationshop', methods=['GET','POST'])
+def addedrationshop():
+    return render_template('addedrationshop.html',list=list)
+
+@app.route('/addedworkship', methods=['GET','POST'])
+def addedworkship():
+    return render_template('addedworkship.html',list=list)
+
+@app.route('/workship', methods=['GET','POST'])
+def workship():
+    return render_template('workship.html',list=list)
+
+@app.route('/supplyco', methods=['GET','POST'])
+def supplyco():
+    return render_template('supplyco.html',list=list)
+
+@app.route('/rationshop', methods=['GET','POST'])
+def rationshop():
+    return render_template('rationshop.html',list=list)
+
+
+@app.route('/publiccenters', methods=['GET','POST'])
+def publiccenters():
+    return render_template('publiccenters.html',list=list)
+
 # @app.route('/bankview', methods=['GET','POST'])
 # def addedHealthcare():
 #     return render_template('adminviewHealthcare.html',list=list)
