@@ -284,7 +284,36 @@
       </div>
       </a>
     </div>
-  
+    </div>
+    <div class="row">
+      <div class="col mx-auto cont">
+        
+        <a href="{{ url_for('public_departments') }}" style="text-decoration: none">
+          <div class="cards mx-auto" >
+            <div class="gradient"></div>
+            <img
+              src="{{url_for('static',filename='images/bank.jpg')}}"
+              class="card-img-top crdimg p-1"
+              alt="..."/><p class="cen">
+                Public Depatments
+              </p></img>
+          </div>
+        </a>
+      </div>
+      <div class="col mx-auto cont">
+              
+        <a href="{{ url_for('publiccenters') }}" style="text-decoration: none">
+        <div class="cards mx-auto" >
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/eservice.jpg')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen">
+              Public Distribution Centers
+            </p>
+        </div>
+        </a>
+      </div>
   </div>
 </div>
 </section>

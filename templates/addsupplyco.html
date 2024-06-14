@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='images/logo.webp')}}"
+      type="image/icon type"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='CSS/index/admin.css') }}"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <title>Add Supplyco</title>
+  </head>
+  <body class="bdy">
+    <div class="navv">
+      <nav class="navbar">
+        <!-- Navbar logo -->
+        <div class="nav-header">
+          <div class="nav-logo">
+            <a href="#">
+              <img
+                id="logo"
+                src="{{url_for('static',filename='images/logo.webp')}}"
+                width="90px"
+                alt="logo"
+              />
+            </a>
+            <a href="{{ url_for('admin_dash') }}">
+              <div class="logout-btn">
+                  <button type="button" class="btn btn-success">Home</button>
+              </div></a>
+          </div>
+        </div>
+  
+        <!-- responsive navbar toggle button -->
+      </nav>
+    </div>
+  
+    <div class="container">
+      <div class="row">
+        <div class="box1">
+          <div class="cards mx-auto">
+            <p id="addplace">Add Supplyco</p>
+            <!-- <a href="" onclick="showForm()"><img class="addbut" src="images/plus.png" alt=""></a> -->
+            <img
+              src="{{url_for('static',filename='images/plus.webp')}}"
+              class="addbut"
+              value="Add Child"
+              onclick="addChild();"
+            />
+          </div>
+        </div>
+        <div class="formparent">
+          <div class="formchild">
+            <form
+              id="form1"
+              action="/edit_pages"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <h6><label for="">Name of the place</label></h6>
+              <input
+                type="text"
+                name="name"
+                id=""
+                placeholder="Enter the name here"
+                required
+              />
+              <br /><br />
+              <h6><label for="">Link for the map</label></h6>
+              <input
+                type="text"
+                name="map"
+                id=""
+                placeholder="paste the link here"
+                required
+              />
+              <br /><br />
+              <h6><label for="">Add image</label></h6>
+              <span
+                ><input
+                  id="myfile"
+                  type="file"
+                  name="files[]"
+                  multiple="true"
+                  autocomplete="off"
+                  required
+              /></span>
+              <br /><br />
+              <h6><label for="">Contact Number</label></h6>
+              <input value="" type="text" name="contact">
+              <br /><br />
+              <h6><label>Working Time</label></h6>
+              <input value="" type="text" name="wt" placeholder="eg: 8am-8pm">
+              <br><br>
+              <div class="sub">
+                <input type="submit" class="sub" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      function addChild() {
+        document.getElementById("form1").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

@@ -1213,6 +1213,7 @@ def project_remove():
     return redirect(url_for('addedproject'))
 
 
+
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):
