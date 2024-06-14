@@ -22,14 +22,14 @@
   />
    {% endblock head %}
   {% block body  %}
-    <h1 class="LW"> Local Workforce</h1>
+    <h1 class="LW" id="local_workforce_title"></h1>
    
     <div class="container">
       <div class="row">
             <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
               <div class="demos">
                 <div class="card-head">
-                  <div class="card-title mt-2"><h4>CARPENTERS</h4></div>
+                  <div class="card-title mt-2"><h4 id="carpenters"></h4></div>
                 </div>
                 <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">   
@@ -58,7 +58,7 @@
             <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
               <div class="">
                 <div class="card-head">
-                  <div class="card-title mt-2"><h4>PLUMBERS</h4></div>
+                  <div class="card-title mt-2"><h4 id="plumbers"></h4></div>
                 </div>
                 <div class="card-body mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">
@@ -87,7 +87,7 @@
             <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
               <div class="">
                 <div class="card-head">
-                  <div class="card-title mt-2"><h4>ELECTRICIANS</h4></div>
+                  <div class="card-title mt-2"><h4 id="electricians"></h4></div>
                 </div>
                 <div class="card-body bg-transparent text-black mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">
@@ -116,7 +116,7 @@
             <div class="parents col-12 col-md-3 col-lg-6 p-4 mx-auto">
               <div class="">
                 <div class="card-head">
-                  <div class="card-title mt-2"><h4>TREKKING GUIDE</h4></div>
+                  <div class="card-title mt-2"><h4 id="trekking_guides"></h4></div>
                 </div>
                 <div class="card-body bg-transparent text-black mainb" style="max-height: 200px;overflow-x: hidden; overflow-y: auto;">
                   <div class="card-body_text">
@@ -151,7 +151,50 @@
   <!-- </body> -->
 
     <!-- JavaScript Bundle with Popper -->
-
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('local_workforce_title').innerText = translations['local_workforce_title'];
+              } catch (e) {
+                console.error('Element with ID "local_workforce_title" not found:', e);
+              }
+              
+              try {
+                document.getElementById('carpenters').innerText = translations['carpenters'];
+              } catch (e) {
+                console.error('Element with ID "carpenters" not found:', e);
+              }
+    
+              try {
+                document.getElementById('plumbers').innerText = translations['plumbers'];
+              } catch (e) {
+                console.error('Element with ID "plumbers" not found:', e);
+              }
+    
+              try {
+                document.getElementById('electricians').innerText = translations['electricians'];
+              } catch (e) {
+                console.error('Element with ID "electricians" not found:', e);
+              }
+    
+              try {
+                document.getElementById('trekking_guides').innerText = translations['trekking_guides'];
+              } catch (e) {
+                console.error('Element with ID "trekking_guides" not found:', e);
+              }
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
+    
     {% endblock body %}
 
    

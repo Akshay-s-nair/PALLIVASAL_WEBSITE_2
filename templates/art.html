@@ -7,7 +7,7 @@
 
 {% block body %}
   <main>
-    <h1 class="headng">Art and Cultural</h1>
+    <h1 class="headng" id="art_and_cultural"></h1>
     <div class="container-wrapper">
       {% for item in list %}
       {% if item.name is not none %}
@@ -26,4 +26,20 @@
       {% endfor %}
     </div>
   </main>
+
+  <script>
+    // Function to fetch translations and update content
+    function updateTranslations() {
+      fetch('/get_translation')
+        .then(response => response.json())
+        .then(translations => {
+          if (!translations.error) {
+            document.getElementById('art_and_cultural').innerText = translations['art_and_cultural'];
+          }
+        });
+    }
+  
+    // Fetch translations on page load
+    document.addEventListener('DOMContentLoaded', updateTranslations);
+  </script>
 {% endblock body %}

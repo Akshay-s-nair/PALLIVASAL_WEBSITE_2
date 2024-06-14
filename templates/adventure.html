@@ -7,7 +7,7 @@
 
 {% block body %}
   <main>
-    <h1 class="headng">Adventure Activities</h1>
+    <h1 class="headng" id="adventure_activities_title"></h1>
     <div class="container-wrapper">
       {% for item in list %}
       {% if item.name is not none%}
@@ -25,4 +25,26 @@
       {% endfor %}
     </div>
   </main>
+
+  <script>
+    // Function to fetch translations and update content
+    function updateTranslations() {
+      fetch('/get_translation')
+        .then(response => response.json())
+        .then(translations => {
+          if (!translations.error) {
+  
+            try {
+              document.getElementById('adventure_activities_title').innerText = translations['adventure_activities_title'];
+            } catch (e) {
+              console.error('Element with ID "adventure_activities_title" not found:', e);
+            }
+          }
+        });
+    }
+  
+    // Fetch translations on page load
+    document.addEventListener('DOMContentLoaded', updateTranslations);
+  </script>
+  
 {% endblock body %}

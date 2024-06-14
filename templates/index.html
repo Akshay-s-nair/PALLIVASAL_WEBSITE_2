@@ -15,6 +15,48 @@
       type="text/css"
       href="{{url_for('static',filename='CSS/index/style.css')}}"
     />
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+    fetch('/get_translation')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.error) {
+                // Update elements with translated values
+                document.getElementById('welcome_message').innerText = data.welcome_message;
+                document.getElementById('tourism_heading').innerText = data.tourism_heading;
+                document.getElementById('places_to_visit').innerText = data.places_to_visit;
+                document.getElementById('place_to_stay').innerText = data.place_to_stay;
+                document.getElementById('adventure_activities').innerText = data.adventure_activities;
+                document.getElementById('art_and_cultural').innerText = data.art_and_cultural;
+                document.getElementById('services_heading').innerText = data.services_heading;
+                document.getElementById('transportation').innerText = data.transportation;
+                document.getElementById('local_workforce').innerText = data.local_workforce;
+                document.getElementById('spices_plantations').innerText = data.spices_plantations;
+                document.getElementById('other_services').innerText = data.other_services;
+                document.getElementById('public_services_heading').innerText = data.public_services_heading;
+                document.getElementById('hospitals').innerText = data.hospitals;
+                document.getElementById('pharmacy').innerText = data.pharmacy;
+                document.getElementById('banks').innerText = data.banks;
+                document.getElementById('e_services').innerText = data.e_services;
+                document.getElementById('projects_heading').innerText = data.projects_heading;
+                document.getElementById('about_us').innerText = data.about_us;
+                document.getElementById('contact_us').innerText = data.contact_us;
+                document.getElementById('phone_number').innerText = data.phone_number;
+                document.getElementById('email').innerText = data.email;
+                document.getElementById('mobile_number').innerText = data.mobile_number;
+            } else {
+                console.error("Error fetching translations:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching translations:", error);
+        });
+}
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
 
      
           {% endblock head %}
@@ -23,10 +65,10 @@
 
           <!----------------------Preloader------------------------>
 
-          {% include 'basenav.html' %}
+          {% include 'base.html' %}
 
           <div id="preloader"></div>
-
+          
 
           <!----------------------Home------------------------>
           <section id="home">
@@ -42,22 +84,19 @@
             />
           </div>
           <div>
-            <p class="content1">
-              Pallivasal is a village in Idukki district in the Indian state of
-              Kerala. The first hydro-electric project in Kerala was established
-              at Pallivasal during the reign of Maharajah Sree Chithira Thirunal
-              Balarama Varma.
+            <p class="content1" id="welcome_message">loading...
             </p>
           </div>
         </header>
       </div>
+      
     </section>
     <!-- <div id="A"></div>> -->
       <!----------------------Tourism------------------------>
       <section class=" p-4" id="tourism">
         <div class="container-fluid">
           <div class="h" style="display: flex;justify-content: center;align-items: center;">
-            <h1  id="myHeading" style="text-align: center" class="headings hidden">Tourism</h1>
+            <h1  id="myHeading" style="text-align: center" class="headings hidden"><div id="tourism_heading">Tourism</div></h1>
           </div>
         
         <section class="show p-2">
@@ -74,8 +113,7 @@
                 <img
                   src="{{url_for('static',filename='images/waterfall.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen">
-                    Places to Visit
+                  alt="..."/><p class="cen" id="places_to_visit">
                   </p></img>
              
             </div></a>
@@ -92,8 +130,7 @@
                   <img
                     src="{{url_for('static',filename='images/stay.webp')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen" >
-                      Place to Stay
+                    alt="..."/><p class="cen" id="place_to_stay">
                     </p></img>
                 
               </div></a>
@@ -115,8 +152,7 @@
                   <img
                     src="{{url_for('static',filename='images/adventure.jpg')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen">
-                      Adventure Activities
+                    alt="..."/><p class="cen" id="adventure_activities">
                     </p></img>
                 
               </div></a>
@@ -133,8 +169,7 @@
                   <img
                     src="{{url_for('static',filename='images/culture.jpg')}}"
                     class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen">
-                      Art and Cultural
+                    alt="..."/><p class="cen" id="art_and_cultural">
                     </p></img>
                 
               </div></a>
@@ -148,7 +183,7 @@
       <section class="p-4" id="services">
         <div class="container-fluid" >
         <div class="h" style="display: flex;justify-content: center;align-items: center;">
-          <h1 style="text-align: center" class="headings">Services</h1>
+          <h1 style="text-align: center" class="headings" id="services_heading"></h1>
       </div>
           <div class="row">
           <div class="col mx-auto cont">
@@ -159,8 +194,7 @@
                 <img
                   src="{{url_for('static',filename='images/Rectangle1.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen">
-                    Transportation
+                  alt="..."/><p class="cen" id="transportation">
                   </p></img>
               </div>
             </a>
@@ -175,8 +209,7 @@
                   src="{{url_for('static',filename='images/Rectangle2.webp')}}"
                   class="card-img-top crdimg p-1"
                   alt="..."
-                /><p class="cen">
-                  Local Workforce
+                /><p class="cen" id="local_workforce">
                 </p></img>
             </div>
           </a>
@@ -192,8 +225,7 @@
                 <img
                   src="{{url_for('static',filename='images/spices.webp')}}"
                   class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen">
-                    Spices & Plantations
+                  alt="..."/><p class="cen" id="spices_plantations">
                   </p></img>
               </div>
             </a>
@@ -207,8 +239,7 @@
                 src="{{url_for('static',filename='images/Rectangle2.webp')}}"
                 class="card-img-top crdimg p-1"
                 alt="..."
-              /><p class="cen">
-                Other Services
+              /><p class="cen" id="other_services">
               </p></img>
           </div>
         </a>
@@ -222,7 +253,7 @@
 <section class="p-4" id="services">
   <div class="container-fluid" >
   <div class="h" style="display: flex;justify-content: center;align-items: center;">
-    <h1 style="text-align: center" class="headings">Public Services</h1>
+    <h1 style="text-align: center" class="headings" id="public_services_heading"></h1>
 </div>
   <div class="row">
     <div class="col mx-auto cont">
@@ -233,8 +264,7 @@
           <img
             src="{{url_for('static',filename='images/hospital.jpg')}}"
             class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen">
-              Hospitals
+            alt="..."/><p class="cen" id="hospitals">
             </p></img>
         </div>
       </a>
@@ -248,8 +278,7 @@
           <img
             src="{{url_for('static',filename='images/pharmacy.jpg')}}"
             class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen">
-              Pharmacy
+            alt="..."/><p class="cen" id="pharmacy">
         </p></img>
         </div>
       </a>
@@ -264,8 +293,7 @@
           <img
             src="{{url_for('static',filename='images/bank.jpg')}}"
             class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen">
-              Banks
+            alt="..."/><p class="cen" id="banks">
             </p></img>
         </div>
       </a>
@@ -278,8 +306,7 @@
         <img
           src="{{url_for('static',filename='images/eservice.jpg')}}"
           class="card-img-top crdimg p-1"
-          alt="..."/><p class="cen">
-            E-Services And Waste Management
+          alt="..."/><p class="cen" id="e_services">
           </p>
       </div>
       </a>
@@ -289,7 +316,7 @@
 </div>
 </section>
     
-      <h1 style="text-align: center" class="headings">Projects</h1>
+      <h1 style="text-align: center" class="headings" id="projects_heading"></h1>
       <div class="slideshow-container">
 
         <!-- Full-width images with number and caption text -->
@@ -333,15 +360,15 @@
       <!----------------------About Us------------------------>
       <section>
 
-        <div class="text-white" id="aboutus"><h4>About US</h4>
+        <div class="text-white" id="aboutus"><h4 id="about_us">About US</h4>
         <hr>
         <div class="row">
           <div class="col">
             <div class="contactus text-white">
-              <div class="contct"><h5>Contact US</h5></div>
-              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="tel">0486526323</div> 
-              <div class="contct"><img id="mail-logo" src="/static/images/mail_logo.webp" alt="mail"><a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com">pallivasalgp@gmail.com</a></div>
-              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="mob">9496045021</div>
+              <div class="contct"><h5 id="contact_us"></h5></div>
+              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="tel" id="phone_number"></div> 
+              <div class="contct"><img id="mail-logo" src="/static/images/mail_logo.webp" alt="mail"><a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com" id="email"></a></div>
+              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="mob" id="mobile_number"></div>
             
           
           

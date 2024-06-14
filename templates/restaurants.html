@@ -51,7 +51,7 @@
         <!-- responsive navbar toggle button -->
       </nav>
     </div>
-    <h2>Restaurants</h2>
+    <h2 id="restaurants"></h2>
     <div class="container">
       {% for item in result %}
       {% if item.img1 is not none and item.name is not none%}
@@ -83,5 +83,26 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('restaurants').innerText = translations['restaurants'];
+              } catch (e) {
+                console.error('Element with ID "restaurants" not found:', e);
+              }
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
   </body>
 </html>

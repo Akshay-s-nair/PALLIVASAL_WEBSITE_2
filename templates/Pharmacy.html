@@ -1,3 +1,4 @@
++
 {% extends 'commonNav.html' %}
 {% block head %}
   <title>Pharmacy</title>
@@ -7,7 +8,7 @@
 
 {% block body %}
   <main>
-    <h1 class="headng">Pharmacy</h1>
+    <h1 class="headng" id="pharmacy"></h1>
     <div class="container-wrapper">
       {% for item in list %}
         <div class="container mx-auto">
@@ -22,4 +23,25 @@
       {% endfor %}
     </div>
   </main>
+  <script>
+    // Function to fetch translations and update content
+    function updateTranslations() {
+      fetch('/get_translation')
+        .then(response => response.json())
+        .then(translations => {
+          if (!translations.error) {
+            try {
+              document.getElementById('pharmacy').innerText = translations['pharmacy'];
+            } catch (e) {
+              console.error('Element with ID "pharmacy" not found:', e);
+            }
+  
+            
+          }
+        });
+    }
+  
+    // Fetch translations on page load
+    document.addEventListener('DOMContentLoaded', updateTranslations);
+  </script>
 {% endblock body %}

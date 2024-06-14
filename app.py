@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, send_from_directory, session ,flash 
+from flask import Flask, redirect, url_for,jsonify, render_template, request, send_from_directory, session ,flash 
 from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.utils import secure_filename
@@ -32,6 +32,10 @@ local_server=True
 app = Flask(__name__)
 Compress(app)
 
+available_languages = {
+    'en': 'English',
+    'ml': 'മലയാളം'
+}
 # client = Client(keys.account_sid , keys.auth_token)
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
@@ -74,7 +78,25 @@ db_init(app)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    if 'language' not in session:
+        session['language'] = 'en'  # Default language
+    return render_template('index.html', language=session['language'], available_languages=available_languages)
+
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    selected_language = request.form.get('language')
+    session['language'] = selected_language
+    return redirect(url_for('index'))
+
+@app.route('/get_translation')
+def get_translation():
+    language = session.get('language', 'en')
+    try:
+        with open(f'translations_{language}.json', encoding='utf-8') as f:
+            translations = json.load(f)
+        return jsonify(translations)
+    except FileNotFoundError:
+        return jsonify({"error": "Translations not found"}), 404
 
 @app.route('/home')
 def home():
@@ -82,7 +104,7 @@ def home():
 
 @app.route('/view')
 def view():
-    return render_template('view.html')
+    return render_template('view.html',language=session['language'])
 
 def authenticate_user(contact, password):
     list = Details.query.filter_by(contact=contact).first()
@@ -358,7 +380,7 @@ def register():
             flash(f"Error committing changes: {e}")
             return redirect(url_for('register'))
 
-    return render_template('register.html')
+    return render_template('register.html', language=session['language'])
 
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
@@ -389,7 +411,7 @@ def signin():
         return render_template('admin_dash.html', data=data)
 
     details_list = Details.query.filter_by(accept=1).all()
-    return render_template('signin.html', list=details_list)
+    return render_template('signin.html', list=details_list, language=session['language'])
 
 @app.route("/admin", methods=['GET', 'POST'])
 def admin():
@@ -713,7 +735,7 @@ def allowed_file(filename):
 @app.route('/tour')
 def tour():
     list = Places.query.filter_by().all()
-    return render_template('tour.html' , list = list)
+    return render_template('tour.html' , list = list,language=session['language'])
 
 @app.route('/place/<int:id>', methods = ["GET" , "POST"])
 def place(id):
@@ -756,7 +778,7 @@ def place_remove():
 @app.route('/where_to_stay')
 def where_to_stay():
     list = Details.query.filter_by(accept = 1).all()
-    return render_template('where_to_stay.html', list = list)
+    return render_template('where_to_stay.html', list = list,language=session['language'])
 
 
 @app.route('/dormitories')
@@ -812,7 +834,7 @@ def view_tent_camping(id):
 @app.route('/local_workforce')
 def local_workforce():
     list = Details.query.filter_by(accept = 1).all()
-    return render_template('local_workforce.html' , list = list)
+    return render_template('local_workforce.html' , list = list,language=session['language'])
 
 @app.route('/view_localworkforce/<int:sno>', methods=['GET', 'POST'])
 def view_localworkforce(sno):
@@ -880,7 +902,7 @@ def transport():
     trans=Details.query.with_entities(Details.services).all()
     product_list = [item.services for item in trans]
     product_list=list(set(product_list))
-    return render_template('transport.html', list = list1, list2=product_list)
+    return render_template('transport.html',language=session['language'], list = list1, list2=product_list)
 
 @app.route('/transport_view/<int:sno>', methods=["GET" ,"POST"])
 def transport_view(sno):
@@ -913,7 +935,7 @@ def eservices():
 
 @app.route('/forgotpass', methods=['GET', 'POST'])
 def forgotpass():
-    return render_template('forgot.html')
+    return render_template('forgot.html',language=session['language'])
 
 @app.route('/forgotcheck', methods=['GET', 'POST'])
 def forgotcheck():
@@ -925,7 +947,7 @@ def forgotcheck():
             u=Details.query.filter_by(contact=mobile , accept = 1).first()
             if u:
                 if t.sno==u.sno:
-                    return render_template('forgotnumb.html',no=t.sno)
+                    return render_template('forgotnumb.html',no=t.sno,language=session['language'])
                 else:
                     flash('Phonenumber and email does not match! try again.')
                     return redirect(url_for('forgotcheck'))
@@ -935,7 +957,7 @@ def forgotcheck():
         else:
             flash('Email does not Exist! try again.')
             return redirect(url_for('forgotcheck'))
-    return render_template('forgot.html')
+    return render_template('forgot.html',language=session['language'])
 
 @app.route('/forgotemail/<int:sno>', methods=['GET', 'POST'])
 def forgotemail(sno):

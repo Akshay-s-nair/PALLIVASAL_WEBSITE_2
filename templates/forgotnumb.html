@@ -6,72 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='CSS/signin/signup.css') }}">
     <title>Pallivasal</title>
-    <link
-      rel="icon"
-      href="{{url_for('static',filename='images/logo.webp')}}"
-      type="image/icon type"
-    />
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.webp') }}" type="image/icon type" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/f5cbf694f9.js" crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-
 </head>
 <body>
     <header>
-
         <section class="100vh gradient-custom">
             <div class="container h-100" id="box">
                 <div class="row d-flex justify-content-center align-items-centre h-100">
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                         <section id="getotp">
-                           
-                        <div class="card bg-transparent w-75 mx-auto" style="border-radius: 1rem;">
-                            <div class="card-body p-1 text-center">
-                                <form class="form1" method="post" action="/forgotemail/{{ no }}">
-                                <div class="mb-md-5 mt-md-4 ">
-                                    <img src="{{url_for('static',filename='images/logo.webp')}}" class="img-fluid mx-auto d-block pt-3" width="110px" id="logoimg">
-                                    <h2 class="text-white sign"  style="margin-top:20px;">Change Password</h2>
-                                    <div class="input-container">		
-                                        <input type="password" style="margin-top:15px;" name="password1"/>
-                                        <label  style="margin-top:7px;font-size: 15px;">Enter your New Password</label>
-                                    </div>
-                                    <div class="input-container">		
-                                        <input type="password" style="margin-top:15px;" name="password2"/>
-                                        <label  style="margin-top:7px;font-size: 15px;">Re-enter your New Password</label>
-                                    </div>
-                                    
-                                   
-                                    <div class="pt-3 pb-2">
-                                        <button type="submit" class="otpbtn" value="Login" >verify</button>
-                                    </div>
-                                    {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-                                        <div class="flashes">
-                                            {% for message in messages %}
-                                                <div class="alert alert-info">{{ message }}</div>
-                                            {% endfor %}
+                            <div class="card bg-transparent w-75 mx-auto" style="border-radius: 1rem;">
+                                <div class="card-body p-1 text-center">
+                                    <form class="form1" method="post" action="/forgotemail/{{ no }}">
+                                        <div class="mb-md-5 mt-md-4">
+                                            <img src="{{ url_for('static',filename='images/logo.webp') }}" class="img-fluid mx-auto d-block pt-3" width="110px" id="logoimg">
+                                            <h2 class="text-white sign" style="margin-top:20px;">
+                                                {% if language == 'ml' %}
+                                                    പാസ്‌വേഡ് മാറ്റുക
+                                                {% else %}
+                                                    Change Password
+                                                {% endif %}
+                                            </h2>
+                                            <div class="input-container">		
+                                                <input type="password" style="margin-top:15px;" name="password1"/>
+                                                <label style="margin-top:7px;font-size: 15px;">
+                                                    {% if language == 'ml' %}
+                                                        നിങ്ങളുടെ പുതിയ പാസ്‌വേഡ് നൽകുക
+                                                    {% else %}
+                                                        Enter your New Password
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="input-container">		
+                                                <input type="password" style="margin-top:15px;" name="password2"/>
+                                                <label style="margin-top:7px;font-size: 15px;">
+                                                    {% if language == 'ml' %}
+                                                        പുതിയ പാസ്‌വേഡ് വീണ്ടും നൽകുക
+                                                    {% else %}
+                                                        Re-enter your New Password
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="pt-3 pb-2">
+                                                <button type="submit" class="otpbtn" value="Login">
+                                                    {% if language == 'ml' %}
+                                                        സ്ഥിരീകരിക്കുക
+                                                    {% else %}
+                                                        Verify
+                                                    {% endif %}
+                                                </button>
+                                            </div>
+                                            {% with messages = get_flashed_messages() %}
+                                            {% if messages %}
+                                                <div class="flashes">
+                                                    {% for message in messages %}
+                                                        <div class="alert alert-info">{{ message }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            {% endwith %}
                                         </div>
-                                    {% endif %}
-                                {% endwith %}
-                                                                
+                                    </form>
                                 </div>
-                            </form>
                             </div>
-                        </div>
-                    
                         </section>
-                       
-                    </div>
-
                     </div>
                 </div>
             </div>
         </section>
-
     </header>
-    
 </body>
 </html>
