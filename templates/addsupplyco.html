@@ -51,6 +51,15 @@
     <div class="container">
       <div class="row">
         <div class="box1">
+          {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="flashes">
+                            {% for message in messages %}
+                                <div class="alert alert-info">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %} 
           <div class="cards mx-auto">
             <p id="addplace">Add Supplyco</p>
             <!-- <a href="" onclick="showForm()"><img class="addbut" src="images/plus.png" alt=""></a> -->
@@ -66,7 +75,7 @@
           <div class="formchild">
             <form
               id="form1"
-              action="/edit_pages"
+              action="/addsupplyco"
               method="post"
               enctype="multipart/form-data"
             >
@@ -75,7 +84,7 @@
                 type="text"
                 name="name"
                 id=""
-                placeholder="Enter the name here"
+                placeholder="Enter the place here"
                 required
               />
               <br /><br />
@@ -93,8 +102,7 @@
                 ><input
                   id="myfile"
                   type="file"
-                  name="files[]"
-                  multiple="true"
+                  name="file"
                   autocomplete="off"
                   required
               /></span>

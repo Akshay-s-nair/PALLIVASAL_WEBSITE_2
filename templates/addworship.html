@@ -21,7 +21,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <title>Add Workship</title>
+    <title>Add Worship</title>
   </head>
   <body class="bdy">
     <div class="navv">
@@ -52,7 +52,7 @@
       <div class="row">
         <div class="box1">
           <div class="cards mx-auto">
-            <p id="addplace">Add Workship</p>
+            <p id="addplace">Add Worship</p>
             <!-- <a href="" onclick="showForm()"><img class="addbut" src="images/plus.png" alt=""></a> -->
             <img
               src="{{url_for('static',filename='images/plus.webp')}}"
@@ -66,7 +66,7 @@
           <div class="formchild">
             <form
               id="form1"
-              action="/edit_pages"
+              action="/addworship"
               method="post"
               enctype="multipart/form-data"
             >
@@ -93,8 +93,7 @@
                 ><input
                   id="myfile"
                   type="file"
-                  name="files[]"
-                  multiple="true"
+                  name="file"
                   autocomplete="off"
                   required
               /></span>
