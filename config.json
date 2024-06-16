@@ -2,7 +2,7 @@
   "data": {
     "local_server": "True",
 
-    "local_uri": "mysql+pymysql://root:12345678@localhost/pallivasal_db",
+    "local_uri": "mysql+pymysql://root:12345678@localhost/pallivasal",
 
 
 
