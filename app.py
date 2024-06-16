@@ -17,8 +17,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop , CivilSupply , Public
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project , Worship
 
 from sqlalchemy.sql.expression import update
 
@@ -1212,8 +1212,237 @@ def project_remove():
         db.session.commit()     
     return redirect(url_for('addedproject'))
 
+@app.route('/publiccenters', methods=['GET','POST'])
+def publiccenters():
+    return render_template('publiccenters.html')
+
+####rationshop
+@app.route('/rationshop', methods=['GET','POST'])
+def rationshop():
+    list = CivilSupply.query.filter_by(type='Ration').all()
+    return render_template('rationshop.html', list = list)
 
 
+@app.route('/addrationshop', methods=['GET', 'POST'])
+def addrationshop():
+    if request.method == 'POST':
+        type = "Ration"
+        name = request.form.get('name')
+        map = request.form.get('map')
+        img = request.files.get('file')
+        contact = request.form.get('contact')
+        wt = request.form.get('wt')
+        
+        if not img:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addrationshop'))
+
+        filename = secure_filename(img.filename)
+        if not filename:
+            flash('Invalid image filename. Please try again.')
+            return redirect(url_for('addrationshop'))
+
+        try:
+            img_path = os.path.join('static', 'uploads', filename)
+            img = Image.open(img)
+            img.save(img_path)
+        except Exception as e:
+            flash(f"Error saving image: {e}")
+            return redirect(url_for('addrationshop'))
+
+        entry = CivilSupply(type = type , name = name , map = map , img=filename , contact = contact , wt = wt)
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('Ration shop is added. Click + button to add more')
+            return redirect(url_for('addrationshop'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addrationshop'))
+
+    return render_template('addrationshop.html')
+
+@app.route('/addedrationshop', methods=['GET','POST'])
+def addedrationshop():
+    list = CivilSupply.query.filter_by(type='Ration').all()
+    return render_template('addedrationshop.html',list=list)
+
+@app.route('/rationshop_remove', methods=['POST'])    
+def rationshop_remove():
+    row_id2 = request.form.get('row_id2')
+    row = rationshop.query.filter_by(id = row_id2).first()
+    if row:
+        try:
+            img = row.img
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()
+    return redirect(url_for('addedrationshop'))
+
+#supplyco
+@app.route('/supplyco', methods=['GET','POST'])
+def supplyco():
+    list = CivilSupply.query.filter_by(type='Supplyco').all()
+    return render_template('supplyco.html', list = list)
+
+
+@app.route('/addsupplyco', methods=['GET', 'POST'])
+def addsupplyco():
+    if request.method == 'POST':
+        type = "Supplyco"
+        name = request.form.get('name')
+        map = request.form.get('map')
+        img = request.files.get('file')
+        contact = request.form.get('contact')
+        wt = request.form.get('wt')
+        
+        if not img:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addsupplyco'))
+
+        filename = secure_filename(img.filename)
+        if not filename:
+            flash('Invalid image filename. Please try again.')
+            return redirect(url_for('addsupplyco'))
+
+        try:
+            img_path = os.path.join('static', 'uploads', filename)
+            img = Image.open(img)
+            img.save(img_path)
+        except Exception as e:
+            flash(f"Error saving image: {e}")
+            return redirect(url_for('addsupplyco'))
+
+        entry = CivilSupply(type = type , name = name , map = map , img=filename , contact = contact , wt = wt)
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('Supplyco is added. Click + button to add more')
+            return redirect(url_for('addsupplyco'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addsupplyco'))
+
+    return render_template('addsupplyco.html')
+
+@app.route('/addedsupplyco', methods=['GET','POST'])
+def addedsupplyco():
+    list = CivilSupply.query.filter_by(type='Supplyco').all()
+    return render_template('addedsupplyco.html',list=list)
+
+@app.route('/supplyco_remove', methods=['POST'])    
+def supplyco_remove():
+    row_id2 = request.form.get('row_id2')
+    row = supplyco.query.filter_by(id = row_id2).first()
+    if row:
+        try:
+            img = row.img
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()
+    return redirect(url_for('addedsupplyco'))
+
+##publicdepartments
+@app.route('/publicdepartments', methods=['GET','POST'])
+def publicdepartments():
+    list = Public.query.filter_by().all()  
+    return render_template('publicdepartments.html', list = list)
+
+@app.route('/addpublicdepartments', methods=['GET','POST'])
+def addpublicdepartments():
+    if(request.method == 'POST'):
+        name=request.form.get('name')
+        contact = request.form.get('contact')
+        map=request.form.get('map')
+
+        entry = Public(name=name,contact=contact,map=map)
+        db.session.add(entry)
+        db.session.commit()
+        flash('public department '+ name+' added. click + button to add more')
+        return render_template('addpublicdepartments.html')
+    else:
+        return render_template('addpublicdepartments.html')
+
+@app.route('/addedpublicdepartments', methods=['GET','POST'])
+def addedpublicdepartments():
+    list = Public.query.filter_by().all()
+    return render_template('addedpublicdepartments.html',list=list)
+
+@app.route('/publicdepartments_remove', methods=['POST'])    
+def publicdepartments_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Public.query.filter_by(id = row_id2).first()
+    db.session.delete(row)
+    db.session.commit()     
+    return redirect(url_for('addedpublicdepartments'))
+
+##worship
+@app.route('/worship', methods=['GET','POST'])
+def worship():
+    list = Worship.query.filter_by().all()
+    return render_template('worship.html', list = list)
+
+
+@app.route('/addworship', methods=['GET', 'POST'])
+def addworship():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        map = request.form.get('map')
+        img = request.files.get('file')
+        
+        if not img:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addworship'))
+
+        filename = secure_filename(img.filename)
+        if not filename:
+            flash('Invalid image filename. Please try again.')
+            return redirect(url_for('addworship'))
+
+        try:
+            img_path = os.path.join('static', 'uploads', filename)
+            img = Image.open(img)
+            img.save(img_path)
+        except Exception as e:
+            flash(f"Error saving image: {e}")
+            return redirect(url_for('addworship'))
+
+        entry = Worship(name = name , map = map , img=filename )
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('Worship center is added. Click + button to add more')
+            return redirect(url_for('addworship'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addworship'))
+
+    return render_template('addworship.html')
+
+@app.route('/addedworship', methods=['GET','POST'])
+def addedworship():
+    list = Worship.query.filter_by().all()
+    return render_template('addedworship.html',list=list)
+
+@app.route('/worship_remove', methods=['POST'])    
+def worship_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Worship.query.filter_by(id = row_id2).first()
+    if row:
+        try:
+            img = row.img
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()
+    return redirect(url_for('addedworship'))
+
+##add admin
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
     if(request.method == 'POST'):
