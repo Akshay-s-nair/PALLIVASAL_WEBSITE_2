@@ -12,7 +12,7 @@
         type="image/icon type"
       /> 
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Workship</title>
+    <title>Worship</title>
 
     <!-- Font Awesome -->
     <link
@@ -66,7 +66,7 @@
     </header> -->
     <div class="containerr">
       <nav class="head">
-        <h1>Workship</h1>
+        <h1>Worship</h1>
       </nav>
       <table class="table">
         <thead id="table-head">
@@ -74,19 +74,21 @@
           <th>Remove</th>
         </thead>
         <tbody id="table-body" style="text-align: center;">
+          {% for item in list %}
           <tr>
             <td>
-              name
+              {{ item.name }}
             </td>
             <td>
-              <form method="post" action="{{ url_for('place_remove') }}">
-                <input type="hidden" name="row_id2" value="{{ list.id }}" />
+              <form method="post" action="{{ url_for('worship_remove') }}">
+                <input type="hidden" name="row_id2" value="{{ item.id }}" />
                 <button type="submit" class="button-20 bt" id="reject" role="button">
                   Remove
                 </button>
               </form>
             </td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>

@@ -232,3 +232,25 @@ class Others(db.Model):
     details = relationship("Details", back_populates="others")
 
 Details.others = relationship("Others", order_by=Others.local_id, back_populates="details")
+
+
+class Public(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), nullable=False)
+    contact = db.Column(db.String(15), nullable=False)
+    map = db.Column(db.Text, nullable=False)
+
+class CivilSupply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(25), nullable=False)
+    map = db.Column(db.Text, nullable=False)
+    img = db.Column(db.Text, nullable=False)
+    contact = db.Column(db.String(15), nullable=False)
+    wt = db.Column(db.String(20), nullable=False)
+
+class Worship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    map = db.Column(db.Text, nullable=False)
+    img = db.Column(db.Text, nullable=False)
