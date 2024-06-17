@@ -22,7 +22,7 @@
   />
    {% endblock head %}
   {% block body  %}
-    <h1 class="LW"> Spices</h1>
+    <h1 class="LW" id="spices"></h1>
    
     <div class="container">
       <div class="row">
@@ -75,6 +75,27 @@
       crossorigin="anonymous"
     ></script>
 
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              
+              try {
+                document.getElementById('spices').innerText = translations['spices'];
+              } catch (e) {
+                console.error('Element with ID "spices" not found:', e);
+              }
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
     {% endblock body %}
 
    

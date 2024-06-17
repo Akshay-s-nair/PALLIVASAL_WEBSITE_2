@@ -17,6 +17,7 @@
     {% block head %}
 
     {% endblock %}
+    
 
 </head>
 
@@ -33,8 +34,14 @@
                             alt="logo" />
                     </a>
                 </div>
-            </div>
-
+                </div>
+                    <form id="lang" action="{{ url_for('set_language') }}" method="post">
+                        <select id="langsel" name="language" onchange="this.form.submit()">
+                            {% for code, name in available_languages.items() %}
+                            <option value="{{ code }}" {% if language == code %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                    </select>
+                    </form>
             <!-- Responsive navbar toggle button -->
             <label></label>
             <input type="checkbox" id="nav-check" />
@@ -51,10 +58,35 @@
                 <!-- <a href="{{ url_for('view') }}"><img
                         src="{{url_for('static',filename='images/user_icon.webp')}}" width="30px" height="30px"
                         alt="User icon" /></a> -->
-                <a href="{{ url_for('view') }}">Login</a>
-                <a href="#tourism">Tourism</a>
-                <a href="#services">Services</a>
-                <a href="#aboutus">About Us</a>
+                
+                <a href="{{ url_for('view') }}">
+                    {% if language == 'ml' %}
+                        ലോഗിൻ
+                    {% else %}
+                        Login
+                    {% endif %}
+                </a>
+                <a href="#tourism">
+                    {% if language == 'ml' %}
+                        ടൂറിസം
+                    {% else %}
+                        Tourism
+                    {% endif %}
+                </a>
+                <a href="#services">
+                    {% if language == 'ml' %}
+                        സേവനങ്ങൾ
+                    {% else %}
+                        Services
+                    {% endif %}
+                </a>
+                <a href="#aboutus">
+                    {% if language == 'ml' %}
+                        ഞങ്ങളെക്കുറിച്ച്
+                    {% else %}
+                        About Us
+                    {% endif %}
+                </a>
 
             </div>
         </nav>

@@ -3,11 +3,27 @@
   <title>Places to Visit</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='CSS/placestovisit/tourstyle.css') }}">
   <script defer src="{{ url_for('static', filename='JS/slider.js') }}"></script>
+  <script>
+    // Function to fetch translations and update content
+    function updateTranslations() {
+      fetch('/get_translation')
+        .then(response => response.json())
+        .then(translations => {
+          if (!translations.error) {
+            document.getElementById('places_to_visit_title').innerText = translations['places_to_visit_title'];
+            document.getElementById('places_to_visit_name').innerText = translations['places_to_visit_name'];
+          }
+        });
+    }
+  
+    // Fetch translations on page load
+    document.addEventListener('DOMContentLoaded', updateTranslations);
+  </script>
 {% endblock head %}
 
 {% block body %}
   <main>
-    <h1 class="headng">Places to Visit</h1>
+    <h1 class="headng" id="places_to_visit_title"></h1>
     <div class="container-wrapper">
       {% for item in list %}
         <div class="container mx-auto">

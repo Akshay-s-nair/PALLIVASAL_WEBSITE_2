@@ -39,8 +39,8 @@
     </div>
 
 
-  <h1 class="LW">
-    Plantations
+  <h1 class="LW" id="plantations">
+    
   </h1>
   <div class="container">
     <div class="row">
@@ -79,5 +79,27 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+    
+              try {
+                document.getElementById('plantations').innerText = translations['plantations'];
+              } catch (e) {
+                console.error('Element with ID "plantations" not found:', e);
+              }
+    
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
   </body>
 </html>
