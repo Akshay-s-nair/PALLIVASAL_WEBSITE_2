@@ -54,7 +54,7 @@
     <h2>Worship</h2>
     <div class="container">
       {% for item in list %}
-      <a href="/view_worship/{{ item.id }}" style="text-decoration: none;">
+      <a href="{{ item.map }}" style="text-decoration: none;">
         <div class="card">
           {% set fname = 'uploads/' + item.img %}  
           <img src="{{ url_for('static',filename=fname) }}">

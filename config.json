@@ -3,9 +3,7 @@
     "local_server": "True",
 
 
-
-    "local_uri": "mysql+pymysql://root:12345678@localhost/pallivasal",
-
+    "local_uri": "mysql+pymysql://root:12345678@localhost/pallivasal_db",
 
 
 
