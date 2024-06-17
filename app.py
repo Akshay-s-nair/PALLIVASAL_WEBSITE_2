@@ -1304,6 +1304,12 @@ def rationshop_remove():
         db.session.commit()
     return redirect(url_for('addedrationshop'))
 
+@app.route('/view_rationshop/<int:id>')
+def view_rationshop(id):
+    info = CivilSupply.query.filter_by(id = id)
+    return render_template('view_rationshop.html' ,info = info)
+
+
 #supplyco
 @app.route('/supplyco', methods=['GET','POST'])
 def supplyco():
@@ -1368,6 +1374,11 @@ def supplyco_remove():
         db.session.delete(row)
         db.session.commit()
     return redirect(url_for('addedsupplyco'))
+
+@app.route('/view_supplyco/<int:id>')
+def view_supplyco(id):
+    info = CivilSupply.query.filter_by(id = id)
+    return render_template('view_supplyco.html' ,info = info)
 
 ##publicdepartments
 @app.route('/publicdepartments', methods=['GET','POST'])

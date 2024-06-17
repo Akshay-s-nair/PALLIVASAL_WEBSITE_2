@@ -49,15 +49,15 @@
   
         <!-- responsive navbar toggle button -->
       </nav>
-    </div> xsza
+    </div> 
     <div class="view-container">
-      {% set fname = 'uploads/' + info.img1 %}  
+      {% set fname = 'uploads/' + info.img %}  
       <img src="{{ url_for('static',filename=fname) }}">
         <div class="box">
         <h5>Place : {{ info.name }}</h5>
-        <h5>Contact number: {{ info.details.contact }}</h5>
-        <h5>Working Time : {{ info.place }}</h5>
-        <a href="{{ info.location }}">
+        <h5>Contact number: {{ info.contact }}</h5>
+        <h5>Working Time : {{ info.wt }}</h5>
+        <a href="{{ info.map }}">
           <button  class = "but">
             <!-- <img src="{{url_for('static',filename='images/map.webp')}}" alt="map"> -->
             <p>  Location </p>
