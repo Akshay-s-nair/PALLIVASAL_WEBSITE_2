@@ -311,7 +311,36 @@
       </div>
       </a>
     </div>
-  
+    </div>
+    <div class="row">
+      <div class="col mx-auto cont">
+        
+        <a href="{{ url_for('publicdepartments') }}" style="text-decoration: none">
+          <div class="cards mx-auto" >
+            <div class="gradient"></div>
+            <img
+              src="{{url_for('static',filename='images/bank.jpg')}}"
+              class="card-img-top crdimg p-1"
+              alt="..."/><p class="cen">
+                Public Depatments
+              </p></img>
+          </div>
+        </a>
+      </div>
+      <div class="col mx-auto cont">
+              
+        <a href="{{ url_for('publiccenters') }}" style="text-decoration: none">
+        <div class="cards mx-auto" >
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/eservice.jpg')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen">
+              Public Distribution Centers
+            </p>
+        </div>
+        </a>
+      </div>
   </div>
 </div>
 </section>
@@ -319,29 +348,14 @@
       <h1 style="text-align: center" class="headings" id="projects_heading"></h1>
       <div class="slideshow-container">
 
-        <!-- Full-width images with number and caption text -->
+        <!-- Projects -->
+
+        {% for item in list %}
         <div class="mySlides">
-          
-          <img src="{{url_for('static',filename='images/spices.webp')}}" >
-          <div class="text">Actively participated in an international level 24 hour coding competition.</div>
+          <img src="{{ url_for('static', filename='uploads/' + item.img) }}">
+          <div class="text">{{ item.desc }}</div>
         </div>
-        <div class="mySlides">
-          
-          <img src="{{url_for('static',filename='images/jeep.webp')}}" >
-          <div class="text">Volunteered as MDC at IEEE SB CEMunnar in EXECOM 2021 fsddddddddddddddddddddddddddddddddbdhv dfhbwhfbsdhf sd sdsffnfvs bzd fsdfskvc </div>
-        </div>
-      
-        <div class="mySlides">
-          
-          <img src="{{url_for('static',filename='images/tent.webp')}}" >
-          <div class="text">Volunteered as PES Chair at IEEE SB CEMunnar in EXECOM 2022 </div>
-        </div>
-      
-        <div class="mySlides">
-          
-          <img src="{{url_for('static',filename='images/taxi.webp')}}" >
-          <div class="text">Successfully participated in the Webinar conducted by ACSES.</div>
-        </div>
+        {% endfor %}
       
         <!-- Next and previous buttons -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -363,28 +377,28 @@
         <div class="text-white" id="aboutus"><h4 id="about_us">About US</h4>
         <hr>
         <div class="row">
-          <div class="col">
+          <div class="col-md-1 col-sm-4 col-xs-6">
             <div class="contactus text-white">
+
               <div class="contct"><h5 id="contact_us"></h5></div>
               <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="tel" id="phone_number"></div> 
               <div class="contct"><img id="mail-logo" src="/static/images/mail_logo.webp" alt="mail"><a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com" id="email"></a></div>
               <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="mob" id="mobile_number"></div>
-            
+
           
           
         </div>
           </div>
-          <div class="col">
-                  <details>
-                    <summary>About</summary>
-                    <p>The boundaries of the present Pallivasal Grama Panchayat are Lakshmimudi in the north, Koombanpara Ellakkal Road bordering Vellathooval Panchayat in the south, Pulippara and Pothamedu bordering Munnar and Bisonvali Panchayats in the east and Koombanpara in the west. The Kallar and Muthirappuzha rivers flow through this panchayat and fall into the Periyar. Coffee, cardamom and pepper are the main crops. The tea gardens are part of the panchayat. Corn, soybeans and peanuts are also grown. Ginger and turmeric Paddy is a short-term crop here. Paddy cultivation is on the rise.
-
-                      The population density is 246. The historic Pallivasal Powerhouse, Pandavanmala, Chithirapuram, Sri. Koombanpara, which has started a soil conservation project by constructing a condor line to remove soil erosion in Pattanthan, is in Pallivasal grama panchayat. Situated just below the Munnar resort, also known as South Kashmir, the panchayat has always been a favourite with tourists.
-                      
-                      The historic Pallivasal grama panchayat is a hilly panchayat located at an altitude of 5000 feet above sea level. Most of the people speak Tamil.
-                      
-                      Most of the farmers in the district are engaged in horticulture and animal husbandry. There are other combinations. The famous tea gardens and factory of the Tata Tea Company are located in the T Panchayat.</p>
-                  </details>
+          <div class="col-md-1 col-sm-4 col-xs-6">
+            <ul class="list-unstyled footer-min">
+              <li>
+                About US
+              </li>
+              <li>
+                History
+              </li>
+             
+            </ul>
           </div>
         </div>
          </div>

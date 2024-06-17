@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+        rel="icon"
+        href="{{url_for('static',filename='images/logo.webp')}}"
+        type="image/icon type"
+      /> 
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Projects</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='CSS/transport/transport.css') }}"
+    />
+    <style>
+      a{
+        text-decoration: none;
+        color: #ffffff;
+      }
+      a:hover{
+        text-decoration: none;
+        color: #323232;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--Main Navigation-->
+    <div class="navv">
+      <nav class="navbar">
+        <!-- Navbar logo -->
+        <div class="nav-header">
+          <div class="nav-logo">
+            <a href="/home">
+              <img
+                id="logo"
+                src="{{url_for('static',filename='images/logo.webp')}}"
+                width="90px"
+                alt="logo"
+                style="margin-top: 15px;"
+              />
+            </a>
+          </div>
+        </div>
+
+        <!-- responsive navbar toggle button -->
+      </nav>
+    </div>
+    <!-- <header class="mb-10">
+    </header> -->
+    <div class="containerr">
+      <nav class="head">
+        <h1>Projects</h1>
+      </nav>
+      <table class="table">
+        <thead id="table-head">
+          <th>Project Description</th>
+          <th>Delete</th>
+        </thead>
+        <tbody id="table-body" style="text-align: center;">
+          {% for item in list %}
+          <tr>
+            <td>
+              {{ item.desc }}
+            </td>
+            <td>
+              <form method="post" action="{{ url_for('project_remove') }}">
+                <input type="hidden" name="row_id2" value="{{ item.id }}" />
+                <button type="submit" class="button-20 bt" id="reject" role="button">
+                  Remove
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  
+</body>
+
+</html>
