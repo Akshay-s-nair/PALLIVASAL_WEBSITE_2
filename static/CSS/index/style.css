@@ -501,7 +501,7 @@ svg {
   /* font-family: 'Love Light', cursive; */
   font-family: 'Permanent Marker', cursive;
   color: #eeeeeed9;
-  font-size: 62px;
+  font-size: 56px;
   padding-bottom: 10px;
   padding-top: 60px;
 }
@@ -562,7 +562,7 @@ hr{
 }
 @media (max-width:500px) {
   .headings{
-    font-size: 34px;
+    font-size: 28px;
     padding: 10px;
   }
   .responsiveimg{
