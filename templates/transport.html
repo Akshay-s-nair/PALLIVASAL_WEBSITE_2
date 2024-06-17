@@ -16,12 +16,14 @@
       color: #ffffff;
     }
   </style>
+
+
   {% endblock head %}
 
   {% block body  %}
     <div class="container text-center" style="margin-top: 100px">
-      <div class="row-fluid">
-        <h1 class="headng ">Transportation</h1>
+      <div class="row-fluid" >
+        <h1 class="headng" id="transportation"></h1>
       </div>
       <div class="container text-center mt-5">
         <div class="row mb-5">
@@ -32,7 +34,7 @@
               alt="" class="imgs"
               />
             </a>
-            <h5>Bus Services</h5>
+            <h5 id="bus_services"></h5>
           </div>
           {% if "Jeep Safari" in list2 %}
           <div class="col-lg blk">
@@ -46,7 +48,7 @@
               alt="" class="imgs"
             />
             </a>
-            <h5>Jeep Safari</h5>
+            <h5 id="jeep_safari"></h5>
           </div>
           {% endif %}
 
@@ -63,7 +65,7 @@
                   alt="" class="imgs"
                 />
                 </a>
-                <h5 id="ts">Taxi Services</h5>     
+                <h5 id="ts" ><div id="tent_camping"></div></h5>     
           </div>
           {% endif %}
           
@@ -82,7 +84,7 @@
                   alt="" class="imgs"
                 />
                 </a>
-                <h5>Ambulance</h5>
+                <h5 id="ambulance"></h5>
           </div>
           {% endif %}
 
@@ -98,7 +100,7 @@
               alt="" class="imgs"
             />
             </a>
-            <h5>Bike mechanic</h5>
+            <h5 id="bike_mechanic"></h5>
           </div>
           {% endif %}
 
@@ -114,7 +116,7 @@
               alt="" class="imgs"
             />
             </a>
-            <h5>Car mechanic</h5>
+            <h5 ><div id="car_mechanic"></div></h5>
           </div>
           {% endif %}
 
@@ -138,7 +140,7 @@
                   alt="" class="imgs"
                 />
                 </a>
-                <h5>Car Rental</h5>
+                <h5 id="car_rental"></h5>
           </div>
           {% endif %}
 
@@ -154,7 +156,7 @@
               alt="" class="imgs"
             />
             </a>
-            <h5>Bike Rental</h5>
+            <h5 id="bike_rental"></h5>
           </div>
           {% endif %}
 
@@ -170,11 +172,88 @@
               alt="" class="imgs"
             />
             </a>
-            <h5>Auto Rickshaw</h5>
+            <h5 id="auto_rickshaw"></h5>
           </div>
           {% endif %}
 
         </div>
       </div>
     </div>
+
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('transportation').innerText = translations['transportation'];
+              } catch (e) {
+                console.error('Element with ID "transportation" not found:', e);
+              }
+              
+              try {
+                document.getElementById('bus_services').innerText = translations['bus_services'];
+              } catch (e) {
+                console.error('Element with ID "bus_services" not found:', e);
+              }
+    
+              
+    
+              try {
+                document.getElementById('jeep_safari').innerText = translations['jeep_safari'];
+              } catch (e) {
+                console.error('Element with ID "jeep_safari" not found:', e);
+              }
+    
+              try {
+                document.getElementById('taxi_service').innerText = translations['taxi_service'];
+              } catch (e) {
+                console.error('Element with ID "taxi_service" not found:', e);
+              }
+    
+              try {
+                document.getElementById('ambulance').innerText = translations['ambulance'];
+              } catch (e) {
+                console.error('Element with ID "ambulance" not found:', e);
+              }
+    
+              try {
+                document.getElementById('bike_mechanic').innerText = translations['bike_mechanic'];
+              } catch (e) {
+                console.error('Element with ID "bike_mechanic" not found:', e);
+              }
+    
+              try {
+                document.getElementById('car_rental').innerText = translations['car_rental'];
+              } catch (e) {
+                console.error('Element with ID "car_rental" not found:', e);
+              }
+    
+              try {
+                document.getElementById('bike_rental').innerText = translations['bike_rental'];
+              } catch (e) {
+                console.error('Element with ID "bike_rental" not found:', e);
+              }
+    
+              try {
+                document.getElementById('auto_rickshaw').innerText = translations['auto_rickshaw'];
+              } catch (e) {
+                console.error('Element with ID "auto_rickshaw" not found:', e);
+              }
+
+              try {
+                document.getElementById('car_mechanic').innerText = translations['car_mechanic'];
+              } catch (e) {
+                console.error('Element with ID "car_mechanic" not found:', e);
+              }
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
+    
     {% endblock body %}

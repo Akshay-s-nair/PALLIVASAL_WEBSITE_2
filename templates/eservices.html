@@ -66,7 +66,7 @@
     </header> -->
     <div class="containerr">
       <nav class="head">
-        <h1>E-Services And Waste Management</h1>
+        <h1 id="e_services"></h1>
       </nav>
       <table class="table">
         <thead id="table-head"></thead>
@@ -250,6 +250,26 @@
         });
       }
     }
+  </script>
+  <script>
+    // Function to fetch translations and update content
+    function updateTranslations() {
+      fetch('/get_translation')
+        .then(response => response.json())
+        .then(translations => {
+          if (!translations.error) {
+            try {
+              document.getElementById('e_services').innerText = translations['e_services'];
+            } catch (e) {
+              console.error('Element with ID "e_services" not found:', e);
+            }
+            
+          }
+        });
+    }
+  
+    // Fetch translations on page load
+    document.addEventListener('DOMContentLoaded', updateTranslations);
   </script>
 </body>
 
