@@ -12,7 +12,6 @@ function updateTranslations() {
     fetch('/get_translation')
         .then(response => response.json())
         .then(data => {
-            // Example of handling null values gracefully
             if (data) {
                 updateElement('welcome_message', data.welcome_message);
                 updateElement('tourism_heading', data.tourism_heading);
