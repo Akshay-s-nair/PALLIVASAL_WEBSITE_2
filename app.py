@@ -80,7 +80,7 @@ db_init(app)
 def index():
     if 'language' not in session:
         session['language'] = 'en'  # Default language
-    list = Project.query.filter_by().all()
+    list = Project.query.filter_by().order_by().all()
     return render_template('index.html', language=session['language'], available_languages=available_languages,list = list)
 
 @app.route('/set_language', methods=['POST'])
@@ -102,7 +102,7 @@ def get_translation():
 
 @app.route('/home')
 def home():
-    list = Project.query.filter_by().all()
+    list = Project.query.filter_by().order_by().all()
     return render_template("index.html",list = list)
 
 @app.route('/view')
@@ -303,18 +303,18 @@ def userdash(sno):
 
 
 
-    list = Details.query.filter_by(sno=sno , accept = 1).all()
-    localworkforce = LocalWorkforce.query.filter_by(details_id = sno).all()
-    wheretostay = WhereToStay.query.filter_by(details_id = sno).all()
-    spices = Spices.query.filter_by(details_id = sno).all()
-    spiceproducts = Spiceproducts.query.filter_by().all()
-    plantation = Plantation.query.filter_by(details_id = sno).all()
-    transport=Transportation.query.filter_by(details_id = sno).all()
-    pharmacy=Pharmacy.query.filter_by(details_id = sno).all()
-    adventure=Adventure.query.filter_by(details_id = sno).all()
-    art=Art.query.filter_by(details_id = sno).all()
-    shop=Shop.query.filter_by(details_id = sno).all()
-    others=Others.query.filter_by(details_id = sno).all()
+    list = Details.query.filter_by(sno=sno , accept = 1).order_by().all()
+    localworkforce = LocalWorkforce.query.filter_by(details_id = sno).order_by().all()
+    wheretostay = WhereToStay.query.filter_by(details_id = sno).order_by().all()
+    spices = Spices.query.filter_by(details_id = sno).order_by().all()
+    spiceproducts = Spiceproducts.query.filter_by().order_by().all()
+    plantation = Plantation.query.filter_by(details_id = sno).order_by().all()
+    transport=Transportation.query.filter_by(details_id = sno).order_by().all()
+    pharmacy=Pharmacy.query.filter_by(details_id = sno).order_by().all()
+    adventure=Adventure.query.filter_by(details_id = sno).order_by().all()
+    art=Art.query.filter_by(details_id = sno).order_by().all()
+    shop=Shop.query.filter_by(details_id = sno).order_by().all()
+    others=Others.query.filter_by(details_id = sno).order_by().all()
     return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art ,shop = shop, others=others) 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -413,7 +413,7 @@ def signin():
     if 'user' in session and session['user'] == user_contact:
         return render_template('admin_dash.html', data=data)
 
-    details_list = Details.query.filter_by(accept=1).all()
+    details_list = Details.query.filter_by(accept=1).order_by().all()
     return render_template('signin.html', list=details_list, language=session['language'])
 
 @app.route("/admin", methods=['GET', 'POST'])
@@ -522,9 +522,9 @@ def admin_reject():
         row = Details.query.filter_by(sno = row_id2).first()
         filename = row.file
         if row:
-            spices_to_delete=Spices.query.filter_by(details_id=row.sno).all()
+            spices_to_delete=Spices.query.filter_by(details_id=row.sno).order_by().all()
             for spice in spices_to_delete:
-                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).all()
+                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).order_by().all()
                 for spiceproduct in spiceproducts_to_delete:
                     db.session.delete(spiceproduct)
                 for spice in spices_to_delete:
@@ -598,9 +598,9 @@ def approved_remove():
         row = Details.query.filter_by(sno = row_id2).first()
         filename = row.file
         if row:
-            spices_to_delete=Spices.query.filter_by(details_id=row.sno).all()
+            spices_to_delete=Spices.query.filter_by(details_id=row.sno).order_by().all()
             for spice in spices_to_delete:
-                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).all()
+                spiceproducts_to_delete = Spiceproducts.query.filter_by(details_id=spice.local_id).order_by().all()
                 for spiceproduct in spiceproducts_to_delete:
                     db.session.delete(spiceproduct)
                 for spice in spices_to_delete:
@@ -667,7 +667,7 @@ def approved_remove():
 @app.route('/requests', methods=["GET" ,"POST"])
 def requests():
     if "user" in session:
-        list = Details.query.filter_by(accept = None).all()
+        list = Details.query.filter_by(accept = None).order_by().all()
         return render_template('requests.html', list=list)
     else:
         return render_template('admin.html')
@@ -675,7 +675,7 @@ def requests():
 @app.route('/approved_app', methods=["GET" ,"POST"])
 def approved_app():
     if "user" in session:
-        list = Details.query.filter_by(accept = 1).all()
+        list = Details.query.filter_by(accept = 1).order_by().all()
         return render_template('approved_app.html', list=list)
     else:
         return render_template('admin.html')
@@ -737,7 +737,7 @@ def allowed_file(filename):
 
 @app.route('/tour')
 def tour():
-    list = Places.query.filter_by().all()
+    list = Places.query.filter_by().order_by().all()
     return render_template('tour.html' , list = list,language=session['language'])
 
 @app.route('/place/<int:id>', methods = ["GET" , "POST"])
@@ -747,7 +747,7 @@ def place(id):
 
 @app.route('/added_places', methods=["GET" ,"POST"])
 def added_places():
-    list = Places.query.filter_by().all()
+    list = Places.query.filter_by().order_by().all()
     return render_template('addedplaces.html', list=list)
 
 @app.route('/addedplace_detail/<int:id>' , methods = ["GET" , "POST"])
@@ -780,14 +780,14 @@ def place_remove():
 
 @app.route('/where_to_stay')
 def where_to_stay():
-    list = Details.query.filter_by(accept = 1).all()
+    list = Details.query.filter_by(accept = 1).order_by().all()
     return render_template('where_to_stay.html', list = list,language=session['language'])
 
 
 @app.route('/dormitories')
 def dormitories():
-    list = Details.query.filter_by( accept = 1).all()
-    info = WhereToStay.query.filter_by().all()
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = WhereToStay.query.filter_by().order_by().all()
     return render_template('dormitories.html', info = info , list = list )
 
 @app.route('/view_dormitories/<int:id>')
@@ -799,8 +799,8 @@ def view_dormitories(id):
 
 @app.route('/home_stay')
 def home_stay():
-    list = Details.query.filter_by( accept = 1).all()
-    info = WhereToStay.query.filter_by().all()
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = WhereToStay.query.filter_by().order_by().all()
     return render_template('home_stay.html', info = info , list = list )
 
 @app.route('/view_homestay/<int:id>')
@@ -812,8 +812,8 @@ def view_homestay(id):
 
 @app.route('/resorts')
 def resorts():
-    list = Details.query.filter_by( accept = 1).all()
-    info = WhereToStay.query.filter_by().all()
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = WhereToStay.query.filter_by().order_by().all()
     return render_template('resorts.html', info = info , list = list )
 
 @app.route('/view_resorts/<int:id>')
@@ -824,8 +824,8 @@ def view_resorts(id):
 
 @app.route('/tent_camping')
 def tent_camping():
-    list = Details.query.filter_by( accept = 1).all()
-    info = WhereToStay.query.filter_by().all()
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = WhereToStay.query.filter_by().order_by().all()
     return render_template('tent_camping.html', info = info , list = list )
 
 @app.route('/view_tent/<int:id>')
@@ -836,7 +836,7 @@ def view_tent_camping(id):
 
 @app.route('/local_workforce')
 def local_workforce():
-    list = Details.query.filter_by(accept = 1).all()
+    list = Details.query.filter_by(accept = 1).order_by().all()
     return render_template('local_workforce.html' , list = list,language=session['language'])
 
 @app.route('/view_localworkforce/<int:sno>', methods=['GET', 'POST'])
@@ -848,20 +848,20 @@ def view_localworkforce(sno):
 
 @app.route('/plantation_crops')
 def plantation_crops():
-    list1 = Plantation.query.filter_by().all()
+    list1 = Plantation.query.filter_by().order_by().all()
     return render_template('plantation_crops.html',list=list1)
 
 @app.route('/spices')
 def spices():
-    list = Details.query.filter_by().all()
+    list = Details.query.filter_by().order_by().all()
     return render_template('spices.html',list=list)
 
 @app.route('/spices_view')
 def spices_view():
-    lis1=Details.query.filter_by(services='Spices outlet').all()
-    lis2 = Spices.query.filter_by().all()
-    lis3=Spiceproducts.query.filter_by().all()
-    lis4 = Spiceproducts.query.with_entities(Spiceproducts.product).all()
+    lis1=Details.query.filter_by(services='Spices outlet').order_by().all()
+    lis2 = Spices.query.filter_by().order_by().all()
+    lis3=Spiceproducts.query.filter_by().order_by().all()
+    lis4 = Spiceproducts.query.with_entities(Spiceproducts.product).order_by().all()
     product_list = [item.product for item in lis4]
     product_list=list(set(product_list))
     return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3,product_list=product_list)
@@ -870,7 +870,7 @@ def spices_view():
 def view_spices(sno):
     lis1 = Details.query.filter_by(sno = sno , accept = 1)
     lis2 = Spices.query.filter_by(details_id = sno)  
-    lis3=Spiceproducts.query.filter_by().all()
+    lis3=Spiceproducts.query.filter_by().order_by().all()
     return render_template('view_spices.html' ,lis2=lis2,lis1=lis1,lis3=lis3 )
 
 @app.route('/addspiceproduct/<int:sno>', methods=['GET', 'POST'])
@@ -884,9 +884,9 @@ def addspiceproduct(sno):
         db.session.add(spiceobj)
         db.session.commit()
 
-    list = Details.query.filter_by(sno=sno , accept = 1).all()
-    list1=Spices.query.filter_by().all()
-    list2=Spiceproducts.query.filter_by().all()
+    list = Details.query.filter_by(sno=sno , accept = 1).order_by().all()
+    list1=Spices.query.filter_by().order_by().all()
+    list2=Spiceproducts.query.filter_by().order_by().all()
     return render_template('add_spices.html', list = list ,list1=list1, list2=list2)
 
 
@@ -901,8 +901,8 @@ def deletespiceproduct(sno , id):
 
 @app.route('/transport')
 def transport():
-    list1 = Details.query.filter_by(accept = 1).all()
-    trans=Details.query.with_entities(Details.services).all()
+    list1 = Details.query.filter_by(accept = 1).order_by().all()
+    trans=Details.query.with_entities(Details.services).order_by().all()
     product_list = [item.services for item in trans]
     product_list=list(set(product_list))
     return render_template('transport.html',language=session['language'], list = list1, list2=product_list)
@@ -1024,7 +1024,7 @@ def addedhospital_detail(id):
 
 @app.route('/addedHealthcare', methods=['GET','POST'])
 def addedHealthcare():
-    list=HealthCare.query.filter_by().all()
+    list=HealthCare.query.filter_by().order_by().all()
     return render_template('adminviewHealthcare.html',list=list)
 
 @app.route('/Hospital_remove', methods=['GET','POST'])
@@ -1043,7 +1043,7 @@ def Hospital_remove():
 
 @app.route('/Hospitals', methods=['GET','POST'])
 def Hospitals():
-    list=HealthCare.query.filter_by().all()
+    list=HealthCare.query.filter_by().order_by().all()
     return render_template('view_hospitals.html',list=list)
 
 @app.route('/hospitalview/<int:id>', methods=['GET','POST'])
@@ -1054,7 +1054,7 @@ def hospitalview(id):
 
 @app.route('/Pharmacyfn', methods=['GET','POST'])
 def Pharmacyfn():
-    list=Pharmacy.query.filter_by().all()
+    list=Pharmacy.query.filter_by().order_by().all()
     return render_template('Pharmacy.html',list=list)
 
 
@@ -1065,7 +1065,7 @@ def pharmacyview(id):
 
 @app.route('/adventure', methods=['GET','POST'])
 def adventure():
-    list = Adventure.query.filter_by().all()  
+    list = Adventure.query.filter_by().order_by().all()  
     return render_template('adventure.html',list=list)
 
 @app.route('/view_adventure/<int:id>', methods = ["GET" , "POST"])
@@ -1076,7 +1076,7 @@ def view_adventure(id):
 
 @app.route('/art', methods=['GET','POST'])
 def art():
-    list = Art.query.filter_by().all()  
+    list = Art.query.filter_by().order_by().all()  
     return render_template('art.html',list=list)
 
 @app.route('/view_art/<int:id>', methods = ["GET" , "POST"])
@@ -1087,7 +1087,7 @@ def view_art(id):
 
 @app.route('/bank', methods=['GET','POST'])
 def bank():
-    list = Bank.query.filter_by().all()  
+    list = Bank.query.filter_by().order_by().all()  
     return render_template('banks.html', list = list)
 
 @app.route('/addmore', methods=['GET','POST'])
@@ -1121,7 +1121,7 @@ def restaurants():
     result = db.session.query(Others).join(Details).filter(
         Details.accept == 1,
         Details.services.in_(desired_services)
-    ).all()
+    ).order_by().all()
     return render_template('restaurants.html', result = result)
 
 @app.route('/view_restaurant/<int:id>', methods=['GET','POST'])
@@ -1135,7 +1135,7 @@ def hair_saloons():
     result = db.session.query(Others).join(Details).filter(
         Details.accept == 1,
         Details.services.in_(desired_services)
-    ).all()
+    ).order_by().all()
     return render_template('hair_saloons.html',result = result)
 
 
@@ -1150,7 +1150,7 @@ def studio():
     result = db.session.query(Others).join(Details).filter(
         Details.accept == 1,
         Details.services.in_(desired_services)
-    ).all()
+    ).order_by().all()
     return render_template('studio.html', result = result)
 
 @app.route('/view_studio/<int:id>', methods=['GET','POST'])
@@ -1160,7 +1160,7 @@ def view_studio(id):
 
 @app.route('/shops', methods=['GET','POST'])
 def shops():
-    list = Shop.query.filter_by().all()  
+    list = Shop.query.filter_by().order_by().all()  
     return render_template('shops.html' , list = list)
 
 @app.route('/view_shop/<int:id>', methods=['GET','POST'])
@@ -1170,7 +1170,7 @@ def view_shop(id):
 
 @app.route('/addedbank', methods=['GET','POST'])
 def addedbank():
-    list = Bank.query.filter_by().all()
+    list = Bank.query.filter_by().order_by().all()
     return render_template('addedbank.html',list=list)
 
 @app.route('/bank_remove', methods=['POST'])    
@@ -1218,7 +1218,7 @@ def addproject():
 
 @app.route('/addedproject', methods=['GET','POST'])
 def addedproject():
-    list = Project.query.all()
+    list = Project.query.order_by().all()
     return render_template('addedproject.html',list=list)
 
 @app.route('/project_remove', methods=['POST'])    
@@ -1242,7 +1242,7 @@ def publiccenters():
 ####rationshop
 @app.route('/rationshop', methods=['GET','POST'])
 def rationshop():
-    list = CivilSupply.query.filter_by(type='Ration').all()
+    list = CivilSupply.query.filter_by(type='Ration').order_by().all()
     return render_template('rationshop.html', list = list)
 
 
@@ -1287,7 +1287,7 @@ def addrationshop():
 
 @app.route('/addedrationshop', methods=['GET','POST'])
 def addedrationshop():
-    list = CivilSupply.query.filter_by(type='Ration').all()
+    list = CivilSupply.query.filter_by(type='Ration').order_by().all()
     return render_template('addedrationshop.html',list=list)
 
 @app.route('/rationshop_remove', methods=['POST'])    
@@ -1313,7 +1313,7 @@ def view_rationshop(id):
 #supplyco
 @app.route('/supplyco', methods=['GET','POST'])
 def supplyco():
-    list = CivilSupply.query.filter_by(type='Supplyco').all()
+    list = CivilSupply.query.filter_by(type='Supplyco').order_by().all()
     return render_template('supplyco.html', list = list)
 
 
@@ -1358,13 +1358,13 @@ def addsupplyco():
 
 @app.route('/addedsupplyco', methods=['GET','POST'])
 def addedsupplyco():
-    list = CivilSupply.query.filter_by(type='Supplyco').all()
+    list = CivilSupply.query.filter_by(type='Supplyco').order_by().all()
     return render_template('addedsupplyco.html',list=list)
 
 @app.route('/supplyco_remove', methods=['POST'])    
 def supplyco_remove():
     row_id2 = request.form.get('row_id2')
-    row = supplyco.query.filter_by(id = row_id2).first()
+    row = CivilSupply.query.filter_by(id = row_id2).first()
     if row:
         try:
             img = row.img
@@ -1383,7 +1383,7 @@ def view_supplyco(id):
 ##publicdepartments
 @app.route('/publicdepartments', methods=['GET','POST'])
 def publicdepartments():
-    list = Public.query.filter_by().all()  
+    list = Public.query.filter_by().order_by(Public.name).all()  
     return render_template('publicdepartments.html', list = list)
 
 @app.route('/addpublicdepartments', methods=['GET','POST'])
@@ -1403,7 +1403,7 @@ def addpublicdepartments():
 
 @app.route('/addedpublicdepartments', methods=['GET','POST'])
 def addedpublicdepartments():
-    list = Public.query.filter_by().all()
+    list = Public.query.filter_by().order_by().all()
     return render_template('addedpublicdepartments.html',list=list)
 
 @app.route('/publicdepartments_remove', methods=['POST'])    
@@ -1417,7 +1417,7 @@ def publicdepartments_remove():
 ##worship
 @app.route('/worship', methods=['GET','POST'])
 def worship():
-    list = Worship.query.filter_by().all()
+    list = Worship.query.filter_by().order_by().all()
     return render_template('worship.html', list = list)
 
 
@@ -1459,7 +1459,7 @@ def addworship():
 
 @app.route('/addedworship', methods=['GET','POST'])
 def addedworship():
-    list = Worship.query.filter_by().all()
+    list = Worship.query.filter_by().order_by().all()
     return render_template('addedworship.html',list=list)
 
 @app.route('/worship_remove', methods=['POST'])    
