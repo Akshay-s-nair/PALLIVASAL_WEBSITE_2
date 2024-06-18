@@ -17,6 +17,7 @@
     "e_services": "ഇ-സേവനങ്ങളും മാലിന്യ സംസ്കരണവും",
     "projects_heading": "പദ്ധതികൾ",
     "about_us": "ഞങ്ങളേക്കുറിച്ച്",
+    "history":"ചരിത്രം",
     "contact_us": "ബന്ധപ്പെടുക",
     "phone_number": "0486526323",
     "email": "pallivasalgp@gmail.com",
@@ -57,5 +58,7 @@
     "contactNo":"കോൺടാക്റ്റ് നമ്പർ",
     "location":"സ്ഥലം",
     "password": "പാസ്‌വേഡ്",
-    "login": "ലോഗിൻ"
+    "login": "ലോഗിൻ",
+    "info": "ഞങ്ങളേക്കുറിച്ച് | ചരിത്രം"
+
 }

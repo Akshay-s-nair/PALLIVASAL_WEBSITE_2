@@ -17,6 +17,7 @@
     "e_services": "E-Services And Waste Management",
     "projects_heading": "Projects",
     "about_us": "About Us",
+    "history":"History",
     "contact_us": "Contact Us",
     "phone_number": "0486526323",
     "email": "pallivasalgp@gmail.com",
@@ -58,4 +59,6 @@
     "location":"Location",
     "password": "Password",
     "login": "Login"
+
+
 }

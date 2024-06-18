@@ -6,7 +6,7 @@ const navbar = document.querySelector('nav');
 const scrollDistance = 650;
 
 // add a scroll event listener to the window object
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {   
     // get the current scrollY value
     const currentScrollY = window.scrollY;
 

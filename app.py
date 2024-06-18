@@ -41,6 +41,8 @@ available_languages = {
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['DB_SERVER'] = data['local_uri']
 

@@ -1,461 +1,266 @@
-{% extends 'base.html' %}
-  
-  {% block head  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
     <title>Pallivasal</title>
-      <link
-        rel="icon"
-        href="{{url_for('static',filename='images/logo.webp')}}"
-        type="image/x-icon"
-      /> 
-      <!--  -->
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Love+Light&family=Pacifico&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-      <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{url_for('static',filename='CSS/index/style.css')}}"
-    />
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.webp') }}" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Love+Light&family=Pacifico&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/index/style.css') }}"/>
     <script>
-      // Function to fetch translations and update content
-      function updateTranslations() {
+function updateTranslations() {
     fetch('/get_translation')
         .then(response => response.json())
         .then(data => {
-            if (!data.error) {
-                // Update elements with translated values
-                document.getElementById('welcome_message').innerText = data.welcome_message;
-                document.getElementById('tourism_heading').innerText = data.tourism_heading;
-                document.getElementById('places_to_visit').innerText = data.places_to_visit;
-                document.getElementById('place_to_stay').innerText = data.place_to_stay;
-                document.getElementById('adventure_activities').innerText = data.adventure_activities;
-                document.getElementById('art_and_cultural').innerText = data.art_and_cultural;
-                document.getElementById('services_heading').innerText = data.services_heading;
-                document.getElementById('transportation').innerText = data.transportation;
-                document.getElementById('local_workforce').innerText = data.local_workforce;
-                document.getElementById('spices_plantations').innerText = data.spices_plantations;
-                document.getElementById('other_services').innerText = data.other_services;
-                document.getElementById('public_services_heading').innerText = data.public_services_heading;
-                document.getElementById('hospitals').innerText = data.hospitals;
-                document.getElementById('pharmacy').innerText = data.pharmacy;
-                document.getElementById('banks').innerText = data.banks;
-                document.getElementById('e_services').innerText = data.e_services;
-                document.getElementById('projects_heading').innerText = data.projects_heading;
-                document.getElementById('about_us').innerText = data.about_us;
-                document.getElementById('contact_us').innerText = data.contact_us;
-                document.getElementById('phone_number').innerText = data.phone_number;
-                document.getElementById('email').innerText = data.email;
-                document.getElementById('mobile_number').innerText = data.mobile_number;
+            // Example of handling null values gracefully
+            if (data) {
+                updateElement('welcome_message', data.welcome_message);
+                updateElement('tourism_heading', data.tourism_heading);
+                updateElement('places_to_visit', data.places_to_visit);
+                updateElement('place_to_stay', data.place_to_stay);
+                updateElement('adventure_activities', data.adventure_activities);
+                updateElement('art_and_cultural', data.art_and_cultural);
+                updateElement('services_heading', data.services_heading);
+                updateElement('transportation', data.transportation);
+                updateElement('local_workforce', data.local_workforce);
+                updateElement('spices_plantations', data.spices_plantations);
+                updateElement('other_services', data.other_services);
+                updateElement('public_services_heading', data.public_services_heading);
+                updateElement('hospitals', data.hospitals);
+                updateElement('pharmacy', data.pharmacy);
+                updateElement('banks', data.banks);
+                updateElement('e_services', data.e_services);
+                updateElement('projects_heading', data.projects_heading);
+                updateElement('about_us', data.about_us);
+                updateElement('history', data.history);
             } else {
-                console.error("Error fetching translations:", data.error);
+                console.error("No data received from server.");
             }
         })
         .catch(error => {
             console.error("Error fetching translations:", error);
         });
 }
+
+function updateElement(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.innerText = value;
+    } else {
+        console.warn(`Element with id '${elementId}' not found.`);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', updateTranslations);
+  </script>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+    <!----------------------Preloader------------------------>
+    {% include 'base.html' %}
+    <div id="preloader"></div>
     
-      // Fetch translations on page load
-      document.addEventListener('DOMContentLoaded', updateTranslations);
-    </script>
-
-     
-          {% endblock head %}
-          
-          {% block body  %}
-
-          <!----------------------Preloader------------------------>
-
-          {% include 'base.html' %}
-
-          <div id="preloader"></div>
-          
-
-          <!----------------------Home------------------------>
-          <section id="home">
-          <div class="wrapper">
-          <header>
-          <div class="explorer">
-            <img
-              src="{{url_for('static',filename='images/explore.webp')}}"
-              class="responsiveimg"
-              width="1322"
-              height="680"
-              alt="Explore Pallivasal"
-            />
-          </div>
-          <div>
-            <p class="content1" id="welcome_message">loading...
-            </p>
-          </div>
-        </header>
-      </div>
-      
+    <!----------------------Home------------------------>
+    <section id="home">
+        <div class="wrapper">
+            <header>
+                <div class="explorer">
+                    <img src="{{ url_for('static', filename='images/explore.webp') }}" class="responsiveimg" width="1322" height="680" alt="Explore Pallivasal"/>
+                </div>
+                <div>
+                    <p class="content1" id="welcome_message">loading...</p>
+                </div>
+            </header>
+        </div>
     </section>
-    <!-- <div id="A"></div>> -->
-      <!----------------------Tourism------------------------>
-      <section class=" p-4" id="tourism">
+    <!----------------------Tourism------------------------>
+    <section class="p-4" id="tourism">
         <div class="container-fluid">
-          <div class="h" style="display: flex;justify-content: center;align-items: center;">
-            <h1  id="myHeading" style="text-align: center" class="headings hidden"><div id="tourism_heading">Tourism</div></h1>
-          </div>
-        
-        <section class="show p-2">
-          <div class="row">
-            <div class="col mx-auto cont p-1">
-              <a
-                href="{{ url_for('tour') }}"
-                style="text-decoration: none"
-              >
-              
-              
-              <div class="cards mx-auto " >
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/waterfall.webp')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen" id="places_to_visit">
-                  </p></img>
-             
-            </div></a>
+            <div class="h" style="display: flex;justify-content: center;align-items: center;">
+                <h1 id="myHeading" style="text-align: center" class="headings hidden"><div id="tourism_heading">Tourism</div></h1>
             </div>
-            <div class="col mx-auto cont p-1">
-              <a
-                href="{{ url_for('where_to_stay') }}"
-                style="text-decoration: none"
-              >
-              
-                
-                <div class="cards mx-auto " >
-                  <div class="gradient"></div>
-                  <img
-                    src="{{url_for('static',filename='images/stay.webp')}}"
-                    class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen" id="place_to_stay">
-                    </p></img>
-                
-              </div></a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col mx-auto cont p-1">
-              <a
-
-
-                href="{{ url_for('adventure') }}"
-
-                style="text-decoration: none"
-              >
-              
-                
-                <div class="cards mx-auto ">
-                  <div class="gradient"></div>
-                  <img
-                    src="{{url_for('static',filename='images/adventure.webp')}}"
-                    class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen" id="adventure_activities">
-                    </p></img>
-                
-              </div></a>
-            </div>
-            <div class="col mx-auto cont p-1">
-              <a
-                href="{{ url_for('art') }}"
-                style="text-decoration: none"
-              >
-              
-                
-                <div class="cards mx-auto " >
-                  <div class="gradient"></div>
-                  <img
-                    src="{{url_for('static',filename='images/culture.webp')}}"
-                    class="card-img-top crdimg p-1"
-                    alt="..."/><p class="cen" id="art_and_cultural">
-                    </p></img>
-                
-              </div></a>
-            </div>
-          </div></div>
-        </section>
-      </section>
-
-      <!----------------------Services------------------------>
-      
-      <section class="p-4" id="services">
-        <div class="container-fluid" >
-        <div class="h" style="display: flex;justify-content: center;align-items: center;">
-          <h1 style="text-align: center" class="headings" id="services_heading"></h1>
-      </div>
-          <div class="row px-2">
-          <div class="col mx-auto cont p-1">
-            
-            <a href="{{ url_for('transport') }}" style="text-decoration: none">
-              <div class="cards mx-auto" >
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/Rectangle1.webp')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen" id="transportation">
-                  </p></img>
-              </div>
-            </a>
-          </div>
-
-          <div class="col mx-auto cont p-1">
-            
-              <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
-              <div class="cards mx-auto">
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/Rectangle2.webp')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."
-                /><p class="cen" id="local_workforce">
-                </p></img>
-            </div>
-          </a>
-          </div>
-        
+            <section class="show p-2">
+                <div class="row">
+                    <div class="col mx-auto cont p-1">
+                        <a href="{{ url_for('tour') }}" style="text-decoration: none">
+                            <div class="cards mx-auto">
+                                <div class="gradient"></div>
+                                <img src="{{ url_for('static', filename='images/waterfall.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="places_to_visit"></p></img>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col mx-auto cont p-1">
+                        <a href="{{ url_for('where_to_stay') }}" style="text-decoration: none">
+                            <div class="cards mx-auto">
+                                <div class="gradient"></div>
+                                <img src="{{ url_for('static', filename='images/stay.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="place_to_stay"></p></img>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mx-auto cont p-1">
+                        <a href="{{ url_for('adventure') }}" style="text-decoration: none">
+                            <div class="cards mx-auto">
+                                <div class="gradient"></div>
+                                <img src="{{ url_for('static', filename='images/adventure.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="adventure_activities"></p></img>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col mx-auto cont p-1">
+                        <a href="{{ url_for('art') }}" style="text-decoration: none">
+                            <div class="cards mx-auto">
+                                <div class="gradient"></div>
+                                <img src="{{ url_for('static', filename='images/culture.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="art_and_cultural"></p></img>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="row px-2">
-          <div class="col mx-auto cont p-1">
-            
-            <a href="{{ url_for('spices') }}" style="text-decoration: none">
-              <div class="cards mx-auto">
-                <div class="gradient"></div>
-                <img
-                  src="{{url_for('static',filename='images/spices.webp')}}"
-                  class="card-img-top crdimg p-1"
-                  alt="..."/><p class="cen" id="spices_plantations">
-                  </p></img>
-              </div>
-            </a>
-          </div>
-          <div class="col mx-auto cont p-1">
-      
-            <a href="{{ url_for('other_services') }}" style="text-decoration: none">
-            <div class="cards mx-auto">
-              <div class="gradient"></div>
-              <img
-                src="{{url_for('static',filename='images/Rectangle2.webp')}}"
-                class="card-img-top crdimg p-1"
-                alt="..."
-              /><p class="cen" id="other_services">
-              </p></img>
-          </div>
-        </a>
-        </div>
-        </div>
-      </div>
-      </section>
-
-<!----------------------Public Services------------------------>
-      
-<section class="p-4" id="services">
-  <div class="container-fluid" >
-  <div class="h" style="display: flex;justify-content: center;align-items: center;">
-    <h1 style="text-align: center" class="headings" id="public_services_heading"></h1>
-</div>
-  <div class="row px-2">
-    <div class="col mx-auto cont p-1">
-      
-      <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
-        <div class="cards mx-auto">
-          <div class="gradient"></div>
-          <img
-            src="{{url_for('static',filename='images/hospital.webp')}}"
-            class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen" id="hospitals">
-            </p></img>
-        </div>
-      </a>
-    </div>
-
-    <div class="col mx-auto cont p-1">
-      
-      <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
-        <div class="cards mx-auto" >
-          <div class="gradient"></div>
-          <img
-            src="{{url_for('static',filename='images/pharmacy.webp')}}"
-            class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen" id="pharmacy">
-        </p></img>
-        </div>
-      </a>
-    </div>
-    </div>
-    <div class="row px-2">
-    <div class="col mx-auto cont p-1">
-      
-      <a href="{{ url_for('bank') }}" style="text-decoration: none">
-        <div class="cards mx-auto" >
-          <div class="gradient"></div>
-          <img
-            src="{{url_for('static',filename='images/bank.webp')}}"
-            class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen" id="banks">
-            </p></img>
-        </div>
-      </a>
-    </div>
-    <div class="col mx-auto cont p-1">
-            
-      <a href="{{ url_for('eservices') }}" style="text-decoration: none">
-      <div class="cards mx-auto" >
-        <div class="gradient"></div>
-        <img
-          src="{{url_for('static',filename='images/eservice.webp')}}"
-          class="card-img-top crdimg p-1"
-          alt="..."/><p class="cen" id="e_services">
-          </p>
-      </div>
-      </a>
-    </div>
-    </div>
-    <div class="row px-2">
-      <div class="col mx-auto cont p-1">
-        
-        <a href="{{ url_for('publicdepartments') }}" style="text-decoration: none">
-          <div class="cards mx-auto" >
-            <div class="gradient"></div>
-            <img
-              src="{{url_for('static',filename='images/publicdepartments.webp')}}"
-              class="card-img-top crdimg p-1"
-              alt="..."/><p class="cen">
-                Public Depatments
-              </p></img>
-          </div>
-        </a>
-      </div>
-      <div class="col mx-auto cont p-1">
-              
-        <a href="{{ url_for('publiccenters') }}" style="text-decoration: none">
-        <div class="cards mx-auto" >
-          <div class="gradient"></div>
-          <img
-            src="{{url_for('static',filename='images/eservice.webp')}}"
-            class="card-img-top crdimg p-1"
-            alt="..."/><p class="cen">
-              Public Distribution Centers
-            </p>
-        </div>
-        </a>
-      </div>
-  </div>
-</div>
-</section>
+    </section>
     
-      <h1 style="text-align: center" class="headings" id="projects_heading"></h1>
-      <div class="slideshow-container">
-
-        <!-- Projects -->
-
+    <!----------------------Services------------------------>
+    <section class="p-4" id="services">
+        <div class="container-fluid">
+            <div class="h" style="display: flex;justify-content: center;align-items: center;">
+                <h1 style="text-align: center" class="headings" id="services_heading"></h1>
+            </div>
+            <div class="row px-2">
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('transport') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/Rectangle1.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="transportation"></p></img>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('local_workforce') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/Rectangle2.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="local_workforce"></p></img>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('spices') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/spices.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="spices_plantations"></p></img>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('other_services') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/Rectangle2.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="other_services"></p></img>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!----------------------Public Services------------------------>
+    <section class="p-4" id="services">
+        <div class="container-fluid">
+            <div class="h" style="display: flex;justify-content: center;align-items: center;">
+                <h1 style="text-align: center" class="headings" id="public_services_heading"></h1>
+            </div>
+            <div class="row px-2">
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('Hospitals') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/hospital.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="hospitals"></p></img>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('Pharmacyfn') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/pharmacy.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="pharmacy"></p></img>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('bank') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/bank.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="banks"></p></img>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('eservices') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/eservice.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="e_services"></p></img>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('publicdepartments') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen">Public Departments</p></img>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto cont p-1">
+                    <a href="{{ url_for('publiccenters') }}" style="text-decoration: none">
+                        <div class="cards mx-auto">
+                            <div class="gradient"></div>
+                            <img src="{{ url_for('static', filename='images/eservice.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen">Public Distribution Centers</p></img>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-------------- Projects Section ----------------->
+    <h1 style="text-align: center" class="headings" id="projects_heading"></h1>
+    <div class="slideshow-container">
         {% for item in list %}
         <div class="mySlides">
-          <img src="{{ url_for('static', filename='uploads/' + item.img) }}">
-          <div class="text">{{ item.desc }}</div>
+            <img src="{{ url_for('static', filename='uploads/' + item.img) }}">
+            <div class="text">{{ item.desc }}</div>
         </div>
         {% endfor %}
-      
         <!-- Next and previous buttons -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
-      </div>
-      
-      <!-------------- Image of panchayath office ----------------->
-      <section class="pt-3">
-        <img
-          src="{{url_for('static',filename='images/panchayath.webp')}}"
-          class="img-fluid"
-          alt=""
-        />
-      </section>
-
-      <!----------------------About Us------------------------>
-      <section>
-
-
-        <div class="text-white" id="aboutus">
-        <!-- <h4>About US</h4>
-
-        <div class="text-white" id="aboutus"><h4 id="about_us">About US</h4>
-
-        <hr>
-        <div class="row">
-          <div class="col-md-1 col-sm-4 col-xs-6">
-            <div class="contactus text-white">
-
-              <div class="contct"><h5 id="contact_us"></h5></div>
-              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="tel" id="phone_number"></div> 
-              <div class="contct"><img id="mail-logo" src="/static/images/mail_logo.webp" alt="mail"><a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com" id="email"></a></div>
-              <div class="contct"><img id="call-logo" src="/static/images/call_logo.webp" alt="mob" id="mobile_number"></div>
-
-          
-          
-        </div>
-          </div>
-          <div class="col-md-1 col-sm-4 col-xs-6">
-            <ul class="list-unstyled footer-min">
-              <li>
-                About US
-              </li>
-              <li>
-                History
-              </li>
-             
-            </ul>
-          </div>
-        </div> -->
-
-        <p>About US  |  History</p>
-        <p>0486526323  |  <a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com">pallivasalgp@gmail.com</a>  |  +91 9496045021</p>
-         </div>
-      </section>
     </div>
-
-
-    <script src="{{url_for('static', filename='JS/main.js')}}"></script>
-    <script>
-      var loader = document.getElementById("preloader");
-
-      window.addEventListener("load",function(){
-        loader.style.display = "none";
-      })
-    </script>
-    <script>
-      let slideIndex = 1;
-  showSlides(slideIndex);
-  
-  // Next/previous controls
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
     
-  }
-  
-  // Thumbnail image controls
-  function currentSlide(n) {
-    showSlides(slideIndex = n);
-  }
-  
-  function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
+    <!-------------- Image of panchayath office ----------------->
+    <section class="pt-3">
+        <img src="{{ url_for('static', filename='images/panchayath.webp') }}" class="img-fluid" alt=""/>
+    </section>
     
+    <!----------------------About Us------------------------>
+    <section>
+        <div class="text-white" id="aboutus">
+          <div>
+            <p><a href="" id="about_us" style="color: aliceblue;text-decoration: none;"> About Us</a> |<a href="" id="history" style="color: aliceblue;text-decoration: none;"> History</a></p>
+          </div>
+
+            <p >0486526323 | <a style="color: aliceblue; text-decoration: none;" href="mailto:pallivasalgp@gmail.com">pallivasalgp@gmail.com</a> | +91 9496045021</p>
+
+        </div>
+    </section>
     
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active";
-    setTimeout(showSlides, 2000);
-  }
-    </script>
-
-   {% endblock body %}
-
+    <script src="{{ url_for('static', filename='JS/main.js') }}" defer></script>
+    {% endblock %}
+</body>
+</html>
