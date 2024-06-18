@@ -154,7 +154,14 @@ h2{
   .navbar #nav-check, .navbar .nav-btn{
     display: none;
   }
-  
+.card-blur{
+  backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(0, 0, 0, 0.474);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.553);
+    margin: 5% 100px;
+}
   
 
 @media (max-width:700px) {

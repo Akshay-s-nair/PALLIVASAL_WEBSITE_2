@@ -794,6 +794,10 @@ details{
   text-align: left;
   justify-content: left;
 }
+#aboutus p{
+  font-size: 18px;
+  padding: 2px 5px;
+}
 @media (max-width:700px){
   #google_translate_element{
     top: 50px;
@@ -804,5 +808,9 @@ details{
   }
   .services-side{
     padding: 0;
+  }
+  #aboutus p{
+    font-size: 14px;
+    padding: 0px 5px;
   }
 }
