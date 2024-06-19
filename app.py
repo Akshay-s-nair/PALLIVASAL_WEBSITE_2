@@ -105,11 +105,11 @@ def get_translation():
 @app.route('/home')
 def home():
     list = Project.query.filter_by().order_by().all()
-    return render_template("index.html",list = list)
+    return render_template("index.html",list = list,language=session['language'], available_languages=available_languages)
 
 @app.route('/view')
 def view():
-    return render_template('view.html',language=session['language'])
+    return render_template('view.html',language=session['language'], available_languages=available_languages)
 
 def authenticate_user(contact, password):
     list = Details.query.filter_by(contact=contact).first()
@@ -317,7 +317,7 @@ def userdash(sno):
     art=Art.query.filter_by(details_id = sno).order_by().all()
     shop=Shop.query.filter_by(details_id = sno).order_by().all()
     others=Others.query.filter_by(details_id = sno).order_by().all()
-    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art ,shop = shop, others=others) 
+    return render_template('userdash.html', list = list , transport = transport ,local = localworkforce , stay = wheretostay , spices = spices , prod = spiceproducts , plant = plantation,pharma=pharmacy ,adventure=adventure, art = art ,shop = shop, others=others,language=session['language']) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -729,7 +729,7 @@ def edit_pages():
     
 @app.route('/confirm')
 def confirm():
-    return render_template('confirm.html')
+    return render_template('confirm.html',language=session['language'])
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -745,17 +745,17 @@ def tour():
 @app.route('/place/<int:id>', methods = ["GET" , "POST"])
 def place(id):
     list = Places.query.filter_by(id = id ).first()                
-    return render_template('place.html' , list = list)
+    return render_template('place.html' , list = list,language=session['language'])
 
 @app.route('/added_places', methods=["GET" ,"POST"])
 def added_places():
     list = Places.query.filter_by().order_by().all()
-    return render_template('addedplaces.html', list=list)
+    return render_template('addedplaces.html', list=list,language=session['language'])
 
 @app.route('/addedplace_detail/<int:id>' , methods = ["GET" , "POST"])
 def addedplace_detail(id):
     list = Places.query.filter_by(id = id ).first()                
-    return render_template('addedplace_detail.html' , list=list )
+    return render_template('addedplace_detail.html' , list=list,language=session['language'] )
 
 @app.route('/place_remove', methods=['POST'])    
 def place_remove():
@@ -790,51 +790,51 @@ def where_to_stay():
 def dormitories():
     list = Details.query.filter_by( accept = 1).order_by().all()
     info = WhereToStay.query.filter_by().order_by().all()
-    return render_template('dormitories.html', info = info , list = list )
+    return render_template('dormitories.html', info = info , list = list,language=session['language'] )
 
 @app.route('/view_dormitories/<int:id>')
 def view_dormitories(id):
     list = Details.query.filter_by(sno = id , accept = 1)
     info = WhereToStay.query.filter_by(details_id = id)
-    return render_template('view_dormitories.html' , list = list , info = info)
+    return render_template('view_dormitories.html' , list = list , info = info,language=session['language'])
 
 
 @app.route('/home_stay')
 def home_stay():
     list = Details.query.filter_by( accept = 1).order_by().all()
     info = WhereToStay.query.filter_by().order_by().all()
-    return render_template('home_stay.html', info = info , list = list )
+    return render_template('home_stay.html', info = info , list = list,language=session['language'] )
 
 @app.route('/view_homestay/<int:id>')
 def view_homestay(id):
     list = Details.query.filter_by(sno = id , accept = 1)
     info = WhereToStay.query.filter_by(details_id = id)
-    return render_template('view_homestay.html' , list = list , info = info)
+    return render_template('view_homestay.html' , list = list , info = info,language=session['language'])
 
 
 @app.route('/resorts')
 def resorts():
     list = Details.query.filter_by( accept = 1).order_by().all()
     info = WhereToStay.query.filter_by().order_by().all()
-    return render_template('resorts.html', info = info , list = list )
+    return render_template('resorts.html', info = info , list = list,language=session['language'] )
 
 @app.route('/view_resorts/<int:id>')
 def view_resorts(id):
     list = Details.query.filter_by(sno = id , accept = 1)
     info = WhereToStay.query.filter_by(details_id = id)
-    return render_template('view_resorts.html' , list = list , info = info)
+    return render_template('view_resorts.html' , list = list , info = info,language=session['language'])
 
 @app.route('/tent_camping')
 def tent_camping():
     list = Details.query.filter_by( accept = 1).order_by().all()
     info = WhereToStay.query.filter_by().order_by().all()
-    return render_template('tent_camping.html', info = info , list = list )
+    return render_template('tent_camping.html', info = info , list = list,language=session['language'] )
 
 @app.route('/view_tent/<int:id>')
 def view_tent_camping(id):
     list = Details.query.filter_by(sno = id , accept = 1)
     info = WhereToStay.query.filter_by(details_id = id)
-    return render_template('view_tent.html' , list = list , info = info)
+    return render_template('view_tent.html' , list = list , info = info,language=session['language'])
 
 @app.route('/local_workforce')
 def local_workforce():
@@ -845,18 +845,18 @@ def local_workforce():
 def view_localworkforce(sno):
     list = Details.query.filter_by(sno = sno , accept = 1)
     info = LocalWorkforce.query.filter_by(details_id = sno)  
-    return render_template('view_localworkforce.html' , list = list, info = info )
+    return render_template('view_localworkforce.html' , list = list, info = info,language=session['language'] )
 
 
 @app.route('/plantation_crops')
 def plantation_crops():
     list1 = Plantation.query.filter_by().order_by().all()
-    return render_template('plantation_crops.html',list=list1)
+    return render_template('plantation_crops.html',list=list1,language=session['language'])
 
 @app.route('/spices')
 def spices():
     list = Details.query.filter_by().order_by().all()
-    return render_template('spices.html',list=list)
+    return render_template('spices.html',list=list,language=session['language'])
 
 @app.route('/spices_view')
 def spices_view():
@@ -866,14 +866,14 @@ def spices_view():
     lis4 = Spiceproducts.query.with_entities(Spiceproducts.product).order_by().all()
     product_list = [item.product for item in lis4]
     product_list=list(set(product_list))
-    return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3,product_list=product_list)
+    return render_template('spices_view.html',lis1=lis1,lis2=lis2,lis3=lis3,product_list=product_list,language=session['language'])
 
 @app.route('/view_spices/<int:sno>', methods=['GET', 'POST'])
 def view_spices(sno):
     lis1 = Details.query.filter_by(sno = sno , accept = 1)
     lis2 = Spices.query.filter_by(details_id = sno)  
     lis3=Spiceproducts.query.filter_by().order_by().all()
-    return render_template('view_spices.html' ,lis2=lis2,lis1=lis1,lis3=lis3 )
+    return render_template('view_spices.html' ,lis2=lis2,lis1=lis1,lis3=lis3,language=session['language'] )
 
 @app.route('/addspiceproduct/<int:sno>', methods=['GET', 'POST'])
 def addspiceproduct(sno):
@@ -889,7 +889,7 @@ def addspiceproduct(sno):
     list = Details.query.filter_by(sno=sno , accept = 1).order_by().all()
     list1=Spices.query.filter_by().order_by().all()
     list2=Spiceproducts.query.filter_by().order_by().all()
-    return render_template('add_spices.html', list = list ,list1=list1, list2=list2)
+    return render_template('add_spices.html', list = list ,list1=list1, list2=list2,language=session['language'])
 
 
 @app.route('/deletespiceproduct/<int:sno>/<int:id>', methods=['GET', 'POST'])
@@ -898,7 +898,7 @@ def deletespiceproduct(sno , id):
         deletespice = Spiceproducts().query.filter_by( local_id = id).first()
         db.session.delete(deletespice)
         db.session.commit()
-    return redirect(url_for('addspiceproduct', sno=sno)) 
+    return redirect(url_for('addspiceproduct', sno=sno,language=session['language'])) 
     
 
 @app.route('/transport')
@@ -913,17 +913,17 @@ def transport():
 def transport_view(sno):
     t = Details.query.filter_by(sno=sno , accept = 1).first()
     list = Details.query.filter_by(services = t.services , accept = 1)
-    return render_template('transport_view.html', list=list)
+    return render_template('transport_view.html', list=list,language=session['language'])
 
 @app.route('/transport_detail_view/<int:sno>', methods=["GET" ,"POST"])
 def transport_detail_view(sno):
     list = Details.query.filter_by(sno = sno , accept = 1)
     list1=Transportation.query.filter_by(details_id = sno).first()
-    return render_template('view_transportation.html', list=list,list1=list1)
+    return render_template('view_transportation.html', list=list,list1=list1,language=session['language'])
 
 @app.route('/transport_view/busview')
 def busview():
-    return render_template('bus.html')
+    return render_template('bus.html',language=session['language'])
 
 @app.route('/image/<string:img>', methods=['GET', 'POST'])
 def image(img):
@@ -988,7 +988,7 @@ def forgotemail(sno):
             return render_template('emailsend.html')
         else:
             flash('Password does not match.')
-            return render_template('forgotnumb.html',no=sno)
+            return render_template('forgotnumb.html',no=sno,language=session['language'])
 
     return render_template('forgotnumb.html',no=sno)
 
@@ -1015,19 +1015,19 @@ def addHealthcare():
         db.session.commit()
         pic.save(os.path.join('static', 'uploads', filename))
         flash('Hospital '+ name+' added. click + button to add more')
-        return render_template('addHealthcare.html')
+        return render_template('addHealthcare.html',language=session['language'])
     else:
-        return render_template('addHealthcare.html')
+        return render_template('addHealthcare.html',language=session['language'])
     
 @app.route('/addedhospital_detail/<int:id>' , methods = ["GET" , "POST"])
 def addedhospital_detail(id):
     list = HealthCare.query.filter_by(id = id ).first()                
-    return render_template('addedplace_detail.html' , list=list,x=1 )
+    return render_template('addedplace_detail.html' , list=list,x=1,language=session['language'] )
 
 @app.route('/addedHealthcare', methods=['GET','POST'])
 def addedHealthcare():
     list=HealthCare.query.filter_by().order_by().all()
-    return render_template('adminviewHealthcare.html',list=list)
+    return render_template('adminviewHealthcare.html',list=list,language=session['language'])
 
 @app.route('/Hospital_remove', methods=['GET','POST'])
 def Hospital_remove():
@@ -1041,60 +1041,60 @@ def Hospital_remove():
             pass
         db.session.delete(row)
         db.session.commit()     
-    return redirect(url_for('addedHealthcare'))
+    return redirect(url_for('addedHealthcare',language=session['language']))
 
 @app.route('/Hospitals', methods=['GET','POST'])
 def Hospitals():
     list=HealthCare.query.filter_by().order_by().all()
-    return render_template('view_hospitals.html',list=list)
+    return render_template('view_hospitals.html',list=list,language=session['language'])
 
 @app.route('/hospitalview/<int:id>', methods=['GET','POST'])
 def hospitalview(id):
     list=HealthCare.query.filter_by(id=id)
-    return render_template('hospitalview.html',info=list)
+    return render_template('hospitalview.html',info=list,language=session['language'])
   
 
 @app.route('/Pharmacyfn', methods=['GET','POST'])
 def Pharmacyfn():
     list=Pharmacy.query.filter_by().order_by().all()
-    return render_template('Pharmacy.html',list=list)
+    return render_template('Pharmacy.html',list=list,language=session['language'])
 
 
 @app.route('/pharmacyview/<int:id>', methods = ["GET" , "POST"])
 def pharmacyview(id):
     list = Pharmacy.query.filter_by(local_id = id ).first()                
-    return render_template('pharmacyview.html' , list = list)
+    return render_template('pharmacyview.html' , list = list,language=session['language'])
 
 @app.route('/adventure', methods=['GET','POST'])
 def adventure():
     list = Adventure.query.filter_by().order_by().all()  
-    return render_template('adventure.html',list=list)
+    return render_template('adventure.html',list=list,language=session['language'])
 
 @app.route('/view_adventure/<int:id>', methods = ["GET" , "POST"])
 def view_adventure(id):
     list = Details.query.filter_by(sno = id , accept = 1)
     info = Adventure.query.filter_by(details_id = id)        
-    return render_template('view_adventure.html' , list = list ,info = info)
+    return render_template('view_adventure.html' , list = list ,info = info,language=session['language'])
 
 @app.route('/art', methods=['GET','POST'])
 def art():
     list = Art.query.filter_by().order_by().all()  
-    return render_template('art.html',list=list)
+    return render_template('art.html',list=list,language=session['language'])
 
 @app.route('/view_art/<int:id>', methods = ["GET" , "POST"])
 def view_art(id):
     list = Art.query.filter_by(details_id = id)
     for_contact = Details.query.filter_by(sno = id , accept = 1)       
-    return render_template('view_art.html' ,info = for_contact , list = list)
+    return render_template('view_art.html' ,info = for_contact , list = list,language=session['language'])
 
 @app.route('/bank', methods=['GET','POST'])
 def bank():
     list = Bank.query.filter_by().order_by().all()  
-    return render_template('banks.html', list = list)
+    return render_template('banks.html', list = list,language=session['language'])
 
 @app.route('/addmore', methods=['GET','POST'])
 def addmore():
-    return render_template('addmore.html')
+    return render_template('addmore.html',language=session['language'])
 
 @app.route('/addbank', methods=['GET','POST'])
 def addbank():
@@ -1114,7 +1114,7 @@ def addbank():
 
 @app.route('/other_services', methods=['GET','POST'])
 def other_services():
-    return render_template('other_services.html')
+    return render_template('other_services.html',language=session['language'])
 
 
 @app.route('/restaurants', methods=['GET','POST'])
@@ -1124,12 +1124,12 @@ def restaurants():
         Details.accept == 1,
         Details.services.in_(desired_services)
     ).order_by().all()
-    return render_template('restaurants.html', result = result)
+    return render_template('restaurants.html', result = result,language=session['language'])
 
 @app.route('/view_restaurant/<int:id>', methods=['GET','POST'])
 def view_restaurant(id):
     info = Others.query.filter_by(local_id = id).first()
-    return render_template('view_restaurant.html' , info = info)
+    return render_template('view_restaurant.html' , info = info,language=session['language'])
 
 @app.route('/hair_saloons', methods=['GET','POST'])
 def hair_saloons():
@@ -1138,13 +1138,13 @@ def hair_saloons():
         Details.accept == 1,
         Details.services.in_(desired_services)
     ).order_by().all()
-    return render_template('hair_saloons.html',result = result)
+    return render_template('hair_saloons.html',result = result,language=session['language'])
 
 
 @app.route('/view_hair_saloon/<int:id>', methods=['GET','POST'])
 def view_hair_saloon(id):
     info = Others.query.filter_by(local_id = id).first()
-    return render_template('view_hair_saloon.html' , info = info)
+    return render_template('view_hair_saloon.html' , info = info,language=session['language'])
 
 @app.route('/studio', methods=['GET','POST'])
 def studio():
@@ -1153,27 +1153,27 @@ def studio():
         Details.accept == 1,
         Details.services.in_(desired_services)
     ).order_by().all()
-    return render_template('studio.html', result = result)
+    return render_template('studio.html', result = result,language=session['language'])
 
 @app.route('/view_studio/<int:id>', methods=['GET','POST'])
 def view_studio(id):
     info = Others.query.filter_by(local_id = id).first()
-    return render_template('view_studio.html',info = info)
+    return render_template('view_studio.html',info = info,language=session['language'])
 
 @app.route('/shops', methods=['GET','POST'])
 def shops():
     list = Shop.query.filter_by().order_by().all()  
-    return render_template('shops.html' , list = list)
+    return render_template('shops.html' , list = list,language=session['language'])
 
 @app.route('/view_shop/<int:id>', methods=['GET','POST'])
 def view_shop(id):
     list = Shop.query.filter_by(details_id = id).first()    
-    return render_template('view_shop.html', list=list)
+    return render_template('view_shop.html', list=list,language=session['language'])
 
 @app.route('/addedbank', methods=['GET','POST'])
 def addedbank():
     list = Bank.query.filter_by().order_by().all()
-    return render_template('addedbank.html',list=list)
+    return render_template('addedbank.html',list=list,language=session['language'])
 
 @app.route('/bank_remove', methods=['POST'])    
 def bank_remove():
@@ -1216,12 +1216,12 @@ def addproject():
             flash(f"Error committing changes: {e}")
             return redirect(url_for('addproject'))
 
-    return render_template('addproject.html')
+    return render_template('addproject.html',language=session['language'])
 
 @app.route('/addedproject', methods=['GET','POST'])
 def addedproject():
     list = Project.query.order_by().all()
-    return render_template('addedproject.html',list=list)
+    return render_template('addedproject.html',list=list,language=session['language'])
 
 @app.route('/project_remove', methods=['POST'])    
 def project_remove():
@@ -1235,17 +1235,17 @@ def project_remove():
             pass
         db.session.delete(row)
         db.session.commit()     
-    return redirect(url_for('addedproject'))
+    return redirect(url_for('addedproject',language=session['language']))
 
 @app.route('/publiccenters', methods=['GET','POST'])
 def publiccenters():
-    return render_template('publiccenters.html')
+    return render_template('publiccenters.html',language=session['language'])
 
 ####rationshop
 @app.route('/rationshop', methods=['GET','POST'])
 def rationshop():
     list = CivilSupply.query.filter_by(type='Ration').order_by().all()
-    return render_template('rationshop.html', list = list)
+    return render_template('rationshop.html', list = list,language=session['language'])
 
 
 @app.route('/addrationshop', methods=['GET', 'POST'])
@@ -1285,12 +1285,12 @@ def addrationshop():
             flash(f"Error committing changes: {e}")
             return redirect(url_for('addrationshop'))
 
-    return render_template('addrationshop.html')
+    return render_template('addrationshop.html',language=session['language'])
 
 @app.route('/addedrationshop', methods=['GET','POST'])
 def addedrationshop():
     list = CivilSupply.query.filter_by(type='Ration').order_by().all()
-    return render_template('addedrationshop.html',list=list)
+    return render_template('addedrationshop.html',list=list,language=session['language'])
 
 @app.route('/rationshop_remove', methods=['POST'])    
 def rationshop_remove():
@@ -1304,19 +1304,19 @@ def rationshop_remove():
             pass
         db.session.delete(row)
         db.session.commit()
-    return redirect(url_for('addedrationshop'))
+    return redirect(url_for('addedrationshop',language=session['language']))
 
 @app.route('/view_rationshop/<int:id>')
 def view_rationshop(id):
     info = CivilSupply.query.filter_by(id = id)
-    return render_template('view_rationshop.html' ,info = info)
+    return render_template('view_rationshop.html' ,info = info,language=session['language'])
 
 
 #supplyco
 @app.route('/supplyco', methods=['GET','POST'])
 def supplyco():
     list = CivilSupply.query.filter_by(type='Supplyco').order_by().all()
-    return render_template('supplyco.html', list = list)
+    return render_template('supplyco.html', list = list,language=session['language'])
 
 
 @app.route('/addsupplyco', methods=['GET', 'POST'])
@@ -1356,12 +1356,12 @@ def addsupplyco():
             flash(f"Error committing changes: {e}")
             return redirect(url_for('addsupplyco'))
 
-    return render_template('addsupplyco.html')
+    return render_template('addsupplyco.html',language=session['language'])
 
 @app.route('/addedsupplyco', methods=['GET','POST'])
 def addedsupplyco():
     list = CivilSupply.query.filter_by(type='Supplyco').order_by().all()
-    return render_template('addedsupplyco.html',list=list)
+    return render_template('addedsupplyco.html',list=list,language=session['language'])
 
 @app.route('/supplyco_remove', methods=['POST'])    
 def supplyco_remove():
@@ -1375,18 +1375,18 @@ def supplyco_remove():
             pass
         db.session.delete(row)
         db.session.commit()
-    return redirect(url_for('addedsupplyco'))
+    return redirect(url_for('addedsupplyco',language=session['language']))
 
 @app.route('/view_supplyco/<int:id>')
 def view_supplyco(id):
     info = CivilSupply.query.filter_by(id = id)
-    return render_template('view_supplyco.html' ,info = info)
+    return render_template('view_supplyco.html' ,info = info,language=session['language'])
 
 ##publicdepartments
 @app.route('/publicdepartments', methods=['GET','POST'])
 def publicdepartments():
     list = Public.query.filter_by().order_by(Public.name).all()  
-    return render_template('publicdepartments.html', list = list)
+    return render_template('publicdepartments.html', list = list,language=session['language'])
 
 @app.route('/addpublicdepartments', methods=['GET','POST'])
 def addpublicdepartments():
@@ -1399,9 +1399,9 @@ def addpublicdepartments():
         db.session.add(entry)
         db.session.commit()
         flash('public department '+ name+' added. click + button to add more')
-        return render_template('addpublicdepartments.html')
+        return render_template('addpublicdepartments.html',language=session['language'])
     else:
-        return render_template('addpublicdepartments.html')
+        return render_template('addpublicdepartments.html',language=session['language'])
 
 @app.route('/addedpublicdepartments', methods=['GET','POST'])
 def addedpublicdepartments():
@@ -1414,13 +1414,13 @@ def publicdepartments_remove():
     row = Public.query.filter_by(id = row_id2).first()
     db.session.delete(row)
     db.session.commit()     
-    return redirect(url_for('addedpublicdepartments'))
+    return redirect(url_for('addedpublicdepartments',language=session['language']))
 
 ##worship
 @app.route('/worship', methods=['GET','POST'])
 def worship():
     list = Worship.query.filter_by().order_by().all()
-    return render_template('worship.html', list = list)
+    return render_template('worship.html', list = list,language=session['language'])
 
 
 @app.route('/addworship', methods=['GET', 'POST'])
@@ -1457,12 +1457,12 @@ def addworship():
             flash(f"Error committing changes: {e}")
             return redirect(url_for('addworship'))
 
-    return render_template('addworship.html')
+    return render_template('addworship.html',language=session['language'])
 
 @app.route('/addedworship', methods=['GET','POST'])
 def addedworship():
     list = Worship.query.filter_by().order_by().all()
-    return render_template('addedworship.html',list=list)
+    return render_template('addedworship.html',list=list,language=session['language'])
 
 @app.route('/worship_remove', methods=['POST'])    
 def worship_remove():
@@ -1476,7 +1476,7 @@ def worship_remove():
             pass
         db.session.delete(row)
         db.session.commit()
-    return redirect(url_for('addedworship'))
+    return redirect(url_for('addedworship',language=session['language']))
 
 ##add admin
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])

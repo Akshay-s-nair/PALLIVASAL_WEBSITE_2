@@ -26,10 +26,19 @@
                             <div class="card-body p-1 text-center">
                                 <div class="mb-md-5 mt-md-4 ">
                                     <section id="confirm">
-                                    <h3 class="p-2 conf">Wait for the Confirmation</h3>
+                                        {% if language == 'ml' %}
+                                        <h3 class="p-2 conf">സ്ഥിരീകരണത്തിനായി കാത്തിരിക്കുക</h3>
+                                        {% else %}
+                                        <h3 class="p-2 conf">Wait for the Confirmation</h3>
+                                        {% endif %}
+                                    
                                 </section>
                             </div>
-                            <a href="{{ url_for('index') }}"><button class="otpbtn" id="back">Back To Home</button></a>
+                            {% if language == 'ml' %}
+                            <a href="{{ url_for('index') }}"><button class="otpbtn" id="back">ഹോമിലേക്ക് മടങ്ങുക</button></a>
+                            {% else %}
+                                <a href="{{ url_for('index') }}"><button class="otpbtn" id="back">Back To Home</button></a>
+                            {% endif %}
                         </div>
                         </section>
                        
