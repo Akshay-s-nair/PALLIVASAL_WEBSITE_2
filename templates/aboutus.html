@@ -30,13 +30,13 @@
       type="image/icon type"
     />
   </head>
-  <body >
+  <body>
     <div class="navv">
       <nav class="navbar">
         <!-- Navbar logo -->
         <div class="nav-header">
           <div class="nav-logo">
-            <a href="#">
+            <a href="/home">
               <img
                 id="logo"
                 src="{{url_for('static',filename='images/logo.webp')}}"
@@ -46,30 +46,13 @@
             </a>
           </div>
         </div>
+       
   
         <!-- responsive navbar toggle button -->
       </nav>
     </div>
-    <div class="view-container">
-      {% set fname = 'uploads/' + list.img1 %}  
-      <img src="{{ url_for('static',filename=fname) }}">
-        <div class="box">
-        <h5>Name : {{ list.name }}</h5>
-        <h5>Shop Type : {{ list.shop_type }}</h5>
-        <h5>Contact number 1 : {{ list.details.contact }}</h5>
-        <h5>Contact number 2 : {{ list.contact2 }}</h5>
-		    <h5>Place : {{ list.place }}</h5>   
-        <h5>Description : {{ list.description }}</h5>
-		    <h5>Working Time : {{ list.wt }}</h5>
-        <a href="{{ list.location }}">
-          
-            <!-- <img src="{{url_for('static',filename='images/map.webp')}}" alt="map"> -->
-            <p> <b>Location </b> </p>
-          
-        </a>
-      </div>
-    </div>
-
+    <h2>Worship</h2>
+    <div class="card-blur">
       
     </div>
     
