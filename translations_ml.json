@@ -59,6 +59,12 @@
     "location":"സ്ഥലം",
     "password": "പാസ്‌വേഡ്",
     "login": "ലോഗിൻ",
-    "info": "ഞങ്ങളേക്കുറിച്ച് | ചരിത്രം"
+    "info": "ഞങ്ങളേക്കുറിച്ച് | ചരിത്രം",
+    "publicDepartments":"പൊതു വകുപ്പുകൾ",
+    "publicDistributionCenters":"പൊതുവിതരണ കേന്ദ്രങ്ങൾ",
+    "supplyco":"സപ്ലൈകോ",
+    "rationShop":"റേഷൻ കട",
+    "placeofworkship":"ആരാധനാലയം"
+
 
 }

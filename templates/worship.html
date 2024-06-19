@@ -51,7 +51,7 @@
         <!-- responsive navbar toggle button -->
       </nav>
     </div>
-    <h2>Worship</h2>
+    <h2 id="placeofworkship"></h2>
     <div class="container">
       {% for item in list %}
       <a href="{{ item.map }}" style="text-decoration: none;">
@@ -63,6 +63,26 @@
       </a>
       {% endfor %}
     </div>
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('placeofworkship').innerText = translations['placeofworkship'];
+              } catch (e) {
+                console.error('Element with ID "placeofworkship" not found:', e);
+              }
     
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
   </body>
 </html>
