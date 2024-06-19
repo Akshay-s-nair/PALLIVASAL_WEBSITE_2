@@ -58,7 +58,12 @@
     "contactNo": "Contact No",
     "location":"Location",
     "password": "Password",
-    "login": "Login"
+    "login": "Login",
+    "publicDepartments":"Public Departments",
+    "publicDistributionCenters":"Public Distribution Centers",
+    "supplyco":"Supplyco",
+    "rationShop":"Ration Shop",
+    "placeofworkship":"Place of Worship"
 
 
 }

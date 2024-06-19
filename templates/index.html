@@ -33,6 +33,8 @@ function updateTranslations() {
                 updateElement('projects_heading', data.projects_heading);
                 updateElement('about_us', data.about_us);
                 updateElement('history', data.history);
+                updateElement('publicDepartments', data.publicDepartments);
+                updateElement('publicDistributionCenters', data.publicDistributionCenters);
             } else {
                 console.error("No data received from server.");
             }
@@ -213,7 +215,7 @@ document.addEventListener('DOMContentLoaded', updateTranslations);
                     <a href="{{ url_for('publicdepartments') }}" style="text-decoration: none">
                         <div class="cards mx-auto">
                             <div class="gradient"></div>
-                            <img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen">Public Departments</p></img>
+                            <img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="publicDepartments"></p></img>
                         </div>
                     </a>
                 </div>
@@ -221,7 +223,7 @@ document.addEventListener('DOMContentLoaded', updateTranslations);
                     <a href="{{ url_for('publiccenters') }}" style="text-decoration: none">
                         <div class="cards mx-auto">
                             <div class="gradient"></div>
-                            <img src="{{ url_for('static', filename='images/eservice.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen">Public Distribution Centers</p></img>
+                            <img src="{{ url_for('static', filename='images/eservice.webp') }}" class="card-img-top crdimg p-1" alt="..."/><p class="cen" id="publicDistributionCenters"></p></img>
                         </div>
                     </a>
                 </div>
