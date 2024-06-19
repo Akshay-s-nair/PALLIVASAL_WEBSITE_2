@@ -63,7 +63,8 @@
     "publicDistributionCenters":"Public Distribution Centers",
     "supplyco":"Supplyco",
     "rationShop":"Ration Shop",
-    "placeofworkship":"Place of Worship"
+    "placeofworkship":"Place of Worship",
+    "name":"Name"
 
 
 }

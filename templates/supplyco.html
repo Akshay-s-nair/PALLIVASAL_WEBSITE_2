@@ -51,7 +51,7 @@
         <!-- responsive navbar toggle button -->
       </nav>
     </div>
-    <h2>Supplyco</h2>
+    <h2 id="supplyco"></h2>
     <div class="container">
       {% for item in list %}
       <a href="/view_supplyco/{{ item.id }}" style="text-decoration: none;">
@@ -63,6 +63,26 @@
       </a>
       {% endfor %}
     </div>
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('supplyco').innerText = translations['supplyco'];
+              } catch (e) {
+                console.error('Element with ID "supplyco" not found:', e);
+              }
     
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
   </body>
 </html>
