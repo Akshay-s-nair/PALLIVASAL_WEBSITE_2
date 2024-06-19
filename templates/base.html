@@ -35,30 +35,30 @@
                     </a>
                 </div>
                 </div>
-                    <form id="lang" action="{{ url_for('set_language') }}" method="post">
-                        <select id="langsel" name="language" onchange="this.form.submit()">
-                            {% for code, name in available_languages.items() %}
-                            <option value="{{ code }}" {% if language == code %}selected{% endif %}>{{ name }}</option>
-                            {% endfor %}
-                    </select>
-                    </form>
-            <!-- Responsive navbar toggle button -->
-            <label></label>
-            <input type="checkbox" id="nav-check" />
-            <div class="nav-btn">
-                <label for="nav-check">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
-            </div>
-
-            <div class="nav-links px-4">
-
-                <!-- <a href="{{ url_for('view') }}"><img
+                <!-- Responsive navbar toggle button -->
+                <label></label>
+                <input type="checkbox" id="nav-check" />
+                <div class="nav-btn">
+                    <label for="nav-check">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                </div>
+                
+                <div class="nav-links px-4">
+                    
+                    <!-- <a href="{{ url_for('view') }}"><img
                         src="{{url_for('static',filename='images/user_icon.webp')}}" width="30px" height="30px"
                         alt="User icon" /></a> -->
-                
+                        
+                <form id="lang" action="{{ url_for('set_language') }}" method="post">
+                    <select id="langsel" name="language" onchange="this.form.submit()">
+                        {% for code, name in available_languages.items() %}
+                        <option value="{{ code }}" {% if language == code %}selected{% endif %}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </form> 
                 <a href="{{ url_for('view') }}">
                     {% if language == 'ml' %}
                         ലോഗിൻ
@@ -66,6 +66,7 @@
                         Login
                     {% endif %}
                 </a>
+                 
                 <a href="#tourism">
                     {% if language == 'ml' %}
                         ടൂറിസം
@@ -73,6 +74,7 @@
                         Tourism
                     {% endif %}
                 </a>
+            
                 <a href="#services">
                     {% if language == 'ml' %}
                         സേവനങ്ങൾ
@@ -87,7 +89,6 @@
                         About Us
                     {% endif %}
                 </a>
-
             </div>
         </nav>
     </div>

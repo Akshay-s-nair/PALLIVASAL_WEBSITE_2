@@ -66,13 +66,13 @@
     </header> -->
     <div class="containerr">
       <nav class="head">
-        <h1>Public Depatments</h1>
+        <h1 id="publicDepartments"></h1>
       </nav>
       <table class="table">
         <thead id="table-head">
-          <th>Name</th>
-          <th>Contact No.</th>
-          <th>Location</th>
+          <th id="name"></th>
+          <th id="contactNo"</th>
+          <th id="location"></th>
         </thead>
         <tbody id="table-body" style="text-align: center;">
           {% for item in list %}
@@ -91,6 +91,41 @@
         </tbody>
       </table>
     </div>
-  
+    <script>
+      // Function to fetch translations and update content
+      function updateTranslations() {
+        fetch('/get_translation')
+          .then(response => response.json())
+          .then(translations => {
+            if (!translations.error) {
+              try {
+                document.getElementById('publicDepartments').innerText = translations['publicDepartments'];
+              } catch (e) {
+                console.error('Element with ID "publicDepartments" not found:', e);
+              }
+              try {
+                document.getElementById('name').innerText = translations['name'];
+              } catch (e) {
+                console.error('Element with ID "name" not found:', e);
+              }
+              try {
+                document.getElementById('contactNo').innerText = translations['contactNo'];
+              } catch (e) {
+                console.error('Element with ID "contactNo" not found:', e);
+              }
+              try {
+                document.getElementById('location').innerText = translations['location'];
+              } catch (e) {
+                console.error('Element with ID "location" not found:', e);
+              }
+    
+              
+            }
+          });
+      }
+    
+      // Fetch translations on page load
+      document.addEventListener('DOMContentLoaded', updateTranslations);
+    </script>
   </body>
 </html>
