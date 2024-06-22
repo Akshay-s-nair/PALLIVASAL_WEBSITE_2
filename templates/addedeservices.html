@@ -7,12 +7,12 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link
-      rel="icon"
-      href="{{url_for('static',filename='images/logo.webp')}}"
-      type="image/icon type"
-    /> 
+        rel="icon"
+        href="{{url_for('static',filename='images/logo.webp')}}"
+        type="image/icon type"
+      /> 
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>E-Services And Waste Management</title>
+    <title>E-services</title>
 
     <!-- Font Awesome -->
     <link
@@ -66,50 +66,34 @@
     </header> -->
     <div class="containerr">
       <nav class="head">
-        <h1 id="e_services"></h1>
+        <h1>Worship</h1>
       </nav>
       <table class="table">
         <thead id="table-head">
-          <th id="">Name</th>
-          
-          <th id="">Link</th>
+          <th>Name</th>
+          <th>Remove</th>
         </thead>
         <tbody id="table-body" style="text-align: center;">
           {% for item in list %}
           <tr>
             <td>
-              <a href="">{{ item.name }}</a>
+              {{ item.name }}
             </td>
-            
             <td>
-              <a href="{{ item.map }}">click here</a>
+              <form method="post" action="{{ url_for('worship_remove') }}">
+                <input type="hidden" name="row_id2" value="{{ item.id }}" />
+                <button type="submit" class="button-20 bt" id="reject" role="button">
+                  Remove
+                </button>
+              </form>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  
 
-    <script>
-      // Function to fetch translations and update content
-      function updateTranslations() {
-        fetch('/get_translation')
-          .then(response => response.json())
-          .then(translations => {
-            if (!translations.error) {
-              try {
-                document.getElementById('e_services').innerText = translations['e_services'];
-              } catch (e) {
-                console.error('Element with ID "e_services" not found:', e);
-              }
-              
-            }
-          });
-      }
-    
-      // Fetch translations on page load
-      document.addEventListener('DOMContentLoaded', updateTranslations);
-    </script>
-  </body>
+  
+</body>
+
 </html>
