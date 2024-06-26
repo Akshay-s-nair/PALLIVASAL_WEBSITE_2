@@ -103,6 +103,7 @@ h2{
     color: white;
     font-family: 'Permanent Marker', cursive;
     margin-top: 120px;
+    font-size: 56px;
 }
 .navv{
     position: fixed;
@@ -174,5 +175,78 @@ h2{
     .view-container{
         margin-top: 80px;
     }
+    .content1{
+      font-size: 16px;
+    }
+    h2{
+      font-size: 28px;
+    }
 }
+
+/*Gallery*/
+
+.grid {
+  max-width: 1165px;
+  margin: 0 auto;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* fluid 5 columns */
+.grid-item { margin: 5px; }
+
+@-moz-document url-prefix() { 
+  	.grid figure {
+		margin: 10px 1.1666%;	/* padding-bottom in % not working in FF, so use em instead. */
+	}
+}
+
+
+.grid {
+	position: relative;
+	margin: -1.5rem auto;
+	list-style: none;
+	text-align: center;	
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%,-0%); */
+}
+
+@media (min-width: 524px) {	
+  .grid-item img{
+    max-width: 250px;
+  }
+  
+	@-moz-document url-prefix() { 
+	  	.grid figure {
+			margin: 8px 1%;	/* padding-bottom in % not working in FF, so use em instead. */
+		}
+	}
+}
+
+
+@media (min-width: 800px) {
+
+	
+	@-moz-document url-prefix() { 
+	  	.grid figure {
+			margin: 10px 1.1666%;	/* padding-bottom in % not working in FF, so use em instead. */
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	.grid { margin: -1.5rem auto -1.5rem 0;	}
+}
+
+
+.grid-item img{
+  max-width: 300px;
+}
+
 

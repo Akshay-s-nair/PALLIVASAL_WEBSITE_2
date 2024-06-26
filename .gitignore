@@ -8,3 +8,4 @@ uploads
 errorlog.txt
 .venv
 env
+requirements.txt
