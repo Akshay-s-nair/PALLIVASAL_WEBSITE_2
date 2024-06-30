@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/homestay/main.css') }}" />
+    <title>Pallivasal</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.webp') }}" type="image/icon type" />
+  </head>
+  <body>
+    <div class="navv">
+      <nav class="navbar">
+        <!-- Navbar logo -->
+        <div class="nav-header">
+          <div class="nav-logo">
+            <a href="/home">
+              <img id="logo" src="{{ url_for('static', filename='images/logo.webp') }}" width="90px" alt="logo" />
+            </a>
+          </div>
+        </div>
+        <a href="/local_workforce" class="backtotrans">
+          {% if language == 'ml' %}
+            പ്രാദേശിക തൊഴിലാളികൾ
+          {% else %}
+            Local workforce
+          {% endif %}
+        </a>
+      </nav>
+    </div>
+    <div class="view-container">
+      {% for item2 in info %}
+      {% set fname = 'uploads/' + item2.img %}
+      <img src="{{ url_for('static', filename=fname) }}">
+        <div class="box">
+          {% for item1 in list %}
+          <h5>
+            {% if language == 'ml' %}
+              പെയിന്ററുടെ പേര് : {{ item1.name }}
+            {% else %}
+              Painter's name: {{ item1.name }}
+            {% endif %}
+          </h5>
+          <h5>
+            {% if language == 'ml' %}
+              ഫോൺ നമ്പർ 1 : {{ item1.contact }}
+            {% else %}
+              Contact number 1: {{ item1.contact }}
+            {% endif %}
+          </h5>
+          {% endfor %}
+          <h5>
+            {% if language == 'ml' %}
+              ഫോൺ നമ്പർ 2 : {{ item2.whatsapp_number }}
+            {% else %}
+              Contact number 2: {{ item2.whatsapp_number }}
+            {% endif %}
+          </h5>
+          <h5>
+            {% if language == 'ml' %}
+              അനുഭവ വർഷങ്ങൾ : {{ item2.years_of_exp }}
+            {% else %}
+              Years of experience: {{ item2.years_of_exp }}
+            {% endif %}
+          </h5>
+          <h5>
+            {% if language == 'ml' %}
+              സാങ്കേതിക യോഗ്യത : {{ item2.technical_qualifications }}
+            {% else %}
+              Technical Qualifications: {{ item2.technical_qualifications }}
+            {% endif %}
+          </h5>
+          <h5>
+            {% if language == 'ml' %}
+              പ്രതിഫല വിശദാംശങ്ങൾ : {{ item2.remuneration_details }}
+            {% else %}
+              Remuneration Details: {{ item2.remuneration_details }}
+            {% endif %}
+          </h5>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

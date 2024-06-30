@@ -477,7 +477,7 @@ def admin_accept():
         service = details_instance.services
         db.session.commit()
 
-        if service in ["Carpentary works", 'Plumbing services', 'Electrical works']:
+        if service in ["Carpentary works", 'Plumbing services', 'Electrical works','Trekking Guide','Art and Craft','Mason','Painter','Goldsmith','Blacksmith']:
             new_local_workforce = LocalWorkforce(details_id=details_instance.sno)
             db.session.add(new_local_workforce)
         elif service == 'Spices outlet':
@@ -840,6 +840,126 @@ def view_tent_camping(id):
 def local_workforce():
     list = Details.query.filter_by(accept = 1).order_by().all()
     return render_template('local_workforce.html' , list = list,language=session['language'])
+
+@app.route('/carpendry_work')
+def carpendry_work():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('carpendry.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_carpendry/<int:id>')
+def view_carpendry_work(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_carpendry.html' , list = list , info = info,language=session['language'])
+
+@app.route('/plumbers')
+def plumbers():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('plumbers.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_plumbers/<int:id>')
+def view_plumbers(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_plumbers.html' , list = list , info = info,language=session['language'])
+
+
+@app.route('/Electrical')
+def Electrical():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('electricians.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_Electrical/<int:id>')
+def view_Electrical(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_electricians.html' , list = list , info = info,language=session['language'])
+
+
+@app.route('/Trekking')
+def Trekking():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('Trekking.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_Trekking/<int:id>')
+def view_Trekking(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_Trekking.html' , list = list , info = info,language=session['language'])
+
+@app.route('/artandCraft')
+def artandCraft():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('artandCraft.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_artandCraft/<int:id>')
+def view_artandCraft(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_artandCraft.html' , list = list , info = info,language=session['language'])
+
+
+
+@app.route('/mason')
+def mason():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('mason.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_mason/<int:id>')
+def view_mason(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_mason.html' , list = list , info = info,language=session['language'])
+
+
+
+@app.route('/painter')
+def painter():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('painter.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_painter/<int:id>')
+def view_painter(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_painter.html' , list = list , info = info,language=session['language'])
+
+
+
+@app.route('/goldsmith')
+def goldsmith():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('goldsmith.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_goldsmith/<int:id>')
+def view_goldsmith(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_goldsmith.html' , list = list , info = info,language=session['language'])
+
+
+
+@app.route('/blacksmith')
+def blacksmith():
+    list = Details.query.filter_by( accept = 1).order_by().all()
+    info = LocalWorkforce.query.filter_by().order_by().all()
+    return render_template('blacksmith.html', info = info , list = list,language=session['language'] )
+
+@app.route('/view_blacksmith/<int:id>')
+def view_blacksmith(id):
+    list = Details.query.filter_by(sno = id , accept = 1)
+    info = LocalWorkforce.query.filter_by(details_id = id)
+    return render_template('view_blacksmith.html' , list = list , info = info,language=session['language'])
+
+
 
 @app.route('/view_localworkforce/<int:sno>', methods=['GET', 'POST'])
 def view_localworkforce(sno):
