@@ -65,7 +65,12 @@
     "supplyco":"സപ്ലൈകോ",
     "rationShop":"റേഷൻ കട",
     "placeofworkship":"ആരാധനാലയം",
-    "name":"നാമം"
+    "name":"നാമം",
+    "artandCraft":"കലയും കരകൗശലവും",
+    "mason":"മേസൺ",
+    "painter":"പെയിന്റർ",
+    "goldsmith":"സ്വർണ്ണപ്പണിക്കാരൻ",
+    "blacksmith":"കൊല്ലന്‍"
 
 
 }
