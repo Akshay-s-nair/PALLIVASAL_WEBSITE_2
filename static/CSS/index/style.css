@@ -831,3 +831,6 @@ details{
     padding: 0px 5px;
   }
 }
+.img-fluid{
+  width: 100%;
+}

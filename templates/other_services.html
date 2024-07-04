@@ -128,6 +128,39 @@
     </div>
   
   </div>
+  <div class="row services-side">
+    <div class="col mx-auto cont p-1">
+      
+
+      <a href="{{ url_for('auditorium') }}" style="text-decoration: none">
+
+        <div class="cards mx-auto" >
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/parlour.webp')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."/><p class="cen" id="">Auditorium
+            </p></img>
+        </div>
+      </a>
+    </div>
+
+    <div class="col mx-auto cont p-1">
+      
+        <a href="{{ url_for('hiringservices') }}" style="text-decoration: none">
+        <div class="cards mx-auto">
+          <div class="gradient"></div>
+          <img
+            src="{{url_for('static',filename='images/studio.webp')}}"
+            class="card-img-top crdimg p-1"
+            alt="..."
+          /><p class="cen" id="">Hiring Services
+          </p></img>
+      </div>
+    </a>
+    </div>
+  
+  </div>
 </div>
 </section>
 

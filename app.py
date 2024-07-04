@@ -1502,5 +1502,14 @@ def history():
 @app.route('/gallery', methods=['GET','POST'])
 def gallery():
     return render_template('gallery.html')
+@app.route('/auditorium', methods=['GET','POST'])
+def auditorium():
+    return render_template('auditorium.html')
+@app.route('/hiringservices', methods=['GET','POST'])
+def hiringservices():
+    return render_template('hiringservices.html')
+@app.route('/view_hiringservices', methods=['GET','POST'])
+def view_hiringservices():
+    return render_template('view_hiringservices.html')
 if __name__ == ("__main__"):
     app.run(debug=True)
