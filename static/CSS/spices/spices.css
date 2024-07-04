@@ -9,8 +9,7 @@ body{
   
     font-family: sans-serif;
     /* background-image: linear-gradient(180deg,rgb(174, 185, 193),rgb(83,105,118), rgb(24, 24, 27)); */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
-    url("../../images/bg.webp");
+    
   }
 .spices{
     display: flex;

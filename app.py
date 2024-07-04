@@ -1102,10 +1102,10 @@ def eservices():
     list = Eservices.query.filter_by().order_by().all()
     return render_template('eservices.html', list = list)
 
-@app.route('/addeservices', methods=['GET', 'POST'])
-def eservices():
-    list = Eservices.query.filter_by().order_by().all()
-    return render_template('eservices.html', list = list)
+# @app.route('/addeservices', methods=['GET', 'POST'])
+# def eservices():
+#     list = Eservices.query.filter_by().order_by().all()
+#     return render_template('eservices.html', list = list)
 
 
 
