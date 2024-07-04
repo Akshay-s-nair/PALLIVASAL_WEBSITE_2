@@ -85,6 +85,10 @@ class WhereToStay(db.Model):
     no_of_rooms = db.Column(db.String(80), nullable=True, default=None)
     services = db.Column(db.String(80), nullable=True, default=None)
     img1 = db.Column(db.Text, nullable=True, default=None)
+    img2 = db.Column(db.Text , nullable=True)
+    img3 = db.Column(db.Text , nullable=True)
+    img4 = db.Column(db.Text , nullable=True)
+    img5 = db.Column(db.Text , nullable=True)
 
 
     details = relationship("Details", back_populates="where_to_stay")
@@ -164,7 +168,11 @@ class Adventure(db.Model):
     description = db.Column(db.Text, nullable=True, default=None)
     contact2 = db.Column(db.String(80), nullable=True, default=None)
     tariff = db.Column(db.String(80), nullable=True, default=None)
-    img1 = db.Column(db.Text , nullable=True)
+    img1 = db.Column(db.Text , nullable=True , default=None)
+    img2 = db.Column(db.Text , nullable=True)
+    img3 = db.Column(db.Text , nullable=True)
+    img4 = db.Column(db.Text , nullable=True)
+    img5 = db.Column(db.Text , nullable=True)
 
 
     details = relationship("Details", back_populates="adventure")
@@ -180,7 +188,7 @@ class Art(db.Model):
     description = db.Column(db.Text, nullable=True, default=None)
     contact2 = db.Column(db.String(80), nullable=True, default=None)
     place = db.Column(db.String(80), nullable=True, default=None)
-    img1 = db.Column(db.Text , nullable=True)
+    img1 = db.Column(db.Text , nullable=True , default=None)
     img2 = db.Column(db.Text , nullable=True)
     img3 = db.Column(db.Text , nullable=True)
     img4 = db.Column(db.Text , nullable=True)
@@ -212,6 +220,10 @@ class Shop(db.Model):
     contact2 = db.Column(db.String(80), nullable=True, default=None)
     place = db.Column(db.String(80), nullable=True, default=None)
     img1 = db.Column(db.Text , nullable=True)
+    img2 = db.Column(db.Text , nullable=True)
+    img3 = db.Column(db.Text , nullable=True)
+    img4 = db.Column(db.Text , nullable=True)
+    img5 = db.Column(db.Text , nullable=True)
     wt= db.Column(db.String(80), nullable=True, default=None)
     details = relationship("Details", back_populates="shop")
 
@@ -253,3 +265,9 @@ class Worship(db.Model):
     name = db.Column(db.String(50), nullable=False)
     map = db.Column(db.Text, nullable=False)
     img = db.Column(db.Text, nullable=False)
+
+
+class Eservices(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), nullable=False)
+    link = db.Column(db.Text, nullable=False)
