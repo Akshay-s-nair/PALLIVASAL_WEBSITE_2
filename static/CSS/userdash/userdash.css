@@ -397,5 +397,11 @@ form.formbut{
     }
 }
 
-
-
+.inn{
+    padding: 0px;
+    display: inline;
+}
+.inn input{
+    margin: 0px;
+    position: relative;
+}

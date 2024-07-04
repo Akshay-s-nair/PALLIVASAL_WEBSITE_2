@@ -22,8 +22,7 @@
 }
 body{
     /* background-image: linear-gradient(to right,rgb(83,105,118), rgb(41, 46, 73)); */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 1)),
-    url("../../images/bg.webp");
+    
     background-size: cover;
   background-attachment:fixed;
 

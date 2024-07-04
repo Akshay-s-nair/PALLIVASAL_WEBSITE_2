@@ -518,38 +518,28 @@
         <label>Name of the Shop</label>
         <input value="{{ item2.name | default('') }}" type="text" name="name">
         <label for="">Shop type</label>
-        <input type="radio" name="shop_type" value="Grocery">
-        <label >Grocery</label>
-        <input type="radio" name="shop_type" value="Vegetables">
-        <label >Vegetables</label>
-        <input type="radio" name="shop_type" value="MeatandFish">
-        <label >Meat and Fish</label>
-        <input type="radio" name="shop_type" value="SuperMarket">
-        <label >Super Market</label>
-        <input type="radio" name="shop_type" value="Stationary">
-        <label >Stationary</label>
-        <input type="radio" name="shop_type" value="Textiles">
-        <label >Textiles</label>
-        <input type="radio" name="shop_type" value="Jewellery">
-        <label >Jewellery</label>
-        <input type="radio" name="shop_type" value="Sportsitems">
-        <label >Sports items</label>
-        <input type="radio" name="shop_type" value="Fruits">
-        <label >Fruits</label>
-        <input type="radio" name="shop_type" value="Bakery">
-        <label >Bakery</label>
-        <input type="radio" name="shop_type" value="BookShop">
-        <label >Book Shop</label>
-        <input type="radio" name="shop_type" value="PetShop">
-        <label >Pet Shop</label>
-        <input type="radio" name="shop_type" value="Flower/PlantShop">
-        <label >Flower/Plant Shop</label>
+        <select name="shop_type" id="cars" style="width: 95%;">
+          <option value="" selected="selected" disabled="disabled">Select Type</option>
+          <option value="Grocery">Grocery</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="MeatandFish">Meat and Fish</option>
+          <option value="SuperMarket">Super Market</option>
+          <option value="Stationary">Stationary</option>
+          <option value="Textiles">Textiles</option>
+          <option value="Jewellery">Jewellery</option>
+          <option value="Sportsitems">Sports items</option>
+          <option value="Fruits">Fruits</option>
+          <option value="Bakery">Bakery</option>
+          <option value="BookShop">Book Shop</option>
+          <option value="PetShop">Pet Shop</option>
+          <option value="Flower/PlantShop">Flower/Plant Shop</option>
+        </select>
         <label>Location Details(Link of Google Map)</label>
         <input value="{{ item2.location | default('') }}" type="text" name="location">
         <label>Description</label>
         <input value="{{ item2.description | default('') }}" type="text" name="description">
         <label>Additional contact number</label>
-        <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
+        <input value="{{ item2.contact2 | default('') }}" type="text" name="contact"  maxlength="10">
         <label>Place</label>
         <input value="{{ item2.place | default('') }}" type="text" name="place">
         <label>Working Time</label>
@@ -612,6 +602,50 @@
     {% endfor %}
 </div>
 
+{% elif item.services in ["Hiring Services"]  %}
+    
+  <div class="box2">
+    {% for item2 in shop %}
+    <div id="change">
+    <form id="form1" onsubmit="changeDivContent()" action="/userdash/{{ item.sno }}" method='post' enctype="multipart/form-data">
+      <h2>Enter the Details</h2>
+        <label>Name of the Shop</label>
+        <input value="{{ item2.name | default('') }}" type="text" name="name">
+        <label>Location Details(Link of Google Map)</label>
+        <input value="{{ item2.location | default('') }}" type="text" name="location">
+        <label>Description</label>
+        <input value="{{ item2.description | default('') }}" type="text" name="description">
+        <label>Additional contact number</label>
+        <input value="{{ item2.contact2 | default('') }}" type="text" name="contact">
+        <label>Place</label>
+        <input value="{{ item2.place | default('') }}" type="text" name="place">
+        <label>Photo</label>
+        <input type="file" name="img1" required>
+
+        <button id="click-btn" type="submit">Save Changes</button>
+      </form>  
+    </div>
+      <div id="edit">
+        <h2>Details</h2>
+        <h5>Name</h5>
+          <h3>{{ item2.name | default('') }}</h3>
+        <h5>Location Details</h5>
+          <h3>{{ item2.location | default('') }}</h3>
+        <h5>Description</h5>
+          <h3>{{ item2.description | default('') }}</h3>
+        <h5>Additional contact number</h5>
+          <h3>{{ item2.contact2 | default('') }}</h3>
+        <h5>Place</h5>
+          <h3>{{ item2.place | default('') }}</h3>
+          {% if item2.img1 is not none %}
+          <h5>Uploaded Photo</h5>
+          <h3><a href="/image/{{ item2.img1 }}" target="_blank">click here to view image 
+          </a> </h3>    
+          {% endif %}
+          <button onclick="changeDivContent()" >Edit</button>
+      </div>
+    {% endfor %}
+  </div>
   {% elif item.services == "Spices outlet" %}
   <div class="box2">
     {% for item3 in spices %}
