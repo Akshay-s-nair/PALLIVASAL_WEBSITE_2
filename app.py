@@ -12,13 +12,13 @@ from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
 from PIL import Image
 from sqlalchemy.exc import SQLAlchemyError
-# from twilio.rest import Client
-# import keys
+from twilio.rest import Client
+import keys
 
 from flask_compress import Compress
 
 from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop , CivilSupply , Public
-from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project , Worship
+from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project , Worship , Eservices
 
 from sqlalchemy.sql.expression import update
 
@@ -36,7 +36,7 @@ available_languages = {
     'en': 'English',
     'ml': 'മലയാളം'
 }
-# client = Client(keys.account_sid , keys.auth_token)
+client = Client(keys.account_sid , keys.auth_token)
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -169,17 +169,37 @@ def userdash(sno):
                 entry3.facilities = request.form.get('facilities')
                 entry3.no_of_rooms = request.form.get('rooms')
                 entry3.services = request.form.get('services')
-                img1 = request.files['img1']
+                # img1 = request.files['img1']
 
-                if img1:
-                    filename = secure_filename(img1.filename)
-                    if (request.method == 'POST'):    
-                        img1.save(os.path.join('static', 'uploads', filename))
-                        # mimetype = pic.mimetype
+                # if img1:
+                #     filename = secure_filename(img1.filename)
+                #     if (request.method == 'POST'):    
+                #         img1.save(os.path.join('static', 'uploads', filename))
+                #         # mimetype = pic.mimetype
+                # else:
+                #     filename = None
+                # entry3.img1 = filename
+                # db.session.commit()
+                if 'files[]' not in request.files:
+                    flash('No file selected')
+                    return redirect(request.url)
+
+                files = request.files.getlist('files[]')
+                num = len(files)
+                file_names = []
+
+                for file in files:
+                    if file and allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file_names.append(filename)
+                        file.save(os.path.join('static', 'uploads', filename))
+
+                if num <= 5:
+                    for i in range(num):
+                        setattr(entry3, f'img{i+1}', file_names[i])
+                    db.session.commit()
                 else:
-                    filename = None
-                entry3.img1 = filename
-                db.session.commit()
+                    flash('Only a maximum of 5 should be uploaded!')
 
         elif entry4:
             entry4.name=request.form.get('name')
@@ -233,14 +253,26 @@ def userdash(sno):
             entry7.description=request.form.get('description')
             entry7.contact=request.form.get('contact')
             entry7.tariff=request.form.get('tariff')
-            pic = request.files['img1']
-            if pic:
-                filename = secure_filename(pic.filename)
-                pic.save(os.path.join('static', 'uploads', filename))
+            if 'files[]' not in request.files:
+                flash('No file selected')
+                return redirect(request.url)
+
+            files = request.files.getlist('files[]')
+            num = len(files)
+            file_names = []
+
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_names.append(filename)
+                    file.save(os.path.join('static', 'uploads', filename))
+
+            if num <= 5:
+                for i in range(num):
+                    setattr(entry3, f'img{i+1}', file_names[i])
+                db.session.commit()
             else:
-                filename = None
-            entry7.img1=filename   
-            db.session.commit()
+                flash('Only a maximum of 5 should be uploaded!')
                 
         elif entry8:
             entry8.name = request.form.get('name')
@@ -294,14 +326,26 @@ def userdash(sno):
             entry10.contact2=request.form.get('contact')
             entry10.place=request.form.get('place')
             entry10.wt=request.form.get('wt')
-            pic = request.files['img1']
-            if pic:
-                filename = secure_filename(pic.filename)
-                pic.save(os.path.join('static', 'uploads', filename))
+            if 'files[]' not in request.files:
+                flash('No file selected')
+                return redirect(request.url)
+
+            files = request.files.getlist('files[]')
+            num = len(files)
+            file_names = []
+
+            for file in files:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_names.append(filename)
+                    file.save(os.path.join('static', 'uploads', filename))
+
+            if num <= 5:
+                for i in range(num):
+                    setattr(entry3, f'img{i+1}', file_names[i])
+                db.session.commit()
             else:
-                filename = None
-            entry10.img1=filename   
-            db.session.commit()
+                flash('Only a maximum of 5 should be uploaded!')
 
 
 
@@ -369,12 +413,12 @@ def register():
             date=datetime.now().date(), file=filename
         )
 
-        # number = '+91'+contact
-        # message = client.messages.create(
-        #         body="Thank you for registering you will get a conformation after the admins verify your application.",
-        #         from_=keys.twilio_number,
-        #         to=number
-        #     )
+        number = '+91'+contact
+        message = client.messages.create(
+                body="Thank you for registering you will get a conformation after the admins verify your application.",
+                from_=keys.twilio_number,
+                to=number
+            )
         try:
             img = Image.open(pic)
             db.session.add(entry)
@@ -1055,7 +1099,14 @@ def all_routes(text):
 
 @app.route('/eservices', methods=['GET', 'POST'])
 def eservices():
-    return render_template('eservices.html')
+    list = Eservices.query.filter_by().order_by().all()
+    return render_template('eservices.html', list = list)
+
+@app.route('/addeservices', methods=['GET', 'POST'])
+def eservices():
+    list = Eservices.query.filter_by().order_by().all()
+    return render_template('eservices.html', list = list)
+
 
 
 @app.route('/forgotpass', methods=['GET', 'POST'])
