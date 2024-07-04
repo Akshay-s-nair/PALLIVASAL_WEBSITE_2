@@ -80,7 +80,7 @@
               {{ item.name }}
             </td>
             <td>
-              <form method="post" action="{{ url_for('worship_remove') }}">
+              <form method="post" action="{{ url_for('eservice_remove') }}">
                 <input type="hidden" name="row_id2" value="{{ item.id }}" />
                 <button type="submit" class="button-20 bt" id="reject" role="button">
                   Remove
