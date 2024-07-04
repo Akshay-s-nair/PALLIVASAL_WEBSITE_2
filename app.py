@@ -1676,6 +1676,30 @@ def worship_remove():
         db.session.commit()
     return redirect(url_for('addedworship',language=session['language']))
 
+@app.route('/aboutus', methods=['GET','POST'])
+def aboutus():
+    return render_template('aboutus.html')
+
+@app.route('/history', methods=['GET','POST'])
+def history():
+    return render_template('history.html')
+
+@app.route('/gallery', methods=['GET','POST'])
+def gallery():
+    return render_template('gallery.html')
+
+@app.route('/auditorium', methods=['GET','POST'])
+def auditorium():
+    return render_template('auditorium.html')
+
+@app.route('/hiringservices', methods=['GET','POST'])
+def hiringservices():
+    return render_template('hiringservices.html')
+
+@app.route('/view_hiringservices', methods=['GET','POST'])
+def view_hiringservices():
+    return render_template('view_hiringservices.html')
+
 ##add admin
 @app.route('/admin-addadmin-pallivasal', methods=['GET','POST'])
 def addadmin():
@@ -1690,24 +1714,5 @@ def addadmin():
         
     return render_template('admin_add.html')
 
-@app.route('/aboutus', methods=['GET','POST'])
-def aboutus():
-    return render_template('aboutus.html')
-
-@app.route('/history', methods=['GET','POST'])
-def history():
-    return render_template('history.html')
-@app.route('/gallery', methods=['GET','POST'])
-def gallery():
-    return render_template('gallery.html')
-@app.route('/auditorium', methods=['GET','POST'])
-def auditorium():
-    return render_template('auditorium.html')
-@app.route('/hiringservices', methods=['GET','POST'])
-def hiringservices():
-    return render_template('hiringservices.html')
-@app.route('/view_hiringservices', methods=['GET','POST'])
-def view_hiringservices():
-    return render_template('view_hiringservices.html')
 if __name__ == ("__main__"):
     app.run(debug=True)
