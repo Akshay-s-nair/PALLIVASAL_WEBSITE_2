@@ -12,8 +12,8 @@ from flask_mail import Mail,Message
 from logging import FileHandler , WARNING
 from PIL import Image
 from sqlalchemy.exc import SQLAlchemyError
-from twilio.rest import Client
-import keys
+# from twilio.rest import Client
+# import keys
 
 from flask_compress import Compress
 
@@ -36,7 +36,7 @@ available_languages = {
     'en': 'English',
     'ml': 'മലയാളം'
 }
-client = Client(keys.account_sid , keys.auth_token)
+# client = Client(keys.account_sid , keys.auth_token)
 
 app.config['SECRET_KEY']='dgw^9ej(l4vq_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu'
 app.config['SESSION_PERMANENT'] = True
@@ -413,12 +413,12 @@ def register():
             date=datetime.now().date(), file=filename
         )
 
-        number = '+91'+contact
-        message = client.messages.create(
-                body="Thank you for registering you will get a conformation after the admins verify your application.",
-                from_=keys.twilio_number,
-                to=number
-            )
+        # number = '+91'+contact
+        # message = client.messages.create(
+        #         body="Thank you for registering you will get a conformation after the admins verify your application.",
+        #         from_=keys.twilio_number,
+        #         to=number
+        #     )
         try:
             img = Image.open(pic)
             db.session.add(entry)
@@ -1102,11 +1102,38 @@ def eservices():
     list = Eservices.query.filter_by().order_by().all()
     return render_template('eservices.html', list = list)
 
-# @app.route('/addeservices', methods=['GET', 'POST'])
-# def eservices():
-#     list = Eservices.query.filter_by().order_by().all()
-#     return render_template('eservices.html', list = list)
 
+@app.route('/addeservices', methods=['GET', 'POST'])
+def addeservices():
+    if request.method == 'POST':
+        name = request.files.get('name')
+        link = request.form.get('link')
+        
+        entry = Eservices(name=name, link=link)
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('eservices is added. Click + button to add more')
+            return redirect(url_for('addeservices'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addeservices'))
+
+    return render_template('addeservices.html',language=session['language'])
+
+@app.route('/addedeservices', methods=['GET','POST'])
+def addedeservices():
+    list = Eservices.query.order_by().all()
+    return render_template('addedeservices.html',list=list,language=session['language'])
+
+@app.route('/eservices_remove', methods=['POST'])    
+def eservices_remove():
+    row_id2 = request.form.get('row_id2')
+    row = eservices.query.filter_by(id = row_id2).first()
+    
+    db.session.delete(row)
+    db.session.commit()     
+    return redirect(url_for('addedeservices',language=session['language']))
 
 
 @app.route('/forgotpass', methods=['GET', 'POST'])
