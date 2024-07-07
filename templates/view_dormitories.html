@@ -53,24 +53,24 @@
     <div class="view-container">
       {% for item2 in info %}
       <div class="slider">
-        {% if list.img1 is not none %}
-        {% set fname1 = 'uploads/' + list.img1 %}  
+        {% if item2.img1 is not none %}
+        {% set fname1 = 'uploads/' + item2.img1 %}  
         <img src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
         {% endif %}
-        {% if list.img2 is not none %}
-        {% set fname2 = 'uploads/' + list.img2 %}  
+        {% if item2.img2 is not none %}
+        {% set fname2 = 'uploads/' + item2.img2 %}  
         <img src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
         {% endif %}
-        {% if list.img3 is not none %}
-        {% set fname3 = 'uploads/' + list.img3 %}  
+        {% if item2.img3 is not none %}
+        {% set fname3 = 'uploads/' + item2.img3 %}  
         <img src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
         {% endif %}
-        {% if list.img4 is not none %}
-        {% set fname4 = 'uploads/' + list.img4 %}  
+        {% if item2.img4 is not none %}
+        {% set fname4 = 'uploads/' + item2.img4 %}  
         <img src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
         {% endif %}
-        {% if list.img5 is not none %}
-        {% set fname5 = 'uploads/' + list.img5 %}  
+        {% if item2.img5 is not none %}
+        {% set fname5 = 'uploads/' + item2.img5 %}  
         <img src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
         {% endif %}
       </div>
