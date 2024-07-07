@@ -54,7 +54,28 @@
     <div class="view-container">
       {% for item2 in info %}
       {% set fname = 'uploads/' + item2.img1 %}  
-      <img src="{{ url_for('static',filename=fname) }}">
+      <div class="slider" style="height: 100%;">
+        {% if item2.img1 is not none %}
+        {% set fname1 = 'uploads/' + item2.img1 %}  
+        <img src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
+        {% endif %}
+        {% if item2.img2 is not none %}
+        {% set fname2 = 'uploads/' + item2.img2 %}  
+        <img src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
+        {% endif %}
+        {% if item2.img3 is not none %}
+        {% set fname3 = 'uploads/' + item2.img3 %}  
+        <img src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
+        {% endif %}
+        {% if item2.img4 is not none %}
+        {% set fname4 = 'uploads/' + item2.img4 %}  
+        <img src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
+        {% endif %}
+        {% if item2.img5 is not none %}
+        {% set fname5 = 'uploads/' + item2.img5 %}  
+        <img src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
+        {% endif %}
+      </div>
         <div class="box">
         <h5>Name : {{ item2.name }}</h5>
         {% for item1 in list %}
@@ -77,4 +98,67 @@
     </div>
     
   </body>
+  <script>// Get all the sliders on the page
+		var sliders = document.querySelectorAll('.slider');
+
+sliders.forEach(function (slider) {
+  var images = slider.querySelectorAll('img');
+  var currentImageIndex = 0;
+
+  // Hide all images except the first one
+  for (var i = 1; i < images.length; i++) {
+    images[i].style.display = 'none';
+  }
+
+  var intervalId = null; // Start with intervalId set to null
+
+  function startSlider() {
+    intervalId = setInterval(function () {
+
+      // Hide the current image
+      images[currentImageIndex].style.display = 'none';
+
+      // Increment the current image index
+      currentImageIndex++;
+
+      // If we've reached the end of the images, start over at the beginning
+      if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+      }
+
+      // Show the next image
+      images[currentImageIndex].style.display = 'block';
+
+    }, 2000);
+  }
+
+  // Pause the slider on hover
+  slider.addEventListener('mouseover', function () {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+  });
+
+  // Resume or restart the slider on mouseout or click
+  slider.addEventListener('mouseout', function () {
+  if (!intervalId) { // Only start if currently paused
+    startSlider();
+  }
+});
+
+
+  slider.addEventListener('click', function (event) {
+  event.stopPropagation(); // Prevent click from bubbling up
+  if (intervalId) {
+    clearInterval(intervalId);
+  } else {
+    startSlider();
+  }
+});
+
+
+  // Start the slider initially
+  startSlider();
+});
+</script>
 </html>
