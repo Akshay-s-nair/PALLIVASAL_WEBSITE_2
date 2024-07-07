@@ -52,8 +52,28 @@
   </div>
     <div class="view-container">
       {% for item2 in info %}
-      {% set fname = 'uploads/' + item2.img1 %}  
-      <img src="{{ url_for('static',filename=fname) }}">
+      <div class="slider">
+        {% if list.img1 is not none %}
+        {% set fname1 = 'uploads/' + list.img1 %}  
+        <img src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
+        {% endif %}
+        {% if list.img2 is not none %}
+        {% set fname2 = 'uploads/' + list.img2 %}  
+        <img src="{{ url_for('static',filename=fname2) }}" alt="Place 2">	
+        {% endif %}
+        {% if list.img3 is not none %}
+        {% set fname3 = 'uploads/' + list.img3 %}  
+        <img src="{{ url_for('static',filename=fname3) }}" alt="Place 3">
+        {% endif %}
+        {% if list.img4 is not none %}
+        {% set fname4 = 'uploads/' + list.img4 %}  
+        <img src="{{ url_for('static',filename=fname4) }}" alt="Place 4">	
+        {% endif %}
+        {% if list.img5 is not none %}
+        {% set fname5 = 'uploads/' + list.img5 %}  
+        <img src="{{ url_for('static',filename=fname5) }}" alt="Place 5">	
+        {% endif %}
+      </div>
         <div class="box">
         <h5>Dormitorie name : {{ item2.name }}</h5>
         <h5>Addresss : {{ item2.name }}</h5>
@@ -73,4 +93,41 @@
 
    
   </body>
+  <script>// Get all the sliders on the page
+		var sliders = document.querySelectorAll('.slider');
+		
+		// Loop through each slider
+		sliders.forEach(function(slider) {
+		
+		  // Get all the images in the slider
+		  var images = slider.querySelectorAll('img');
+		
+		  // Set the current image index to 0
+		  var currentImageIndex = 0;
+		
+		  // Hide all the images except the first one
+		  for (var i = 1; i < images.length; i++) {
+			images[i].style.display = 'none';
+		  }
+		
+		  // Set an interval to change the image every 2 seconds
+		  setInterval(function() {
+		
+			// Hide the current image
+			images[currentImageIndex].style.display = 'none';
+		
+			// Increment the current image index
+			currentImageIndex++;
+		
+			// If we've reached the end of the images, start over at the beginning
+			if (currentImageIndex >= images.length) {
+			  currentImageIndex = 0;
+			}
+		
+			// Show the next image
+			images[currentImageIndex].style.display = 'block';
+		
+		  }, 2000);
+		
+		});</script>
 </html>
