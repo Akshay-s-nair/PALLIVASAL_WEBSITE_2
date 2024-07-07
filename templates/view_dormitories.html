@@ -52,7 +52,7 @@
   </div>
     <div class="view-container">
       {% for item2 in info %}
-      <div class="slider">
+      <div class="slider" style="height: 100%;">
         {% if item2.img1 is not none %}
         {% set fname1 = 'uploads/' + item2.img1 %}  
         <img src="{{ url_for('static',filename=fname1) }}" alt="Place 1">	
@@ -95,39 +95,65 @@
   </body>
   <script>// Get all the sliders on the page
 		var sliders = document.querySelectorAll('.slider');
-		
-		// Loop through each slider
-		sliders.forEach(function(slider) {
-		
-		  // Get all the images in the slider
-		  var images = slider.querySelectorAll('img');
-		
-		  // Set the current image index to 0
-		  var currentImageIndex = 0;
-		
-		  // Hide all the images except the first one
-		  for (var i = 1; i < images.length; i++) {
-			images[i].style.display = 'none';
-		  }
-		
-		  // Set an interval to change the image every 2 seconds
-		  setInterval(function() {
-		
-			// Hide the current image
-			images[currentImageIndex].style.display = 'none';
-		
-			// Increment the current image index
-			currentImageIndex++;
-		
-			// If we've reached the end of the images, start over at the beginning
-			if (currentImageIndex >= images.length) {
-			  currentImageIndex = 0;
-			}
-		
-			// Show the next image
-			images[currentImageIndex].style.display = 'block';
-		
-		  }, 2000);
-		
-		});</script>
+
+sliders.forEach(function (slider) {
+  var images = slider.querySelectorAll('img');
+  var currentImageIndex = 0;
+
+  // Hide all images except the first one
+  for (var i = 1; i < images.length; i++) {
+    images[i].style.display = 'none';
+  }
+
+  var intervalId = null; // Start with intervalId set to null
+
+  function startSlider() {
+    intervalId = setInterval(function () {
+
+      // Hide the current image
+      images[currentImageIndex].style.display = 'none';
+
+      // Increment the current image index
+      currentImageIndex++;
+
+      // If we've reached the end of the images, start over at the beginning
+      if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+      }
+
+      // Show the next image
+      images[currentImageIndex].style.display = 'block';
+
+    }, 2000);
+  }
+
+  // Pause the slider on hover
+  slider.addEventListener('mouseover', function () {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+  });
+
+  // Resume or restart the slider on mouseout or click
+  slider.addEventListener('mouseout', function () {
+  if (!intervalId) { // Only start if currently paused
+    startSlider();
+  }
+});
+
+
+  slider.addEventListener('click', function (event) {
+  event.stopPropagation(); // Prevent click from bubbling up
+  if (intervalId) {
+    clearInterval(intervalId);
+  } else {
+    startSlider();
+  }
+});
+
+
+  // Start the slider initially
+  startSlider();
+});
+</script>
 </html>
