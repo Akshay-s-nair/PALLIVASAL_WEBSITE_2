@@ -54,15 +54,11 @@
     <h2>Gallery
     </h2>
     <div class="card-blur text-white p-1 pt-5 pb-5 m-2 content1">
-    <div class="grid">                                                    
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/hospital.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/hospital.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
-      <div class="grid-item"><img src="{{ url_for('static', filename='images/publicdepartments.webp') }}" alt="Image"></div>
+    <div class="grid">
+      {% for item in list %}                                               
+      {% set fname = 'uploads/' + item.img %}       
+      <div class="grid-item"><img src="{{ url_for('static',filename=fname) }}" alt="Image"></div>
+      {% endfor %}
   </div> 
 </div>
   </body>

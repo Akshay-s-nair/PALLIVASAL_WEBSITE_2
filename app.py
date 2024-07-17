@@ -17,7 +17,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from flask_compress import Compress
 
-from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop , CivilSupply , Public
+from models import Details , Places , LocalWorkforce, Spices, HealthCare,Pharmacy , Art ,Bank , Shop , CivilSupply , Public ,Gallery
 from models import WhereToStay,Plantation,Spiceproducts, Transportation ,Admin , Adventure ,Others,Project , Worship , Eservices
 
 from sqlalchemy.sql.expression import update
@@ -1686,7 +1686,64 @@ def history():
 
 @app.route('/gallery', methods=['GET','POST'])
 def gallery():
-    return render_template('gallery.html')
+    list = Gallery.query.filter_by().order_by().all()
+    return render_template('gallery.html', list = list,language=session['language'])
+
+@app.route('/addgallery', methods=['GET','POST'])
+def addgallery():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        img = request.files.get('file')
+        
+        if not img:
+            flash('No Image uploaded. Please try again.')
+            return redirect(url_for('addgallery'))
+
+        filename = secure_filename(img.filename)
+        if not filename:
+            flash('Invalid image filename. Please try again.')
+            return redirect(url_for('addgallery'))
+
+        try:
+            img_path = os.path.join('static', 'uploads', filename)
+            img = Image.open(img)
+            img.save(img_path)
+        except Exception as e:
+            flash(f"Error saving image: {e}")
+            return redirect(url_for('addgallery'))
+
+        entry = Gallery(name = name, img=filename )
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash('Image is added. Click + button to add more')
+            return redirect(url_for('addgallery'))
+        except Exception as e:
+            flash(f"Error committing changes: {e}")
+            return redirect(url_for('addgallery'))
+
+    return render_template('addgallery.html',language=session['language'])
+
+
+@app.route('/addedgallery', methods=['GET','POST'])
+def addedgallery():
+    list = Gallery.query.filter_by().order_by().all()
+    return render_template('addedgallery.html',list=list,language=session['language'])
+
+
+@app.route('/gallery_remove', methods=['POST'])    
+def gallery_remove():
+    row_id2 = request.form.get('row_id2')
+    row = Gallery.query.filter_by(id = row_id2).first()
+    if row:
+        try:
+            img = row.img
+            os.remove(os.path.join('static', 'uploads', img))
+        except:
+            pass
+        db.session.delete(row)
+        db.session.commit()
+    return redirect(url_for('addedgallery',language=session['language']))
 
 @app.route('/auditorium', methods=['GET','POST'])
 def auditorium():
